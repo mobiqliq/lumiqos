@@ -1,0 +1,28 @@
+{
+    "name": "lumiqos-monorepo",
+    "version": "1.0.0",
+    "private": true,
+    "workspaces": [
+        "backend/shared",
+        "backend/api-gateway",
+        "backend/auth-service",
+        "backend/school-service",
+        "backend/billing-service",
+        "backend/user-service",
+        "backend/ai-service",
+        "frontend",
+        "mobile"
+    ],
+    "scripts": {
+        "install:all": "npm install --workspaces",
+        "build:shared": "npm run build -w backend/shared",
+        "build:backend": "npm run build -w backend/api-gateway -w backend/auth-service -w backend/school-service -w backend/billing-service -w backend/user-service",
+        "build": "npm run build:shared && npm run build:backend",
+        "docker:build": "docker compose build --no-cache",
+        "docker:up": "docker compose up",
+        "docker:down": "docker compose down"
+    },
+    "devDependencies": {
+        "concurrently": "^9.1.2"
+    }
+}
