@@ -1,0 +1,224 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&family=DM+Mono&display=swap');
+
+:root {
+  /* Core Foundation — Crystal HUD (Refined) */
+  --bg-primary: #0A0F1C;
+  --bg-secondary: #0D1425;
+  --bg-tertiary: #161F35;
+  
+  --surface: rgba(255, 255, 255, 0.03);
+  --surface-hover: rgba(255, 255, 255, 0.06);
+  --surface-opaque: #161F35;
+  
+  --border: rgba(255, 255, 255, 0.06);
+  --border-glow: rgba(59, 130, 246, 0.3);
+  
+  /* Typography */
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --text-muted: #475569;
+  
+  /* Neon Gradients */
+  --grad-blue: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  --grad-amber: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  --grad-purple: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+  --grad-emerald: linear-gradient(135deg, #10b981 0%, #047857 100%);
+  
+  /* Layout */
+  --sidebar-w: 260px;
+  --topbar-h: 72px;
+  --intelligence-w: 380px;
+  
+  /* Effects */
+  --glass: blur(16px);
+  --glow-soft: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  
+  /* Persona Accents */
+  --accent-principal: #3b82f6;
+  --accent-teacher: #10b981;
+  --accent-admin: #8b5cf6;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  overflow: hidden;
+}
+
+/* App Layout — HUD Grid */
+.app-layout {
+  display: grid;
+  grid-template-columns: var(--sidebar-w) 1fr var(--intelligence-w);
+  height: 100vh;
+  background: radial-gradient(circle at top right, #1e293b 0%, #0a0f1c 100%);
+}
+
+/* Sidebar — Vertical Command Rail */
+.sidebar {
+  background: rgba(13, 20, 37, 0.7);
+  border-right: 1px solid var(--border);
+  backdrop-filter: var(--glass);
+  padding: 32px 24px;
+}
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 48px;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: #fff;
+}
+
+.sidebar-logo span { color: #fbbf24; }
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-radius: 12px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.nav-item:hover {
+  background: var(--surface-hover);
+  color: #fff;
+}
+
+.nav-item.active {
+  background: rgba(59, 130, 246, 0.1);
+  color: #fff;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.1);
+  position: relative;
+}
+
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 12px; bottom: 12px;
+  width: 4px; background: #3b82f6; border-radius: 0 4px 4px 0;
+  box-shadow: 0 0 10px #3b82f6;
+}
+
+/* Canvas — Main Workspace */
+.canvas {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.content-viewport {
+  flex: 1;
+  overflow-y: auto;
+  padding: 40px;
+}
+
+/* Header Typography (Unified) */
+h1, .h1 { font-size: 36px; font-weight: 800; letter-spacing: -0.03em; color: #fff; line-height: 1.1; }
+h2, .h2 { font-size: 20px; font-weight: 700; color: #fff; }
+.display { font-size: 48px; font-weight: 900; }
+.mono { font-family: 'DM Mono', monospace; }
+
+.label {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+}
+
+/* KPI Architecture — Balanced Proportions */
+.kpi-gradient {
+  padding: 24px;
+  border-radius: 20px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 130px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--glow-soft);
+}
+
+.kpi-gradient .label { color: rgba(255, 255, 255, 0.8); margin-bottom: 8px; }
+.kpi-gradient .value { 
+  font-family: 'DM Mono', monospace; 
+  font-size: 34px; 
+  font-weight: 700; 
+  letter-spacing: -0.02em;
+}
+
+.aura {
+  position: absolute;
+  top: -50px; right: -50px;
+  width: 150px; height: 150px;
+  background: rgba(255, 255, 255, 0.15);
+  filter: blur(40px);
+  border-radius: 50%;
+}
+
+/* Cards — Refined Borders */
+.card-glow {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 32px;
+  box-shadow: var(--glow-soft);
+  transition: all 0.3s ease;
+}
+
+.card-glow:hover {
+  border-color: rgba(59, 130, 246, 0.3);
+  background: #1a253d;
+}
+
+/* Intelligence Panel */
+.intelligence-panel {
+  background: rgba(13, 20, 37, 0.8);
+  border-left: 1px solid var(--border);
+  backdrop-filter: var(--glass);
+}
+
+/* Utilities */
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.flex-column { display: flex; flex-direction: column; gap: 16px; }
+.flex-between { display: flex; justify-content: space-between; align-items: center; }
+
+/* AI Insight Signal */
+.ai-signal {
+  background: rgba(251, 191, 36, 0.05);
+  border: 1px solid rgba(251, 191, 36, 0.2);
+  border-radius: 16px;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
+
+@keyframes reveal {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
