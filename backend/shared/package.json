@@ -1,0 +1,17 @@
+{
+    "name": "@lumiqos/shared",
+    "version": "1.0.0",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "tsc"
+    },
+    "dependencies": {
+        "@nestjs/common": "^11.0.0",
+        "@nestjs/core": "^11.0.0",
+        "typeorm": "^0.3.28"
+    },
+    "devDependencies": {
+        "typescript": "^5.7.3"
+    }
+}

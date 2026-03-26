@@ -1,0 +1,36 @@
+import { OnApplicationBootstrap } from '@nestjs/common';
+import { Repository } from 'typeorm';
+import { School } from '@lumiqos/shared/src/entities/school.entity';
+import { Student } from '@lumiqos/shared/src/entities/student.entity';
+import { AcademicYear } from '@lumiqos/shared/src/entities/academic-year.entity';
+import { Class } from '@lumiqos/shared/src/entities/class.entity';
+import { Section } from '@lumiqos/shared/src/entities/section.entity';
+import { StudentEnrollment } from '@lumiqos/shared/src/entities/student-enrollment.entity';
+import { User } from '@lumiqos/shared/src/entities/user.entity';
+import { StudentAttendance } from '@lumiqos/shared/src/entities/student-attendance.entity';
+import { AttendanceSession } from '@lumiqos/shared/src/entities/attendance-session.entity';
+import { FeeInvoice } from '@lumiqos/shared/src/entities/fee-invoice.entity';
+import { Subject } from '@lumiqos/shared/src/entities/subject.entity';
+import { Syllabus } from '@lumiqos/shared/src/entities/syllabus.entity';
+import { CurriculumMapping } from '@lumiqos/shared/src/entities/curriculum-mapping.entity';
+import { TeacherSubject } from '@lumiqos/shared/src/entities/teacher-subject.entity';
+import { Board } from '@lumiqos/shared/src/entities/board.entity';
+export declare class SeederService implements OnApplicationBootstrap {
+    private readonly schoolRepo;
+    private readonly studentRepo;
+    private readonly yearRepo;
+    private readonly classRepo;
+    private readonly sectionRepo;
+    private readonly enrollmentRepo;
+    private readonly userRepo;
+    private readonly attendanceRepo;
+    private readonly sessionRepo;
+    private readonly feeRepo;
+    private readonly subjectRepo;
+    private readonly syllabusRepo;
+    private readonly mappingRepo;
+    private readonly teacherSubjectRepo;
+    private readonly boardConfigRepo;
+    constructor(schoolRepo: Repository<School>, studentRepo: Repository<Student>, yearRepo: Repository<AcademicYear>, classRepo: Repository<Class>, sectionRepo: Repository<Section>, enrollmentRepo: Repository<StudentEnrollment>, userRepo: Repository<User>, attendanceRepo: Repository<StudentAttendance>, sessionRepo: Repository<AttendanceSession>, feeRepo: Repository<FeeInvoice>, subjectRepo: Repository<Subject>, syllabusRepo: Repository<Syllabus>, mappingRepo: Repository<CurriculumMapping>, teacherSubjectRepo: Repository<TeacherSubject>, boardConfigRepo: Repository<Board>);
+    onApplicationBootstrap(): Promise<void>;
+}

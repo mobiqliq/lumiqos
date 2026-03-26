@@ -1,0 +1,84 @@
+import { Repository } from 'typeorm';
+import { Class } from '@lumiqos/shared/src/entities/class.entity';
+import { Section } from '@lumiqos/shared/src/entities/section.entity';
+import { Subject } from '@lumiqos/shared/src/entities/subject.entity';
+import { TeacherSubject } from '@lumiqos/shared/src/entities/teacher-subject.entity';
+import { SchoolCalendar } from '@lumiqos/shared/src/entities/school-calendar.entity';
+import { AcademicCalendarService } from './academic-calendar.service';
+import { AcademicYear } from '@lumiqos/shared/src/entities/academic-year.entity';
+import { School } from '@lumiqos/shared/src/entities/school.entity';
+import { User } from '@lumiqos/shared/src/entities/user.entity';
+import { Syllabus } from '@lumiqos/shared/src/entities/syllabus.entity';
+import { CurriculumUnit } from '@lumiqos/shared/src/entities/curriculum-unit.entity';
+import { LessonPlan } from '@lumiqos/shared/src/entities/lesson-plan.entity';
+import { PlannedSchedule } from '@lumiqos/shared/src/entities/planned-schedule.entity';
+import { TimeSlot } from '@lumiqos/shared/src/entities/time-slot.entity';
+import { PedagogicalPourService } from './pedagogical-pour.service';
+import { RecoveryStrategistService } from './recovery-strategist.service';
+import { SubstitutionService } from './substitution.service';
+import { AcademicGateway } from './academic.gateway';
+export declare class AcademicService {
+    private readonly classRepo;
+    private readonly sectionRepo;
+    private readonly subjectRepo;
+    private readonly teacherSubjectRepo;
+    private readonly userRepo;
+    private readonly syllabusRepo;
+    private readonly calendarRepo;
+    private readonly yearRepo;
+    private readonly schoolRepo;
+    private readonly unitRepo;
+    private readonly lessonPlanRepo;
+    private readonly scheduleRepo;
+    private readonly timeSlotRepo;
+    private readonly calendarService;
+    private readonly pedagogicalPourService;
+    private readonly recoveryService;
+    private readonly substitutionService;
+    private readonly academicGateway;
+    private readonly logger;
+    constructor(classRepo: Repository<Class>, sectionRepo: Repository<Section>, subjectRepo: Repository<Subject>, teacherSubjectRepo: Repository<TeacherSubject>, userRepo: Repository<User>, syllabusRepo: Repository<Syllabus>, calendarRepo: Repository<SchoolCalendar>, yearRepo: Repository<AcademicYear>, schoolRepo: Repository<School>, unitRepo: Repository<CurriculumUnit>, lessonPlanRepo: Repository<LessonPlan>, scheduleRepo: Repository<PlannedSchedule>, timeSlotRepo: Repository<TimeSlot>, calendarService: AcademicCalendarService, pedagogicalPourService: PedagogicalPourService, recoveryService: RecoveryStrategistService, substitutionService: SubstitutionService, academicGateway: AcademicGateway);
+    createClass(createDto: Partial<Class>): Promise<Class>;
+    getClasses(): Promise<{
+        has_syllabus: boolean;
+        id: string;
+        name: string;
+        class_name: string;
+        class_id: string;
+        school_id: string;
+        grade_level: number;
+        created_at: Date;
+        updated_at: Date;
+    }[]>;
+    updateClass(id: string, updateDto: Partial<Class>): Promise<Class | null>;
+    deleteClass(id: string): Promise<{
+        success: boolean;
+    }>;
+    createSection(createDto: Partial<Section>): Promise<Section>;
+    getSections(): Promise<Section[]>;
+    updateSection(id: string, updateDto: Partial<Section>): Promise<Section | null>;
+    createSubject(createDto: Partial<Subject>): Promise<Subject>;
+    getSubjects(classId?: string): Promise<Subject[]>;
+    updateSubject(id: string, updateDto: Partial<Subject>): Promise<Subject | null>;
+    assignTeacherToSubject(createDto: Partial<TeacherSubject>): Promise<TeacherSubject>;
+    getTeacherSubjects(): Promise<TeacherSubject[]>;
+    removeTeacherSubject(id: string): Promise<TeacherSubject>;
+    setupDefaultClasses(): Promise<{
+        classes_created: number;
+        classes_skipped: number;
+    }>;
+    completeLesson(scheduleId: string, completionDate: string): Promise<PlannedSchedule>;
+    getVelocityReport(classId: string, subjectId: string, schoolId?: string): Promise<{
+        velocity: number;
+        planned_units: number;
+        completed_units: number;
+        lagging_periods: number;
+    }>;
+    getBaselineGantt(schoolId: string, yearId: string): Promise<any[]>;
+    lockCalendar(schoolId: string, yearId: string): Promise<{
+        status: string;
+        message: string;
+        total_locked_lessons: number;
+        timestamp: string;
+    }>;
+}
