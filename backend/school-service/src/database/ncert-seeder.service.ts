@@ -46,28 +46,40 @@ export class NCERTSeederService {
             }
 
             for (const unitData of subData.units) {
-                // 3. Create Curriculum Unit
-                const unit = await this.unitRepo.save(this.unitRepo.create({
-                    school_id: schoolId,
-                    subject_id: subject.id,
-                    title: unitData.title,
-                    weightage: unitData.weightage,
-                    sequence_order: unitData.sequence
-                }));
+                // 3. Find or Create Curriculum Unit
+                let unit = await this.unitRepo.findOne({
+                    where: { school_id: schoolId, subject_id: subject.id, title: unitData.title }
+                });
 
-                for (const lessonData of unitData.lessons) {
-                    // 4. Create Lesson Plan (Atomic Level)
-                    await this.lessonRepo.save(this.lessonRepo.create({
+                if (!unit) {
+                    unit = await this.unitRepo.save(this.unitRepo.create({
                         school_id: schoolId,
                         subject_id: subject.id,
-                        unit_id: unit.id,
-                        title: lessonData.title,
-                        learning_outcome: lessonData.learning_outcome,
-                        estimated_minutes: lessonData.estimated_minutes,
-                        complexity_index: lessonData.complexity,
-                        tags: lessonData.tags || [],
-                        plan_data: {} // Empty plan data for now, purely content definition
+                        title: unitData.title,
+                        weightage: unitData.weightage,
+                        sequence_order: unitData.sequence
                     }));
+                }
+
+                for (const lessonData of unitData.lessons) {
+                    // 4. Find or Create Lesson Plan
+                    const existingLesson = await this.lessonRepo.findOne({
+                        where: { school_id: schoolId, unit_id: unit.id, title: lessonData.title }
+                    });
+
+                    if (!existingLesson) {
+                        await this.lessonRepo.save(this.lessonRepo.create({
+                            school_id: schoolId,
+                            subject_id: subject.id,
+                            unit_id: unit.id,
+                            title: lessonData.title,
+                            learning_outcome: lessonData.learning_outcome,
+                            estimated_minutes: lessonData.estimated_minutes,
+                            complexity_index: lessonData.complexity,
+                            tags: lessonData.tags || [],
+                            plan_data: {} 
+                        }));
+                    }
                 }
             }
         }
