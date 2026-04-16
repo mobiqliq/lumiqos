@@ -1,3 +1,4 @@
+import { JwtStrategy } from './jwt.strategy';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';
@@ -16,6 +17,6 @@ import { User, Role, Permission, RolePermission } from '@lumiqos/shared/index';
         }),
     ],
     controllers: [AuthController],
-    providers: [AuthService, RoleSeederService],
+    providers: [AuthService, RoleSeederService, JwtStrategy],
 })
 export class AuthModule { }
