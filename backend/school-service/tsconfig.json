@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "paths": { "@lumiqos/shared": ["../shared/src/index.ts"] },
     "paths": {
       "@lumiqos/shared/index": [
         "../shared/src/index"

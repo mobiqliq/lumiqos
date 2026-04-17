@@ -1,107 +1,32 @@
 services:
   lumiqos_db:
-    image: postgres:15
     container_name: lumiqos_db
-    restart: always
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: lumiq
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 5s
-      timeout: 5s
-      retries: 10
-
-  auth-service:
-    build:
-      context: ./backend
-      dockerfile: auth-service/Dockerfile
-    container_name: lumiqos_auth
-    restart: always
-    ports:
-      - "3002:3002"
-    environment:
-      DB_HOST: lumiqos_db
-      DB_USER: postgres
-      DB_PASSWORD: postgres
-      DB_NAME: lumiq
-      DB_PORT: 5432
-      PORT: 3002
-    depends_on:
-      lumiqos_db:
-        condition: service_healthy
-
-  school-service:
-    build:
-      context: ./backend
-      dockerfile: school-service/Dockerfile
-    container_name: lumiqos_school
-    restart: always
-    ports:
-      - "3001:3001"
-    environment:
-      DB_HOST: lumiqos_db
-      DB_USER: postgres
-      DB_PASSWORD: postgres
-      DB_NAME: lumiq
-      DB_PORT: 5432
-      PORT: 3001
-    depends_on:
-      lumiqos_db:
-        condition: service_healthy
-
-  billing-service:
-    build:
-      context: ./backend
-      dockerfile: billing-service/Dockerfile
-    container_name: lumiqos_billing
-    restart: always
-    ports:
-      - "3006:3006"
-    environment:
-      DB_HOST: lumiqos_db
-      DB_USER: postgres
-      DB_PASSWORD: postgres
-      DB_NAME: lumiq
-      DB_PORT: 5432
-      PORT: 3006
-    depends_on:
-      lumiqos_db:
-        condition: service_healthy
+    image: postgres:15-alpine
+    environment: [POSTGRES_USER=postgres, POSTGRES_PASSWORD=postgres, POSTGRES_DB=lumiq]
+    networks: [lumiqos-network]
 
   api-gateway:
-    build:
-      context: ./backend
-      dockerfile: api-gateway/Dockerfile
-    container_name: lumiqos_gateway
-    restart: always
-    ports:
-      - "3000:3000"
+    container_name: api-gateway
+    build: { context: ./backend, dockerfile: api-gateway/Dockerfile }
+    ports: ["3000:3000"]
     environment:
-      PORT: 3000
-      DB_HOST: lumiqos_db
-      DB_USER: postgres
-      DB_PASSWORD: postgres
-      DB_NAME: lumiq
-      DB_PORT: 5432
-      AUTH_SERVICE_HOST: auth-service
-      SCHOOL_SERVICE_HOST: school-service
-      BILLING_SERVICE_HOST: lumiqos_billing
-    depends_on:
-      lumiqos_db:
-        condition: service_healthy
-      auth-service:
-        condition: service_started
-      school-service:
-        condition: service_started
-      billing-service:
-        condition: service_started
+      - SCHOOL_SERVICE_HOST=school-service
+      - SCHOOL_SERVICE_PORT=3001
+    networks: [lumiqos-network]
+    depends_on: [school-service]
 
-volumes:
-  postgres_data:
+  school-service:
+    container_name: school-service
+    build: { context: ./backend, dockerfile: school-service/Dockerfile }
+    networks: [lumiqos-network]
+    depends_on: [ai-service]
 
+  ai-service:
+    container_name: ai-service
+    build: { context: ./backend, dockerfile: ai-service/Dockerfile }
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    networks: [lumiqos-network]
+networks:
+  lumiqos-network:
+    driver: bridge
