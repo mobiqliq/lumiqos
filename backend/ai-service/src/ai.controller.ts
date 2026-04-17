@@ -1,13 +1,13 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 import { AiService } from './ai.service';
-import { ILessonPlan } from '@lumiqos/shared';
 
-@Controller('ai')
+@Controller()
 export class AiController {
   constructor(private readonly aiService: AiService) {}
 
-  @Post('generate-lesson-plan')
-  async generateLessonPlan(@Body('topic') topic: string): Promise<ILessonPlan> {
-    return this.aiService.createLessonPlan(topic);
+  @MessagePattern({ cmd: 'create_lesson_plan' })
+  async handleCreateLessonPlan(@Payload() data: { topic: string }) {
+    return this.aiService.createLessonPlan(data.topic);
   }
 }

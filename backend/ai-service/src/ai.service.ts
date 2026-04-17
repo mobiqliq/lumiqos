@@ -13,26 +13,17 @@ export class AiService {
       const response = await this.openai.chat.completions.create({
         model: "gpt-4o-mini",
         messages: [
-          {
-            role: "system",
-            content: "You are an expert NCERT pedagogical assistant. Respond ONLY in JSON format."
-          },
-          {
-            role: "user",
-            content: `Generate a lesson plan for: "${topic}". 
-            Include: topic, objectives (array), content (detailed string), duration (minutes as number), and assessment.`
-          }
+          { role: "system", content: "You are an expert NCERT pedagogical assistant. Respond ONLY in JSON." },
+          { role: "user", content: `Generate a lesson plan for: "${topic}". Include topic, objectives (array), content (string), duration (number), and assessment.` }
         ],
         response_format: { type: "json_object" }
       });
 
-      const content = response.choices[0].message.content;
-      if (!content) throw new Error("Empty response from OpenAI");
-
-      return JSON.parse(content) as ILessonPlan;
+      const result = response.choices[0].message.content;
+      return JSON.parse(result || '{}') as ILessonPlan;
     } catch (error) {
-      console.error("OpenAI API Error:", error);
-      throw new InternalServerErrorException("AI service unavailable");
+      console.error('OpenAI Error:', error);
+      throw new InternalServerErrorException('AI Generation Failed');
     }
   }
 }
