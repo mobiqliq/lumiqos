@@ -1,31 +1,55 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity()
+@Entity('school')
 export class School {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-    @Column({ type: 'varchar' })
-    name: string;
+  @Column({ nullable: true })
+  school_id: string; 
 
-    @Column({ type: 'varchar', nullable: true })
-    school_name: string;
+  @Column({ nullable: true })
+  school_code: string;
 
-    @Column({ type: 'varchar', nullable: true })
-    school_id: string;
+  @Column({ nullable: true })
+  name: string;
 
-    @Column({ type: 'varchar', nullable: true })
-    school_code: string;
+  @Column({ nullable: true })
+  school_name: string;
 
-    @Column({ type: 'varchar', nullable: true })
-    country: string;
+  @Column({ nullable: true })
+  region: string;
 
-    @Column({ type: 'varchar', nullable: true })
-    region: string; // Added region
+  @Column({ nullable: true })
+  board: string;
 
-    @Column({ type: 'varchar', nullable: true })
-    timezone: string;
+  @Column({ nullable: true })
+  email: string;
 
-    @Column({ type: 'varchar', nullable: true })
-    board: string; // e.g., CBSE, ICSE, IB, Cambridge
+  @Column({ nullable: true })
+  phone: string;
+
+  @Column({ nullable: true })
+  address: string;
+
+  @Column({ nullable: true })
+  city: string;
+
+  @Column({ nullable: true })
+  state: string;
+
+  @Column({ nullable: true })
+  country: string;
+
+  @Column({ nullable: true })
+  zip_code: string;
+
+  @Column({ default: true })
+  is_active: boolean;
+
+  @Column({ nullable: true })
+  logo_url: string;
+
+  @Column({ nullable: true })
+  subscription_tier: string;
 }

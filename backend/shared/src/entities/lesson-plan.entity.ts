@@ -1,72 +1,61 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { LumiqosBaseEntity } from './base.entity';
 import { School } from './school.entity';
-import { Class } from './class.entity';
-import { Subject } from './subject.entity';
 import { User } from './user.entity';
+import { Subject } from './subject.entity';
+import { Class } from './class.entity';
 import { CurriculumUnit } from './curriculum-unit.entity';
 
-console.log('LOADING LESSON PLAN ENTITY FROM SHARED/SRC');
 @Entity('lesson_plans_v3')
-export class LessonPlan {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+export class LessonPlan extends LumiqosBaseEntity {
+  @Column({ nullable: true })
+  title: string;
 
-    @Column()
-    school_id: string;
+  @Column({ type: 'text', nullable: true })
+  learning_outcome: string;
 
-    @Column()
-    class_id: string;
+  @Column({ type: 'int', nullable: true })
+  estimated_minutes: number;
 
-    @Column()
-    subject_id: string;
+  @Column({ type: 'int', nullable: true })
+  complexity_index: number;
 
-    @Column()
-    teacher_id: string;
+  @Column({ type: 'simple-array', nullable: true })
+  tags: string[];
 
-    @Column({ type: 'varchar' })
-    title: string;
+  @Column({ type: 'jsonb', nullable: true })
+  plan_data: any;
 
-    @Column({ type: 'text', nullable: true })
-    learning_outcome: string;
+  // Explicit Foreign Key Columns for TypeORM compatibility
+  @Column({ type: 'uuid', nullable: true })
+  class_id: string;
 
-    @Column({ type: 'int', default: 40 })
-    estimated_minutes: number;
+  @Column({ type: 'uuid', nullable: true })
+  subject_id: string;
 
-    @Column({ type: 'int', default: 5 })
-    complexity_index: number; // 1-10
+  @Column({ type: 'uuid', nullable: true })
+  teacher_id: string;
 
-    @Column({ type: 'uuid', nullable: true })
-    unit_id: string;
+  @Column({ type: 'uuid', nullable: true })
+  unit_id: string;
 
-    @ManyToOne(() => CurriculumUnit, (u) => u.lessons)
-    @JoinColumn({ name: 'unit_id' })
-    unit: CurriculumUnit;
+  @ManyToOne(() => Subject)
+  @JoinColumn({ name: 'subject_id' })
+  subject: Subject;
 
-    @Column({ type: 'jsonb', nullable: true })
-    plan_data: any; // Contains objective, structure, and exitTicket JSON
+  @ManyToOne(() => Class)
+  @JoinColumn({ name: 'class_id' })
+  class: Class;
 
-    @Column({ type: 'text', array: true, default: '{}' })
-    tags: string[]; // AIL, SDG, etc.
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'teacher_id' })
+  teacher: User;
 
-    @ManyToOne(() => School)
-    @JoinColumn({ name: 'school_id' })
-    school: School;
+  @ManyToOne(() => School)
+  @JoinColumn({ name: 'school_id' })
+  school: School;
 
-    @ManyToOne(() => Class)
-    @JoinColumn({ name: 'class_id' })
-    class: Class;
-
-    @ManyToOne(() => Subject)
-    @JoinColumn({ name: 'subject_id' })
-    subject: Subject;
-
-    @ManyToOne(() => User)
-    @JoinColumn({ name: 'teacher_id' })
-    teacher: User;
-
-    @CreateDateColumn()
-    created_at: Date;
-
-    @UpdateDateColumn()
-    updated_at: Date;
+  @ManyToOne(() => CurriculumUnit, { nullable: true })
+  @JoinColumn({ name: 'unit_id' })
+  unit: CurriculumUnit;
 }

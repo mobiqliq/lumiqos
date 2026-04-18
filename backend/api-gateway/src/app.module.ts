@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { HttpModule } from '@nestjs/axios';
@@ -11,21 +11,32 @@ import { TeacherController } from './teacher.controller';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'lumiqos_db',
-      port: 5432,
-      username: 'postgres',
-      password: 'postgres',
-      database: 'lumiq',
-      autoLoadEntities: true,
-      synchronize: true,
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (config: ConfigService) => ({
+        type: 'postgres',
+        host: config.get('DB_HOST', 'lumiqos_db'),
+        port: config.get<number>('DB_PORT', 5432),
+        username: config.get('DB_USERNAME', 'postgres'),
+        password: config.get('DB_PASSWORD', 'postgres'),
+        database: config.get('DB_DATABASE', 'lumiq'),
+        autoLoadEntities: true,
+        synchronize: true,
+      }),
+      inject: [ConfigService],
     }),
-    ClientsModule.register([
+    ClientsModule.registerAsync([
       {
         name: 'SCHOOL_SERVICE',
-        transport: Transport.TCP,
-        options: { host: 'school-service', port: 3001 },
+        imports: [ConfigModule],
+        useFactory: (config: ConfigService) => ({
+          transport: Transport.TCP,
+          options: {
+            host: config.get('SCHOOL_SERVICE_HOST', 'school-service'),
+            port: config.get<number>('SCHOOL_SERVICE_PORT', 3001),
+          },
+        }),
+        inject: [ConfigService],
       },
     ]),
     HttpModule,

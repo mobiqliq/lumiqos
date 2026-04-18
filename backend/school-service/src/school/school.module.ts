@@ -1,10 +1,13 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { SchoolController } from './school.controller';
 import { SchoolService } from './school.service';
+import { LessonPlan } from '@lumiqos/shared';
 
 @Module({
   imports: [
+    TypeOrmModule.forFeature([LessonPlan]),
     ClientsModule.register([
       {
         name: 'AI_SERVICE',
@@ -15,5 +18,6 @@ import { SchoolService } from './school.service';
   ],
   controllers: [SchoolController],
   providers: [SchoolService],
+  exports: [SchoolService],
 })
 export class SchoolModule {}

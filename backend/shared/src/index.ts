@@ -5,4 +5,4 @@ export * from './context/tenant.context';
 export * from './constants/enums';
 export * from './entities/index';
 export * from './interfaces/lesson-plan.interface';
-export * from './interfaces/lesson-plan.interface';
+export * from './interceptors/tenant.interceptor';

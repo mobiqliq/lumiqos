@@ -13,12 +13,11 @@ const AppDataSource = new DataSource({
   password: process.env.DB_PASSWORD || 'postgres',
   database: process.env.DB_NAME || 'lumiq',
   synchronize: false,
-  logging: process.env.NODE_ENV === 'development',
+  logging: true,
   namingStrategy: new SnakeNamingStrategy(),
   entities: [path.join(__dirname, '../../../shared/dist/entities/*.entity.js')],
   migrations: [path.join(__dirname, 'migrations/*.ts')],
   migrationsTableName: 'migrations',
-  migrationsRun: false,
 });
 
 export default AppDataSource;

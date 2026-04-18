@@ -1,19 +1,27 @@
 {
-    "name": "@lumiqos/shared",
-    "version": "1.0.0",
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts",
-    "scripts": {
-        "build": "tsc"
-    },
-    "dependencies": {
-        "@nestjs/common": "^11.1.19",
-        "@nestjs/core": "^11.1.19",
-        "@nestjs/microservices": "^11.1.19",
-        "rxjs": "^7.8.2",
-        "typeorm": "^0.3.28"
-    },
-    "devDependencies": {
-        "typescript": "^5.7.3"
-    }
+  "name": "@lumiqos/shared",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "migration:generate": "typeorm-ts-node-commonjs migration:generate -d src/data-source.ts"
+  },
+  "dependencies": {
+    "@nestjs/common": "^11.1.19",
+    "@nestjs/core": "^11.1.19",
+    "@nestjs/microservices": "^11.1.19",
+    "@nestjs/passport": "^11.0.5",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.4",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
+    "rxjs": "^7.8.2",
+    "typeorm": "^0.3.28"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.7",
+    "@types/passport-jwt": "^4.0.1",
+    "typescript": "^5.7.3"
+  }
 }

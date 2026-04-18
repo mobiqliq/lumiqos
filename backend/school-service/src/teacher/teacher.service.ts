@@ -1,11 +1,20 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { ILessonPlan } from '@lumiqos/shared';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { LessonPlan, TenantContext } from '@lumiqos/shared';
 
 @Injectable()
 export class TeacherService {
   private readonly logger = new Logger(TeacherService.name);
 
-  async getLessonPlan(topic: string): Promise<ILessonPlan> {
+  constructor(
+    @InjectRepository(LessonPlan)
+    private readonly lessonPlanRepo: Repository<LessonPlan>,
+  ) {}
+
+  async getLessonPlan(topic: string): Promise<any> {
+    const { schoolId, userId } = TenantContext.getStore();
+
     try {
       const response = await fetch('http://localhost:3000/ai/generate-lesson-plan', {
         method: 'POST',
@@ -13,16 +22,33 @@ export class TeacherService {
         body: JSON.stringify({ topic }),
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to fetch lesson plan from AI service');
-      }
+      if (!response.ok) throw new Error('AI Service Unreachable');
+      const aiPlan = await response.json();
 
-      return await response.json();
+      const newPlan = this.lessonPlanRepo.create({
+        school_id: schoolId,
+        teacher_id: userId,
+        title: topic,
+        plan_data: aiPlan,
+        class_id: 'd4c837bd-ea38-42ca-a99f-ffddf2e148a8', 
+        subject_id: 'd4c837bd-ea38-42ca-a99f-ffddf2e148a8',
+      });
+
+      return await this.lessonPlanRepo.save(newPlan);
     } catch (error) {
-      this.logger.error(`Error generating lesson plan: ${error.message}`);
+      this.logger.error(`Error: ${error.message}`);
       throw error;
     }
   }
-  
-  // Existing methods would follow...
+
+  async findAllPlans(): Promise<any[]> {
+    const { schoolId, userId } = TenantContext.getStore();
+    return this.lessonPlanRepo.find({
+      where: { 
+        school_id: schoolId,
+        teacher_id: userId 
+      },
+      order: { created_at: 'DESC' }
+    });
+  }
 }
