@@ -1,13 +1,9 @@
 {
   "compilerOptions": {
-    "paths": { "@lumiqos/shared": ["../shared/src/index.ts"] },
+    "baseUrl": "./",
     "paths": {
-      "@lumiqos/shared/index": [
-        "../shared/src/index"
-      ],
-      "@lumiqos/shared/*": [
-        "../shared/*"
-      ]
+      "@lumiqos/shared": ["../shared/src/index.ts"],
+      "@lumiqos/shared/*": ["../shared/src/*"]
     },
     "module": "nodenext",
     "moduleResolution": "nodenext",
@@ -22,7 +18,6 @@
     "target": "ES2023",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": true,

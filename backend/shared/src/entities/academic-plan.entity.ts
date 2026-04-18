@@ -1,37 +1,26 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, Column } from 'typeorm';
+import { LumiqosBaseEntity } from './base.entity';
 
-@Entity()
-export class AcademicPlan {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+@Entity('academic_plan')
+export class AcademicPlan extends LumiqosBaseEntity {
+  @Column({ type: 'uuid' })
+  academic_year_id: string;
 
-    @Column({ type: 'uuid' })
-    school_id: string;
+  @Column({ type: 'uuid' })
+  class_id: string;
 
-    @Column({ type: 'uuid' })
-    academic_year_id: string;
+  @Column({ type: 'uuid' })
+  subject_id: string;
 
-    @Column({ type: 'uuid', nullable: true })
-    class_id: string;
+  @Column({ type: 'int', default: 1 })
+  version: number;
 
-    @Column({ type: 'uuid', nullable: true })
-    subject_id: string;
+  @Column({ type: 'boolean', default: false })
+  is_baseline: boolean;
 
-    @Column({ type: 'int', default: 1 })
-    version: number;
+  @Column({ type: 'varchar', default: 'draft' })
+  status: string; // 'draft', 'generated', 'approved', 'infeasible'
 
-    @Column({ type: 'boolean', default: false })
-    is_baseline: boolean;
-
-    @Column({ type: 'uuid', nullable: true })
-    parent_plan_id: string;
-
-    @Column({ type: 'varchar', default: 'draft' }) // draft, generated, approved, infeasible
-    status: string;
-
-    @CreateDateColumn()
-    created_at: Date;
-
-    @UpdateDateColumn()
-    updated_at: Date;
+  @Column({ type: 'uuid', nullable: true })
+  parent_plan_id: string; // Used for disruption mode (Adjusted Plans)
 }

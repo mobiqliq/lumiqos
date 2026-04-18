@@ -1,8 +1,9 @@
+import { AcademicPlanningModule } from './academic-planning/academic-planning.module';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { SchoolModule } from './school/school.module';
-import { LessonPlan } from '@lumiqos/shared';
+import * as AllEntities from '@lumiqos/shared/src/entities';
 
 @Module({
   imports: [
@@ -14,10 +15,13 @@ import { LessonPlan } from '@lumiqos/shared';
       username: 'postgres',
       password: 'postgres',
       database: 'lumiq',
-      autoLoadEntities: true,
+      // We filter to ensure only classes (entities) are passed to TypeORM
+      entities: Object.values(AllEntities).filter(item => typeof item === 'function'),
       synchronize: true,
+      logging: true,
     }),
     SchoolModule,
+    AcademicPlanningModule,
   ],
 })
 export class AppModule {}

@@ -1,39 +1,28 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
-import { Board } from './board.entity';
+import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { LumiqosBaseEntity } from './base.entity';
+import { School } from './school.entity';
 
-@Entity()
-export class Subject {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+@Entity('subject')
+export class Subject extends LumiqosBaseEntity {
+  @Column({ type: 'uuid', nullable: true })
+  subject_id: string;
 
-    @Column({ type: 'varchar' })
-    name: string;
+  @Column({ nullable: true })
+  name: string;
 
-    @Column({ type: 'varchar', nullable: true })
-    subject_name: string;
+  @Column({ nullable: true })
+  subject_name: string;
 
-    @Column({ type: 'varchar', nullable: true })
-    subject_id: string;
+  @Column({ nullable: true })
+  category: string;
 
-    @Column({ type: 'varchar', nullable: true })
-    school_id: string;
+  @Column({ nullable: true })
+  board_id: string;
 
-    @Column({ type: 'uuid', nullable: true })
-    board_id: string;
+  @Column({ type: 'decimal', precision: 3, scale: 1, default: 1.0 })
+  credits: number;
 
-    @Column({
-        type: 'varchar',
-        default: 'CORE'
-    })
-    category: 'CORE' | 'VOCATIONAL';
-
-    @ManyToOne(() => Board)
-    @JoinColumn({ name: 'board_id' })
-    board: Board;
-
-    @CreateDateColumn()
-    created_at: Date;
-
-    @UpdateDateColumn()
-    updated_at: Date;
+  @ManyToOne(() => School)
+  @JoinColumn({ name: 'school_id' })
+  school: School;
 }

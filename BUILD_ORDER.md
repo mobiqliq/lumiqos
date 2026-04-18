@@ -131,32 +131,34 @@
 
 ## 🔄 Current Phase
 
-### Phase 21: Production Hardening 🔄
+### Phase 23: Data Integrity & Validation 🔄
 **Started**: 2026-03-19  
-**Gate**: 🔓 OPEN
+**Gate**: 🔒 CLEARED
 
 | Sub-Phase | Layer | Task | Status |
 |-----------|-------|------|--------|
-| 21.1 | Schema | Add TypeORM migrations for all existing entities | [ ] |
-| 21.2 | Service | Make seeder idempotent (skip if data exists) | [ ] |
-| 21.3 | Service | Implement real JWT validation in `JwtAuthGuard` | [ ] |
-| 21.4 | API | Implement real login flow (replace demo token) | [ ] |
-| 21.5 | API | Fix `nest start --watch` path resolution | [ ] |
-| 21.6 | UI | Update Login page to use real auth API | [ ] |
+| 21.1 | Schema | Add TypeORM migrations for all existing entities | [x] |
+| 21.2 | Service | Make seeder idempotent (skip if data exists) | [x] |
+| 21.3 | Service | Implement real JWT validation in `JwtAuthGuard` | [x] |
+| 21.4 | API | Implement real login flow (replace demo token) | [x] |
+| 21.5 | API | Fix `nest start --watch` path resolution | [x] |
+| 21.6 | UI | Update Login page to use real auth API | [x] |
 
 **Gate Checklist**:
-- [ ] All 21.x tasks complete
-- [ ] `npm run build` passes for all services
-- [ ] All services start and respond to health checks
-- [ ] Git committed: `[phase-21] production hardening complete`
-- [ ] This file updated with ✅ 🔒
-- [ ] No architecture changes outside scope
+- [x] All 21.x tasks complete
+- [x] `npm run build` passes for all services
+- [x] All services start and respond to health checks
+- [x] Git committed: `[phase-21] production hardening complete`
+- [x] This file updated with ✅ 🔒
+- [x] No architecture changes outside scope
 
 ---
 
 ## ⬚ Upcoming Phases (Planned)
 
-### Phase 22: Academic Planning Engine ⬚
+### Phase 22: Academic Planning Engine 🔄
+**Started**: 2026-04-17  
+**Gate**: 🔒 CLEARED
 | Sub-Phase | Layer | Task |
 |-----------|-------|------|
 | 22.1 | Service | AcademicPlanningService (backward planning logic) |
@@ -165,7 +167,9 @@
 | 22.4 | Calendar | Populate PlanningDay from AcademicCalendarEvent |
 | 22.5 | Validation | Feasibility + constraint checks |
 
-### Phase 23: Data Integrity & Validation ⬚
+### Phase 23: Data Integrity & Validation 🔄
+**Started**: 2026-04-17  
+**Gate**: 🔓 OPEN
 | Sub-Phase | Layer | Task |
 |-----------|-------|------|
 | 23.1 | Schema | Add database indexes on frequently queried columns |

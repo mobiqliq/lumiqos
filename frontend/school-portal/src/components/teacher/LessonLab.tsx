@@ -8,7 +8,7 @@ export const LessonLab = () => {
   const generatePlan = async () => {
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:3000/api/teacher/lesson-plan', {
+      const response = await apiRequest('/teacher/lesson-plan', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ topic }),

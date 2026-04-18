@@ -1,32 +1,51 @@
 services:
   lumiqos_db:
-    container_name: lumiqos_db
     image: postgres:15-alpine
-    environment: [POSTGRES_USER=postgres, POSTGRES_PASSWORD=postgres, POSTGRES_DB=lumiq]
-    networks: [lumiqos-network]
+    container_name: lumiqos_db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=lumiq
+    volumes:
+      - pgdata:/var/lib/postgresql/data
 
   api-gateway:
-    container_name: api-gateway
-    build: { context: ./backend, dockerfile: api-gateway/Dockerfile }
-    ports: ["3000:3000"]
-    environment:
-      - SCHOOL_SERVICE_HOST=school-service
-      - SCHOOL_SERVICE_PORT=3001
-    networks: [lumiqos-network]
-    depends_on: [school-service]
+    build:
+      context: ./backend
+      dockerfile: api-gateway/Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - lumiqos_db
 
   school-service:
-    container_name: school-service
-    build: { context: ./backend, dockerfile: school-service/Dockerfile }
-    networks: [lumiqos-network]
-    depends_on: [ai-service]
+    build:
+      context: ./backend
+      dockerfile: school-service/Dockerfile
+    ports:
+      - "3001:3000"
+    depends_on:
+      - lumiqos_db
 
   ai-service:
-    container_name: ai-service
-    build: { context: ./backend, dockerfile: ai-service/Dockerfile }
+    build:
+      context: ./backend
+      dockerfile: ai-service/Dockerfile
+    depends_on:
+      - lumiqos_db
+
+  frontend:
+    build:
+      context: ./frontend/school-portal
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
     environment:
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
-    networks: [lumiqos-network]
-networks:
-  lumiqos-network:
-    driver: bridge
+      - VITE_API_URL=http://localhost:3000
+    depends_on:
+      - api-gateway
+
+volumes:
+  pgdata:

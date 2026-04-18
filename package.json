@@ -20,9 +20,19 @@
         "build": "npm run build:shared && npm run build:backend",
         "docker:build": "docker compose build --no-cache",
         "docker:up": "docker compose up",
-        "docker:down": "docker compose down"
+        "docker:down": "docker compose down",
+        "dev:school": "nest start school-service --watch",
+        "dev:auth": "nest start auth-service --watch",
+        "dev:api": "nest start api-gateway --watch",
+        "dev:all": "concurrently \"npm run dev:school\" \"npm run dev:auth\" \"npm run dev:api\""
     },
     "devDependencies": {
         "concurrently": "^9.1.2"
+    },
+    "dependencies": {
+        "@nestjs/jwt": "^11.0.2",
+        "@nestjs/passport": "^11.0.5",
+        "passport": "^0.7.0",
+        "passport-jwt": "^4.0.1"
     }
 }

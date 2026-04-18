@@ -1,32 +1,14 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, Index } from 'typeorm';
+import { Entity, Column } from 'typeorm';
+import { LumiqosBaseEntity } from './base.entity';
 
-@Entity()
-@Index(['school_id', 'academic_year_id', 'date'])
-export class PlanningDay {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+@Entity('planning_day')
+export class PlanningDay extends LumiqosBaseEntity {
+  @Column({ type: 'uuid' })
+  academic_year_id: string;
 
-    @Column()
-    school_id: string;
+  @Column({ type: 'date' })
+  date: string;
 
-    @Column()
-    academic_year_id: string;
-
-    @Column({ type: 'date' })
-    date: string;
-
-    @Column({
-        type: 'enum',
-        enum: ['WORKING', 'HOLIDAY', 'EXAM', 'REVISION']
-    })
-    type: string;
-
-    @Column({ type: 'jsonb', nullable: true })
-    metadata: any;
-
-    @CreateDateColumn()
-    created_at: Date;
-
-    @UpdateDateColumn()
-    updated_at: Date;
+  @Column({ type: 'varchar', default: 'WORKING' })
+  type: string; // 'WORKING', 'HOLIDAY', 'EXAM'
 }
