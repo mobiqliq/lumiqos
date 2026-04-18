@@ -1,6 +1,7 @@
 import { TenantInterceptor } from '@lumiqos/shared';
 import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
 import { AcademicPlanningModule } from './academic-planning/academic-planning.module';
+import { IntelligenceGraphModule } from './intelligence-graph/intelligence-graph.module';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
@@ -24,6 +25,7 @@ import { LoggingMiddleware } from './middleware/logging.middleware';
     }),
     SchoolModule,
     AcademicPlanningModule,
+    IntelligenceGraphModule,
   ],
   providers: [
     {
