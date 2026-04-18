@@ -1,6 +1,9 @@
+import { Index } from 'typeorm';
 import { Entity, Column } from 'typeorm';
 import { LumiqosBaseEntity } from './base.entity';
 
+@Index(['plan_id'])
+@Index(['planned_date'])
 @Entity('academic_plan_item')
 export class AcademicPlanItem extends LumiqosBaseEntity {
   @Column({ type: 'uuid' })
