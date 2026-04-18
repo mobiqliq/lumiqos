@@ -16,3 +16,6 @@ src/**/*.js
 
 # Compiled JavaScript from TypeScript (backend only)
 backend/*/src/**/*.js
+
+# Compiled test files
+**/test/**/*.js
