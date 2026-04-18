@@ -14,6 +14,7 @@ import { Exam } from '@lumiqos/shared/src/entities/exam.entity';
 import { Class } from '@lumiqos/shared/src/entities/class.entity';
 import { Subject } from '@lumiqos/shared/src/entities/subject.entity';
 import { SyllabusTopic } from '@lumiqos/shared/src/entities/syllabus-topic.entity';
+import { School } from '@lumiqos/shared/src/entities/school.entity';
 import { v4 as uuid } from 'uuid';
 
 @Injectable()
@@ -45,6 +46,7 @@ export class AcademicPlanningService {
         private classRepo: Repository<Class>,
         @InjectRepository(Subject)
         private subjectRepo: Repository<Subject>,
+        @InjectRepository(School) private schoolRepo: Repository<School>,
     ) {}
 
     /**
@@ -149,10 +151,12 @@ export class AcademicPlanningService {
             throw new ConflictException('Syllabus has no topics configured. Cannot generate plan.');
         }
 
-        const boardConfig = await this.boardConfigRepo.findOne({
-             where: { name: 'CBSE' } // Fallback to CBSE config for now
-        }) || { exam_buffer_days: 7, revision_days: 14, max_sessions_per_day: 1 } as Board;
-
+        // Fetch school to get board association
+        const school = await this.schoolRepo.findOne({ where: { id: schoolId } });
+        if (!school) throw new NotFoundException(`School with ID ${schoolId} not found`);
+        
+        const boardConfig = await this.boardConfigRepo.findOne({ where: { name: school.board } });
+        if (!boardConfig) throw new NotFoundException(`Board configuration for "${school.board}" not found`);
         const finalExam = await this.examRepo.findOne({ 
             where: { school_id: schoolId, academic_year_id: academicYearId }, 
             order: { start_date: 'DESC' } 
