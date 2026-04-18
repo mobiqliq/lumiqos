@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { HttpModule } from '@nestjs/axios';
 import { IntelligenceGraphService } from './intelligence-graph.service';
+import { AIClientService } from './ai-client.service';
 import { IntelligenceGraphController } from './intelligence-graph.controller';
 import { 
   Student, 
@@ -12,8 +14,9 @@ import {
   TopicSkillMap,
   TopicConceptMap,
   SyllabusTopic,
-  AcademicPlan,
-  AcademicPlanItem
+  StudentMarks,
+  HomeworkSubmission,
+  StudentAttendance
 } from '@lumiqos/shared';
 
 @Module({
@@ -28,12 +31,17 @@ import {
       TopicSkillMap,
       TopicConceptMap,
       SyllabusTopic,
-      AcademicPlan,
-      AcademicPlanItem
-    ])
+      StudentMarks,
+      HomeworkSubmission,
+      StudentAttendance
+    ]),
+    HttpModule.register({
+      timeout: 30000,
+      maxRedirects: 5,
+    }),
   ],
   controllers: [IntelligenceGraphController],
-  providers: [IntelligenceGraphService],
-  exports: [IntelligenceGraphService]
+  providers: [IntelligenceGraphService, AIClientService],
+  exports: [IntelligenceGraphService, AIClientService]
 })
 export class IntelligenceGraphModule {}

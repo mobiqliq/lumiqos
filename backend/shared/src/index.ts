@@ -6,3 +6,6 @@ export * from './constants/enums';
 export * from './entities/index';
 export * from './interfaces/lesson-plan.interface';
 export * from './interceptors/tenant.interceptor';
+export * from './clients/resilient-http.client';
+export * from './interfaces/ai-recommendation.interface';
+export * from './config/service-endpoints';
