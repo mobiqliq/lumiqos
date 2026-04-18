@@ -67,7 +67,7 @@ export class AcademicPlanningService {
         // Loop through months in Academic Calendar Events
         for (const event of events) {
             const daysInMonth = new Date(academicYear.start_date.getFullYear(), event.month_index, 0).getDate();
-            const workingDays = new Set(event.working_days || []);
+            const workingDays = new Set((event.working_days || []).map(Number));
 
             for (let day = 1; day <= daysInMonth; day++) {
                 const date = new Date(academicYear.start_date.getFullYear(), event.month_index - 1, day);
@@ -167,6 +167,8 @@ export class AcademicPlanningService {
             where: { school_id: schoolId, academic_year_id: academicYearId, type: 'WORKING' },
             order: { date: 'ASC' }
         });
+        console.log('WORKING DAYS COUNT:', workingDays.length);
+        console.log('FIRST 5 DAYS:', workingDays.slice(0, 5));
 
         // 3. Handle Disruption Mode (Adjusted Plan)
         if (disruptionMode && baselinePlan) {
@@ -178,13 +180,24 @@ export class AcademicPlanningService {
         const examStart = new Date(finalExam.start_date);
         const bufferOffset = boardConfig.exam_buffer_days + boardConfig.revision_days;
         
-        let lastTeachingDateIdx = workingDays.findIndex(wd => new Date(wd.date) >= examStart) - 1;
-        if (lastTeachingDateIdx < 0) lastTeachingDateIdx = workingDays.length - 1;
+let examIdx = workingDays.findIndex(wd => new Date(wd.date) >= examStart);
 
-        // Skip the buffer
-        lastTeachingDateIdx -= bufferOffset;
+if (examIdx === -1) {
+    examIdx = workingDays.length;
+}
 
-        if (lastTeachingDateIdx < 0 || lastTeachingDateIdx < topics.length) {
+let lastTeachingDateIdx = examIdx - 1 - bufferOffset;
+
+if (!workingDays[lastTeachingDateIdx]) {
+    throw new Error(`Invalid teaching index: ${lastTeachingDateIdx}`);
+}
+
+
+if (lastTeachingDateIdx < 0) {
+    lastTeachingDateIdx = 0;
+}
+
+        if (workingDays.length < topics.length + bufferOffset) {
             // Feasibility Check
             const plan = this.planRepo.create({
                 id: uuid(),
@@ -227,13 +240,14 @@ export class AcademicPlanningService {
             const topic = topics[i];
             const wd = workingDays[currentDayIdx];
             planItems.push(this.itemRepo.create({
+        school_id: schoolId,
                 id: uuid(),
                 plan_id: plan.id,
                 class_id: classId,
                 subject_id: subjectId,
                 topic_index: topic.sequence, // Using explicit sequence
                 planned_date: wd.date,
-                session_count: 1
+                session_count: (() => { const len = topic.topic_name.length; return len > 30 ? 3 : len > 15 ? 2 : 1; })()
             }));
             currentDayIdx--;
         }
@@ -721,13 +735,14 @@ export class AcademicPlanningService {
         const planItems: AcademicPlanItem[] = [];
         for (let i = 0; i < remainingTopics.length; i++) {
             planItems.push(this.itemRepo.create({
+        school_id: schoolId,
                 id: uuid(),
                 plan_id: adjustedPlan.id,
                 class_id: classId,
                 subject_id: subjectId,
                 topic_index: remainingTopics[i].sequence, // Using explicit sequence
                 planned_date: availableDays[i].date,
-                session_count: 1
+                session_count: (() => { const len = remainingTopics[i].topic_name.length; return len > 30 ? 3 : len > 15 ? 2 : 1; })()
             }));
         }
         await this.itemRepo.save(planItems);
