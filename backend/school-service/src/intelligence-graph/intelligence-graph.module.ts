@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { HttpModule } from '@nestjs/axios';
+import { CacheModule } from '@nestjs/cache-manager';
 import { IntelligenceGraphService } from './intelligence-graph.service';
 import { AIClientService } from './ai-client.service';
 import { IntelligenceGraphController } from './intelligence-graph.controller';
@@ -39,6 +40,7 @@ import {
       timeout: 30000,
       maxRedirects: 5,
     }),
+    CacheModule.register({ ttl: 300000, max: 100 }),
   ],
   controllers: [IntelligenceGraphController],
   providers: [IntelligenceGraphService, AIClientService],

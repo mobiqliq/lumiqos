@@ -15,24 +15,26 @@ import { Exam } from '@lumiqos/shared/src/entities/exam.entity';
 import { Class } from '@lumiqos/shared/src/entities/class.entity';
 import { Subject } from '@lumiqos/shared/src/entities/subject.entity';
 import { SyllabusTopic } from '@lumiqos/shared/src/entities/syllabus-topic.entity';
+import { School } from '@lumiqos/shared/src/entities/school.entity';
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([
-            AcademicPlan,
-            AcademicPlanItem,
-            PlanningDay,
-            Board,
-            Syllabus,
-            AcademicCalendarEvent,
-            AcademicYear,
-            CurriculumPlan,
-            CurriculumPlanItem,
-            Exam,
-            Class,
-            Subject,
-            SyllabusTopic
-        ]),
+          TypeOrmModule.forFeature([
+              AcademicPlan,
+              AcademicPlanItem,
+              PlanningDay,
+              Board,
+              Syllabus,
+              AcademicCalendarEvent,
+              AcademicYear,
+              CurriculumPlan,
+              CurriculumPlanItem,
+              Exam,
+              Class,
+              Subject,
+              SyllabusTopic,
+              School
+          ]),
     ],
     providers: [AcademicPlanningService],
     controllers: [AcademicPlanningController],
