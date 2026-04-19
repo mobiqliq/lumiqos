@@ -1,6 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { InjectDataSource } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { DataSource } from 'typeorm';
 import { 
   Student, 
   StudentLearningProfile,
@@ -53,6 +55,7 @@ export class IntelligenceGraphService {
     private homeworkRepo: Repository<HomeworkSubmission>,
     @InjectRepository(StudentAttendance)
     private attendanceRepo: Repository<StudentAttendance>,
+    @InjectDataSource() private dataSource: DataSource,
   ) {}
 
   /**
@@ -621,30 +624,27 @@ export class IntelligenceGraphService {
   }
 
   async getStrugglingStudents(classId: string, schoolId: string) {
-    const students = await this.studentRepo
-      .createQueryBuilder('student')
-      .leftJoin('student_enrollment', 'e', 'e.student_id = student.id')
-      .where('e.class_id = :classId', { classId })
-      .andWhere('student.school_id = :schoolId', { schoolId })
-      .select(['student.id', 'student.first_name', 'student.last_name'])
-      .getMany();
+    const result = await this.dataSource.query(`
+      SELECT s.id as student_id, s.first_name, s.last_name,
+             COALESCE(AVG(sm.mastery_level), 0) as avg_mastery,
+             COUNT(CASE WHEN sm.mastery_level < 60 THEN 1 END) as weak_skills_count
+      FROM student s
+      INNER JOIN student_enrollment e ON e.student_id::text = s.id::text
+      LEFT JOIN student_skill_mastery sm ON sm.student_id::text = s.id::text
+      WHERE e.class_id = $1 AND s.school_id = $2
+      GROUP BY s.id
+      HAVING COALESCE(AVG(sm.mastery_level), 0) < 70 OR COUNT(CASE WHEN sm.mastery_level < 60 THEN 1 END) > 0
+      ORDER BY avg_mastery ASC
+    `, [classId, schoolId]);
 
-    const struggling = [];
-    for (const student of students) {
-      const mastery = await this.skillMasteryRepo.find({ where: { student_id: student.id } });
-      if (mastery.length === 0) continue;
-      const avg = mastery.reduce((sum, m) => sum + m.mastery_level, 0) / mastery.length;
-      const weakSkills = mastery.filter(m => m.mastery_level < 60).map(m => m.skill_id);
-      if (avg < 70 || weakSkills.length > 0) {
-        struggling.push({
-          studentId: student.id,
-          name: `${student.first_name} ${student.last_name}`,
-          averageMastery: avg,
-          weakSkillsCount: weakSkills.length
-        });
-      }
-    }
-    return { classId, strugglingStudents: struggling.sort((a, b) => a.averageMastery - b.averageMastery) };
+    const struggling = result.map((r: any) => ({
+      studentId: r.student_id,
+      name: `${r.first_name} ${r.last_name}`,
+      averageMastery: parseFloat(r.avg_mastery),
+      weakSkillsCount: parseInt(r.weak_skills_count, 10)
+    }));
+
+    return { classId, strugglingStudents: struggling };
   }
 
   async getStudentRadarData(studentId: string) {
@@ -656,12 +656,12 @@ export class IntelligenceGraphService {
     mastery.forEach(m => {
       const domain = m.skill?.category || 'General';
       if (!domains[domain]) domains[domain] = { total: 0, count: 0 };
-      domains[domain].total += m.mastery_level;
+      domains[domain].total += Number(m.mastery_level);
       domains[domain].count += 1;
     });
     const radar = Object.entries(domains).map(([domain, data]: [string, any]) => ({
       domain,
-      mastery: data.total / data.count
+      mastery: data.count > 0 ? (data.total / data.count) : 0
     }));
     return { studentId, radar };
   }

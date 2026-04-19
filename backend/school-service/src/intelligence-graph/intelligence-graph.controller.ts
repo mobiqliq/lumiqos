@@ -1,4 +1,6 @@
 import { Controller, Post, Get, Param } from '@nestjs/common';
+import { CacheInterceptor } from '@nestjs/cache-manager';
+import { UseInterceptors } from '@nestjs/common';
 import { IntelligenceGraphService } from './intelligence-graph.service';
 import { AIClientService } from './ai-client.service';
 import { TenantContext } from '@lumiqos/shared';
@@ -42,18 +44,21 @@ export class IntelligenceGraphController {
     return this.aiClient.getInterventionStrategies(studentId);
   }
 
+  @UseInterceptors(CacheInterceptor)
   @Get('class/:classId/heatmap')
   async getClassHeatmap(@Param('classId') classId: string) {
     const { schoolId } = TenantContext.getStore();
     return this.graphService.getClassHeatmap(classId, schoolId);
   }
 
+  @UseInterceptors(CacheInterceptor)
   @Get('class/:classId/struggling-students')
   async getStrugglingStudents(@Param('classId') classId: string) {
     const { schoolId } = TenantContext.getStore();
     return this.graphService.getStrugglingStudents(classId, schoolId);
   }
 
+  @UseInterceptors(CacheInterceptor)
   @Get('student/:studentId/radar')
   async getStudentRadar(@Param('studentId') studentId: string) {
     return this.graphService.getStudentRadarData(studentId);
