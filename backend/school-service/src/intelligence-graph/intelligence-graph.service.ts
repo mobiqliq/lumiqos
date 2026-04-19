@@ -587,4 +587,82 @@ export class IntelligenceGraphService {
       }
     };
   }
+
+  async getClassHeatmap(classId: string, schoolId: string) {
+    const students = await this.studentRepo
+      .createQueryBuilder('student')
+      .leftJoin('student_enrollment', 'e', 'e.student_id = student.id')
+      .where('e.class_id = :classId', { classId })
+      .andWhere('student.school_id = :schoolId', { schoolId })
+      .select(['student.id', 'student.first_name', 'student.last_name'])
+      .getMany();
+
+    const skills = await this.skillRepo.find({ where: { school_id: schoolId } });
+
+    const heatmap = [];
+    for (const student of students) {
+      const mastery = await this.skillMasteryRepo.find({
+        where: { student_id: student.id },
+        relations: ['skill']
+      });
+      const skillMap: Record<string, number> = {};
+      mastery.forEach(m => { skillMap[m.skill_id] = m.mastery_level; });
+      heatmap.push({
+        studentId: student.id,
+        name: `${student.first_name} ${student.last_name}`,
+        skills: skills.map(s => ({
+          skillId: s.id,
+          skillName: s.name,
+          mastery: skillMap[s.id] || null
+        }))
+      });
+    }
+    return { classId, skills: skills.map(s => ({ id: s.id, name: s.name })), heatmap };
+  }
+
+  async getStrugglingStudents(classId: string, schoolId: string) {
+    const students = await this.studentRepo
+      .createQueryBuilder('student')
+      .leftJoin('student_enrollment', 'e', 'e.student_id = student.id')
+      .where('e.class_id = :classId', { classId })
+      .andWhere('student.school_id = :schoolId', { schoolId })
+      .select(['student.id', 'student.first_name', 'student.last_name'])
+      .getMany();
+
+    const struggling = [];
+    for (const student of students) {
+      const mastery = await this.skillMasteryRepo.find({ where: { student_id: student.id } });
+      if (mastery.length === 0) continue;
+      const avg = mastery.reduce((sum, m) => sum + m.mastery_level, 0) / mastery.length;
+      const weakSkills = mastery.filter(m => m.mastery_level < 60).map(m => m.skill_id);
+      if (avg < 70 || weakSkills.length > 0) {
+        struggling.push({
+          studentId: student.id,
+          name: `${student.first_name} ${student.last_name}`,
+          averageMastery: avg,
+          weakSkillsCount: weakSkills.length
+        });
+      }
+    }
+    return { classId, strugglingStudents: struggling.sort((a, b) => a.averageMastery - b.averageMastery) };
+  }
+
+  async getStudentRadarData(studentId: string) {
+    const mastery = await this.skillMasteryRepo.find({
+      where: { student_id: studentId },
+      relations: ['skill']
+    });
+    const domains: Record<string, { total: number; count: number }> = {};
+    mastery.forEach(m => {
+      const domain = m.skill?.category || 'General';
+      if (!domains[domain]) domains[domain] = { total: 0, count: 0 };
+      domains[domain].total += m.mastery_level;
+      domains[domain].count += 1;
+    });
+    const radar = Object.entries(domains).map(([domain, data]: [string, any]) => ({
+      domain,
+      mastery: data.total / data.count
+    }));
+    return { studentId, radar };
+  }
 }

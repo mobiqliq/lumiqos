@@ -41,4 +41,21 @@ export class IntelligenceGraphController {
   async getInterventions(@Param('studentId') studentId: string) {
     return this.aiClient.getInterventionStrategies(studentId);
   }
+
+  @Get('class/:classId/heatmap')
+  async getClassHeatmap(@Param('classId') classId: string) {
+    const { schoolId } = TenantContext.getStore();
+    return this.graphService.getClassHeatmap(classId, schoolId);
+  }
+
+  @Get('class/:classId/struggling-students')
+  async getStrugglingStudents(@Param('classId') classId: string) {
+    const { schoolId } = TenantContext.getStore();
+    return this.graphService.getStrugglingStudents(classId, schoolId);
+  }
+
+  @Get('student/:studentId/radar')
+  async getStudentRadar(@Param('studentId') studentId: string) {
+    return this.graphService.getStudentRadarData(studentId);
+  }
 }

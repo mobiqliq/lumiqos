@@ -8,10 +8,21 @@ export class TenantInterceptor implements NestInterceptor {
     const request = context.switchToHttp().getRequest();
     const user = request.user;
 
-    if (user) {
+    // Development fallback: use x-school-id header if no user
+    let schoolId = user?.schoolId;
+    const userId = user?.userId;
+
+    if (!schoolId) {
+      const headerSchoolId = request.headers['x-school-id'];
+      if (headerSchoolId) {
+        schoolId = Array.isArray(headerSchoolId) ? headerSchoolId[0] : headerSchoolId;
+      }
+    }
+
+    if (schoolId) {
       return new Observable(subscriber => {
         TenantContext.run(
-          { schoolId: user.schoolId, userId: user.userId },
+          { schoolId, userId },
           () => {
             next.handle().subscribe(subscriber);
           }
