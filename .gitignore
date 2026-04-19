@@ -19,3 +19,5 @@ backend/*/src/**/*.js
 
 # Compiled test files
 **/test/**/*.js
+.env
+**/.env
