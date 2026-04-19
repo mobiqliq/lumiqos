@@ -3,18 +3,12 @@
 > This file tracks the ordered build phases of LumiqOS.  
 > New features MUST be appended as the next phase. Never insert or reorder.  
 > **Phase Lock Rule**: See [PHASE_LOCK.md](./PHASE_LOCK.md) — no phase advances until the gate clears.  
-> Last Updated: 2026-03-19
+> Last Updated: 2026-04-19
 
 ---
 
 ## Phase Gate Legend
 
-```
-✅ = Phase complete, gate cleared
-🔄 = Active phase (in progress)
-⬚  = Planned (not started)
-🔒 = Gate: ✔ build ✔ runtime ✔ commit ✔ snapshot ✔ architecture
-```
 
 ---
 
@@ -127,97 +121,89 @@
 - [x] Principal/Admin: numerical overview + graphs (view-only)
 - [x] Teacher: interactive daily marking + AI trend insights
 
+### Phase 21: Production Hardening ✅ 🔒
+- [x] TypeORM migrations for all existing entities
+- [x] Idempotent seeder
+- [x] Real JWT validation in `JwtAuthGuard`
+- [x] Real login flow (replaced demo token)
+- [x] Fixed `nest start --watch` path resolution
+- [x] Login page uses real auth API
+
+### Phase 22: Academic Planning Engine ✅ 🔒
+- [x] AcademicPlanningService (backward planning logic)
+- [x] Generate Academic Plan endpoint
+- [x] Map AcademicPlan → CurriculumPlan
+- [x] Populate PlanningDay from AcademicCalendarEvent
+- [x] Feasibility + constraint checks
+
+### Phase 23: Data Integrity & Validation ✅ 🔒
+- [x] Database indexes on frequently queried columns
+- [x] Input validation (class-validator DTOs)
+- [x] Tenant isolation (TenantInterceptor)
+- [x] Request logging middleware
+
+### Phase 24: Intelligence Graph Foundation ✅ 🔒
+- [x] StudentLearningProfile, Skill, Concept entities
+- [x] StudentSkillMastery, StudentConceptMastery
+- [x] TopicSkillMap, TopicConceptMap
+- [x] Graph population from syllabus topics
+- [x] Mastery calculation (60% exams, 30% homework, 10% attendance)
+
+### Phase 25: AI-Powered Recommendations ✅ 🔒
+- [x] Shared service discovery endpoints
+- [x] Resilient HTTP client with circuit breaker
+- [x] AI recommendation endpoints (generateRecommendations, learningPath, interventions)
+- [x] AIClientService in school-service with graceful degradation
+- [x] Type-safe interfaces for AI contracts
+
+### Phase 26: Teacher Dashboard Analytics ✅ 🔒
+- [x] Class heatmap endpoint (students × skills)
+- [x] Struggling students identification (avg mastery <70 or weak skills)
+- [x] Student radar chart data (domain-wise mastery)
+- [x] Caching via `@nestjs/cache-manager` (TTL 5min)
+- [x] Test data with 3 students across two classes
+
 ---
 
 ## 🔄 Current Phase
 
-### Phase 23: Data Integrity & Validation 🔄
-**Started**: 2026-03-19  
-**Gate**: 🔒 CLEARED
+### Phase 27: Frontend Teacher Dashboard UI 🔄
+**Started**: Not yet  
+**Gate**: 🔓 OPEN
 
-| Sub-Phase | Layer | Task | Status |
-|-----------|-------|------|--------|
-| 21.1 | Schema | Add TypeORM migrations for all existing entities | [x] |
-| 21.2 | Service | Make seeder idempotent (skip if data exists) | [x] |
-| 21.3 | Service | Implement real JWT validation in `JwtAuthGuard` | [x] |
-| 21.4 | API | Implement real login flow (replace demo token) | [x] |
-| 21.5 | API | Fix `nest start --watch` path resolution | [x] |
-| 21.6 | UI | Update Login page to use real auth API | [x] |
-
-**Gate Checklist**:
-- [x] All 21.x tasks complete
-- [x] `npm run build` passes for all services
-- [x] All services start and respond to health checks
-- [x] Git committed: `[phase-21] production hardening complete`
-- [x] This file updated with ✅ 🔒
-- [x] No architecture changes outside scope
+| Sub-Phase | Layer | Task |
+|-----------|-------|------|
+| 27.1 | UI | Create Teacher Dashboard route with class selector |
+| 27.2 | UI | Implement heatmap visualization (Chart.js or react-table) |
+| 27.3 | UI | Display struggling students list with intervention links |
+| 27.4 | UI | Build radar chart component for individual student view |
+| 27.5 | Integration | Connect all three new endpoints to frontend components |
 
 ---
 
 ## ⬚ Upcoming Phases (Planned)
 
-### Phase 22: Academic Planning Engine ✅ 🔒
-**Started**: 2026-04-17  
-**Gate**: 🔒 CLEARED
+### Phase 28: Advanced Analytics ⬚
 | Sub-Phase | Layer | Task |
 |-----------|-------|------|
-| 22.1 | Service | AcademicPlanningService (backward planning logic) |
-| 22.2 | API | Generate Academic Plan endpoint |
-| 22.3 | Integration | Map AcademicPlan → CurriculumPlan |
-| 22.4 | Calendar | Populate PlanningDay from AcademicCalendarEvent |
-| 22.5 | Validation | Feasibility + constraint checks |
+| 28.1 | Schema | Analytics materialized views |
+| 28.2 | Service | Command Center data aggregation |
+| 28.3 | AI | Predictive dropout model |
+| 28.4 | AI | Financial forecasting |
+| 28.5 | UI | Command Center dashboard |
 
-### Phase 23: Data Integrity & Validation 🔄
-**Started**: 2026-04-17  
-**Gate**: 🔓 OPEN
+### Phase 29: Mobile Apps ⬚
 | Sub-Phase | Layer | Task |
 |-----------|-------|------|
-| 23.1 | Schema | Add database indexes on frequently queried columns |
-| 23.2 | Service | Add input validation (class-validator DTOs) |
-| 23.3 | Service | Implement tenant isolation (TenantInterceptor) |
-| 23.4 | Audit | Add request logging middleware |
+| 29.1 | Core | React Native project scaffold |
+| 29.2 | UI | Teacher mobile app |
+| 29.3 | UI | Parent mobile app |
+| 29.4 | Automation | Push notification service |
 
-### Phase 24: Student Intelligence Graph ⬚
+### Phase 30: Autopilot ⬚
 | Sub-Phase | Layer | Task |
 |-----------|-------|------|
-| 24.1 | Schema | Create `StudentProfile` / `LearningEvent` entities |
-| 24.2 | Service | Learning velocity calculation |
-| 24.3 | Service | Behavioral pattern analysis |
-| 24.4 | AI | At-risk student identification model |
-| 24.5 | API | Student intelligence endpoints |
-| 24.6 | UI | Student profile dashboard |
-
-### Phase 25: AI Teacher Copilot ⬚
-| Sub-Phase | Layer | Task |
-|-----------|-------|------|
-| 25.1 | Service | Contextual teaching suggestions engine |
-| 25.2 | AI | Workload optimization alerts |
-| 25.3 | AI | Peer benchmarking analysis |
-| 25.4 | UI | Teacher copilot sidebar |
-
-### Phase 26: Advanced Analytics ⬚
-| Sub-Phase | Layer | Task |
-|-----------|-------|------|
-| 26.1 | Schema | Analytics materialized views |
-| 26.2 | Service | Command Center data aggregation |
-| 26.3 | AI | Predictive dropout model |
-| 26.4 | AI | Financial forecasting |
-| 25.5 | UI | Command Center dashboard |
-
-### Phase 27: Mobile Apps ⬚
-| Sub-Phase | Layer | Task |
-|-----------|-------|------|
-| 27.1 | Core | React Native project scaffold |
-| 27.2 | UI | Teacher mobile app |
-| 27.3 | UI | Parent mobile app |
-| 27.4 | Automation | Push notification service |
-
-### Phase 28: Autopilot ⬚
-| Sub-Phase | Layer | Task |
-|-----------|-------|------|
-| 28.1 | Automation | Scheduled report generation |
-| 28.2 | Automation | Auto fee reminders |
-| 28.3 | AI | Autonomous insight generation |
-| 28.4 | AI | Proactive parent engagement |
-
-
+| 30.1 | Automation | Scheduled report generation |
+| 30.2 | Automation | Auto fee reminders |
+| 30.3 | AI | Autonomous insight generation |
+| 30.4 | AI | Proactive parent engagement |
