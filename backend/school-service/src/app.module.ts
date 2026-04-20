@@ -2,10 +2,14 @@ import { TenantInterceptor } from '@lumiqos/shared';
 import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
 import { AcademicPlanningModule } from './academic-planning/academic-planning.module';
 import { IntelligenceGraphModule } from './intelligence-graph/intelligence-graph.module';
-import { APP_INTERCEPTOR } from '@nestjs/core';
+import { APP_INTERCEPTOR, Reflector } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { SchoolModule } from './school/school.module';
+import { DashboardModule } from './dashboard/dashboard.module';
+import { FinanceModule } from './finance/finance.module';
+import { ParentModule } from './parent/parent.module';
+import { HrModule } from './hr/hr.module';
 import * as AllEntities from '@lumiqos/shared/src/entities';
 import { LoggingMiddleware } from './middleware/logging.middleware';
 
@@ -26,8 +30,13 @@ import { LoggingMiddleware } from './middleware/logging.middleware';
     SchoolModule,
     AcademicPlanningModule,
     IntelligenceGraphModule,
+    DashboardModule,
+    FinanceModule,
+    ParentModule,
+    HrModule,
   ],
   providers: [
+    Reflector,
     {
       provide: APP_INTERCEPTOR,
       useClass: TenantInterceptor,

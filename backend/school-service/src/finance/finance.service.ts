@@ -277,4 +277,46 @@ export class FinanceService {
         item.run_out_prediction = 'In 8 Months';
         return this.inventoryRepo.save(item);
     }
+
+    async getFinanceOverview(schoolId: string) {
+        const now = new Date();
+        const todayStr = now.toISOString().split('T')[0];
+        const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1).toISOString().split('T')[0];
+
+        const [totalCollected, outstanding, overdueCount, defaulters, mtdCollected] = await Promise.all([
+            this.paymentRepo.createQueryBuilder('p')
+                .where('p.school_id = :schoolId', { schoolId })
+                .select('SUM(p.amount)', 'total')
+                .getRawOne(),
+            this.invoiceRepo.createQueryBuilder('inv')
+                .where('inv.school_id = :schoolId', { schoolId })
+                .andWhere('inv.remaining_balance > 0')
+                .select('SUM(inv.remaining_balance)', 'total')
+                .getRawOne(),
+            this.invoiceRepo.createQueryBuilder('inv')
+                .where('inv.school_id = :schoolId', { schoolId })
+                .andWhere('inv.due_date < :today', { today: todayStr })
+                .andWhere('inv.remaining_balance > 0')
+                .getCount(),
+            this.invoiceRepo.createQueryBuilder('inv')
+                .where('inv.school_id = :schoolId', { schoolId })
+                .andWhere('inv.due_date < :today', { today: todayStr })
+                .andWhere('inv.remaining_balance > 0')
+                .select('COUNT(DISTINCT inv.student_id)', 'count')
+                .getRawOne(),
+            this.paymentRepo.createQueryBuilder('p')
+                .where('p.school_id = :schoolId', { schoolId })
+                .andWhere('DATE(p.payment_date) >= :startOfMonth', { startOfMonth })
+                .select('SUM(p.amount)', 'total')
+                .getRawOne(),
+        ]);
+
+        return {
+            total_collected: Number(totalCollected?.total || 0),
+            outstanding_fees: Number(outstanding?.total || 0),
+            overdue_invoices: overdueCount,
+            defaulter_count: Number(defaulters?.count || 0),
+            mtd_collected: Number(mtdCollected?.total || 0),
+        };
+    }
 }

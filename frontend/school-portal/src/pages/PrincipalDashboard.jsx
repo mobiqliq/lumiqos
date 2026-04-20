@@ -1,165 +1,105 @@
 import { useState, useEffect } from 'react';
-import { Bar, Doughnut } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, ArcElement, Tooltip, Legend } from 'chart.js';
-import { demoData } from '../api/client';
-import InsightCard from '../components/InsightCard';
-import { useTranslation } from 'react-i18next';
+import KPICard from '../components/common/KPICard';
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, Tooltip, Legend);
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+const SCHOOL_ID = '11111111-1111-1111-1111-111111111111';
 
 export default function PrincipalDashboard() {
-    const { t } = useTranslation();
-    const [incomingTransfer, setIncomingTransfer] = useState(true);
-    const [data, setData] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    useEffect(() => {
-        const fetchDashboard = async () => {
-            try {
-                // School ID fallback for seeded demo
-                const schoolId = localStorage.getItem('school_id') || 'd4c837bd-ea38-42ca-a99f-ffddf2e148a8';
-                const response = await fetch(`/api/dashboard/overview`, {
-                    headers: { 
-                        'Authorization': `Bearer ${localStorage.getItem('school_token') || 'demo-token'}`,
-                        'X-School-Id': schoolId
-                    }
-                });
-                const res = await response.json();
-                setData(res);
-            } catch (error) {
-                console.error("Dashboard fetch error:", error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-        fetchDashboard();
-    }, []);
+  useEffect(() => {
+    fetch(`${API_BASE}/api/dashboard/overview`, {
+      headers: { 'x-school-id': SCHOOL_ID }
+    })
+      .then(res => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+      })
+      .then(json => { setData(json); setLoading(false); })
+      .catch(err => { setError(err.message); setLoading(false); });
+  }, []);
 
-    const insights = [
-        { 
-            title: t("Attendance Alert"), 
-            desc: t("Grade 10A attendance dropped by 12% on Tuesdays."), 
-            icon: "📉",
-            type: "warning"
-        },
-        { 
-            title: t("Pending Signatures"), 
-            desc: `${data?.academics?.pending_signatures || 15} ${t("report cards are waiting for your digital signature.")}`, 
-            icon: "🖋️",
-            type: "info"
-        }
-    ];
+  if (loading) return (
+    <div style={{ padding: 40, fontFamily: 'var(--font-sans)', color: 'var(--ink-60)', fontSize: 14 }}>
+      Loading dashboard...
+    </div>
+  );
 
-    const perfData = {
-        labels: (demoData?.classes || []).map(c => c.name.replace('Class ', 'C')),
-        datasets: [{ label: 'Avg %', data: (demoData?.classes || []).map(c => c.avgScore), backgroundColor: ['#3b82f6', '#10b981', '#8b5cf6', '#f59e0b', '#06b6d4', '#f97316'], borderRadius: 6 }],
-    };
+  if (error) return (
+    <div style={{ padding: 40, fontFamily: 'var(--font-sans)', color: 'red', fontSize: 14 }}>
+      Error: {error}
+    </div>
+  );
 
-    const chartOpts = { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { grid: { color: 'rgba(148,163,184,0.06)' }, ticks: { color: '#64748b' } }, y: { grid: { color: 'rgba(148,163,184,0.06)' }, ticks: { color: '#64748b' } } } };
+  const fmt = (n) => n?.toLocaleString('en-IN') ?? '—';
+  const pct = (n) => n != null ? `${n}%` : '—';
+  const currency = (n) => n != null ? `₹${(n / 100000).toFixed(1)}L` : '—';
 
-    const riskDonut = {
-        labels: [t('Low Risk'), t('Medium Risk'), t('High Risk')],
-        datasets: [{ data: [6, 2, 3], backgroundColor: ['#10b981', '#f59e0b', '#ef4444'], borderWidth: 0, cutout: '70%' }],
-    };
-    const donutOpts = { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: '#94a3b8', padding: 12, usePointStyle: true, font: { size: 11 } } } } };
+  return (
+    <div>
+      <div style={{ marginBottom: 'var(--space-6)' }}>
+        <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: 26, fontWeight: 400, color: 'var(--ink)', margin: 0 }}>
+          Principal Dashboard
+        </h1>
+        <p style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: 'var(--ink-60)' }}>
+          School-wide overview and strategic insights
+        </p>
+      </div>
 
-    if (isLoading) return <div className="page-content">{t("Loading Command Center...")}</div>;
+      {/* Row 1: Students + Attendance */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 'var(--space-4)', marginBottom: 'var(--space-4)' }}>
+        <KPICard label="Total Students" value={fmt(data.students.total_students)} delta={`${fmt(data.students.active_students)} active`} deltaType="success" />
+        <KPICard label="Today Attendance" value={pct(data.attendance.today_attendance_rate)} delta={`${fmt(data.attendance.absent_students_today)} absent`} deltaType={data.attendance.today_attendance_rate >= 85 ? 'success' : 'warning'} />
+        <KPICard label="Monthly Avg Attendance" value={pct(data.attendance.average_attendance_this_month)} delta="this month" deltaType={data.attendance.average_attendance_this_month >= 85 ? 'success' : 'warning'} />
+        <KPICard label="At-Risk Students" value={fmt(data.academics.at_risk_students)} delta="needs attention" deltaType={data.academics.at_risk_students > 0 ? 'warning' : 'success'} />
+      </div>
 
-    return (
-        <div className="page-content">
-            <div className="page-header"><div><h2>🎛️ {t("Command Center")}</h2><p>{t("Real-time school intelligence overview")}</p></div></div>
+      {/* Row 2: Academics + Finance */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 'var(--space-4)', marginBottom: 'var(--space-6)' }}>
+        <KPICard label="Exams Completed" value={fmt(data.academics.exams_completed)} delta={`Avg score: ${pct(data.academics.average_exam_score)}`} deltaType="success" />
+        <KPICard label="Pending Signatures" value={fmt(data.academics.pending_signatures)} delta="report cards" deltaType={data.academics.pending_signatures > 0 ? 'warning' : 'success'} />
+        <KPICard label="Fee Collected" value={currency(data.finance.total_fee_collected)} delta={`${fmt(data.finance.overdue_invoices)} overdue`} deltaType={data.finance.overdue_invoices > 0 ? 'warning' : 'success'} />
+        <KPICard label="Outstanding Fees" value={currency(data.finance.outstanding_fees)} delta="pending collection" deltaType="warning" />
+      </div>
 
-            <div className="section-label">🧠 {t("Smart Insights")}</div>
-            <div className="insights-grid">
-                {insights.map((ins, i) => <InsightCard key={i} {...ins} />)}
-            </div>
-
-            <div className="stats-grid" style={{ gridTemplateColumns: 'repeat(4, 1fr)' }}>
-                <div className="card stat-card">
-                    <div className="stat-icon green">📋</div>
-                    <div className="stat-info">
-                        <span className="stat-label">{t("Today's Attendance")}</span>
-                        <span className="stat-value">{data?.attendance?.today_attendance_rate || 94}%</span>
-                    </div>
-                </div>
-                <div className="card stat-card">
-                    <div className="stat-icon red">🔴</div>
-                    <div className="stat-info">
-                        <span className="stat-label">{t("At-Risk Students")}</span>
-                        <span className="stat-value">{data?.academics?.at_risk_students || 3}</span>
-                    </div>
-                </div>
-                <div className="card stat-card">
-                    <div className="stat-icon blue">🎓</div>
-                    <div className="stat-info">
-                        <span className="stat-label">{t("Total Students")}</span>
-                        <span className="stat-value">{data?.students?.total_students || 342}</span>
-                    </div>
-                </div>
-                <div className="card stat-card">
-                    <div className="stat-icon yellow">💰</div>
-                    <div className="stat-info">
-                        <span className="stat-label">{t("Outstanding Fees")}</span>
-                        <span className="stat-value">₹{((data?.finance?.outstanding_fees || 240000) / 100000).toFixed(1)}L</span>
-                    </div>
-                </div>
-            </div>
-
-            <div className="charts-grid">
-                <div className="card chart-card"><h3>{t("Class-wise Performance")}</h3><div style={{ height: 240 }}><Bar data={perfData} options={chartOpts} /></div></div>
-                <div className="card chart-card"><h3>{t("Student Risk Distribution")}</h3><div style={{ height: 240, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Doughnut data={riskDonut} options={donutOpts} /></div></div>
-            </div>
-
-            <div className="section-label" style={{ marginTop: 24, display: 'flex', alignItems: 'center', gap: 8 }}>
-                <span>🪪</span> {t("Incoming Ecosystem Transfers (Zero-Friction Onboarding)")}
-            </div>
-            {incomingTransfer === true ? (
-                <div className="card" style={{ padding: 24, background: 'var(--bg-primary)', border: '2px dashed var(--accent)', marginBottom: 24 }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <div>
-                            <div style={{ fontSize: 12, color: 'var(--text-muted)', fontWeight: 600, letterSpacing: 1, marginBottom: 8 }}>SECURE HANDSHAKE PENDING</div>
-                            <div style={{ fontSize: 18, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 4 }}>
-                                Aarav Sharma <span style={{ color: 'var(--accent)' }}>(LUMI-9428-A7X9)</span>
-                            </div>
-                            <div style={{ fontSize: 13, color: 'var(--text-secondary)' }}>
-                                Transferring from: <strong style={{ color: 'var(--text-primary)' }}>Heritage International School</strong>
-                            </div>
-                            <div style={{ marginTop: 12, fontSize: 12, color: 'var(--success)' }}>
-                                ✅ Includes medical records, 5-Axis Profile (3 years data), and Exam Portfolio.
-                            </div>
-                        </div>
-                        <div style={{ display: 'flex', gap: 12 }}>
-                            <button className="btn btn-secondary" style={{ borderColor: 'var(--danger)', color: 'var(--danger)' }} onClick={() => setIncomingTransfer('rejected')}>Reject</button>
-                            <button className="btn btn-primary" style={{ background: 'var(--accent)' }} onClick={() => setIncomingTransfer('accepted')}>🤝 Accept & Sync Portfolio</button>
-                        </div>
-                    </div>
-                </div>
-            ) : incomingTransfer === 'accepted' ? (
-                <div className="card" style={{ padding: 16, background: 'rgba(16, 185, 129, 0.1)', border: '1px solid var(--success)', color: 'var(--success)', marginBottom: 24, textAlign: 'center', fontSize: 14 }}>
-                    ✅ Handshake Complete. Aarav Sharma has been instantly onboarded. No data entry required.
-                </div>
-            ) : (
-                <div className="card" style={{ padding: 16, background: 'rgba(239, 68, 68, 0.1)', border: '1px solid var(--danger)', color: 'var(--danger)', marginBottom: 24, textAlign: 'center', fontSize: 14 }}>
-                    ❌ Transfer Request Rejected.
-                </div>
-            )}
-
-
-            <div className="card table-card">
-                <h3>📅 {t("Today's Timetable")}</h3>
-                <table className="data-table">
-                    <thead><tr><th>{t("Period")}</th><th>{t("Time")}</th><th>{t("Subject")}</th><th>{t("Teacher")}</th><th>{t("Status")}</th></tr></thead>
-                    <tbody>
-                        {demoData.timetable.map(item => (
-                            <tr key={item.period} style={item.status === 'current' ? { background: 'rgba(59,130,246,0.08)' } : {}}>
-                                <td>{item.period}</td><td>{item.time}</td><td className="name-cell">{item.subject}</td><td>{item.teacher}</td>
-                                <td><span className={`badge ${item.status === 'completed' ? 'active' : item.status === 'current' ? 'info' : 'pending'}`}>{item.status === 'current' ? t('● Live') : t(item.status)}</span></td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
+      {/* Row 3: Homework + Communication */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: 'var(--space-4)' }}>
+        <div style={{ background: 'var(--surface-2)', border: '0.5px solid var(--border)', borderRadius: 'var(--r-md)', padding: '20px' }}>
+          <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: 14, fontWeight: 500, marginTop: 0, marginBottom: 16 }}>
+            Homework Overview
+          </h3>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
+            {[
+              { label: 'Assigned Today', value: fmt(data.homework.homework_assigned_today) },
+              { label: 'Pending Reviews', value: fmt(data.homework.pending_homework_reviews) },
+              { label: 'Submission Rate', value: pct(data.homework.homework_submission_rate) },
+            ].map(item => (
+              <div key={item.label} style={{ textAlign: 'center', padding: 16, background: 'var(--surface-1)', borderRadius: 'var(--r-sm)' }}>
+                <div style={{ fontFamily: 'var(--font-sans)', fontSize: 22, fontWeight: 600, color: 'var(--ink)' }}>{item.value}</div>
+                <div style={{ fontFamily: 'var(--font-sans)', fontSize: 12, color: 'var(--ink-60)', marginTop: 4 }}>{item.label}</div>
+              </div>
+            ))}
+          </div>
         </div>
-    );
-}
 
+        <div style={{ background: 'var(--surface-2)', border: '0.5px solid var(--border)', borderRadius: 'var(--r-md)', padding: '20px' }}>
+          <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: 14, fontWeight: 500, marginTop: 0, marginBottom: 16 }}>
+            Communication
+          </h3>
+          {[
+            { label: 'Notifications Sent Today', value: fmt(data.communication.notifications_sent_today) },
+            { label: 'Active Message Threads', value: fmt(data.communication.active_message_threads) },
+            { label: 'Unread Notifications', value: fmt(data.communication.unread_notifications) },
+          ].map(item => (
+            <div key={item.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 0', borderBottom: '0.5px solid var(--border)' }}>
+              <span style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: 'var(--ink-60)' }}>{item.label}</span>
+              <span style={{ fontFamily: 'var(--font-sans)', fontSize: 14, fontWeight: 600, color: 'var(--ink)' }}>{item.value}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}

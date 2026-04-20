@@ -8,6 +8,9 @@ export class SyllabusTopic {
 
     @Column()
     syllabus_id: string;
+    
+    @Column({ type: 'uuid', nullable: true })
+    school_id: string;
 
     @Column()
     topic_name: string;

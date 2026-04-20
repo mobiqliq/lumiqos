@@ -55,7 +55,7 @@ export class DashboardService {
             throw new InternalServerErrorException('No active academic year found for this school');
         }
 
-        const yearId = activeYear.academic_year_id;
+        const yearId = activeYear.id;
 
         const validSchoolId = schoolId as string;
 

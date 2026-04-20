@@ -1,0 +1,54 @@
+.container { display: flex; flex-direction: column; gap: var(--space-6); max-width: 720px; margin: 0 auto; width: 100%; }
+.pageHeader { margin-bottom: var(--space-2); }
+.pageTitle { font-family: var(--font-serif); font-size: 26px; font-weight: 400; color: var(--ink); line-height: 1.15; margin: 0 0 var(--space-1) 0; }
+.pageSubtitle { font-family: var(--font-sans); font-size: 13px; font-weight: 300; color: var(--ink-60); margin: 0; }
+
+.card { background: var(--surface-2); border: 0.5px solid var(--border); border-radius: var(--r-lg); padding: var(--space-8); }
+
+.stepIndicator { display: flex; justify-content: space-between; margin-bottom: var(--space-8); position: relative; }
+.stepIndicator::before { content: ''; position: absolute; top: 15px; left: 10%; right: 10%; height: 1px; background: var(--border); z-index: 0; }
+.step { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); position: relative; z-index: 1; }
+.stepNumber { width: 32px; height: 32px; border-radius: 50%; background: var(--surface-3); border: 0.5px solid var(--border); display: flex; align-items: center; justify-content: center; font-family: var(--font-sans); font-size: 13px; font-weight: 500; color: var(--ink-60); transition: all var(--t-instant); }
+.step.active .stepNumber { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+.step.completed .stepNumber { background: var(--success); border-color: var(--success); color: white; }
+.stepLabel { font-family: var(--font-sans); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-40); }
+.step.active .stepLabel { color: var(--ink); font-weight: 600; }
+
+.stepContent { min-height: 300px; }
+.formGroup { margin-bottom: var(--space-6); }
+.formRow { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+.formGroup label { display: block; font-family: var(--font-sans); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-60); margin-bottom: var(--space-2); }
+.formGroup input, .formGroup textarea, .formGroup select { width: 100%; padding: var(--space-2) var(--space-4); border-radius: var(--r-sm); border: 0.5px solid var(--border); background: var(--surface); font-family: var(--font-sans); font-size: 14px; color: var(--ink); }
+.formGroup input:focus, .formGroup textarea:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(200,169,110,0.15); }
+.helperText { font-family: var(--font-sans); font-size: 11px; color: var(--ink-40); margin-top: var(--space-1); }
+
+.subdomainWrapper { display: flex; align-items: center; }
+.subdomainWrapper input { flex: 1; border-radius: var(--r-sm) 0 0 var(--r-sm); }
+.subdomainSuffix { padding: 0 var(--space-4); height: 36px; display: flex; align-items: center; background: var(--surface-3); border: 0.5px solid var(--border); border-left: none; border-radius: 0 var(--r-sm) var(--r-sm) 0; font-family: var(--font-sans); font-size: 13px; color: var(--ink-60); }
+
+.planOptions { display: flex; flex-direction: column; gap: var(--space-4); }
+.planCard { display: flex; align-items: flex-start; gap: var(--space-4); padding: var(--space-4); border: 0.5px solid var(--border); border-radius: var(--r-md); background: var(--surface); cursor: pointer; transition: all var(--t-instant); }
+.planCard:hover { border-color: var(--gold-light); }
+.planCardSelected { border-color: var(--gold); background: var(--gold-pale); }
+.planCard input { width: auto; margin-top: 3px; }
+.planInfo { display: flex; flex-direction: column; gap: 2px; }
+.planName { font-family: var(--font-sans); font-size: 15px; font-weight: 500; color: var(--ink); }
+.planPrice { font-family: var(--font-serif); font-size: 18px; font-weight: 400; color: var(--ink); }
+.planDesc { font-family: var(--font-sans); font-size: 12px; color: var(--ink-60); }
+
+.billingOptions { display: flex; gap: var(--space-4); }
+.billingOption { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-4); border: 0.5px solid var(--border); border-radius: var(--r-pill); background: var(--surface); font-family: var(--font-sans); font-size: 13px; cursor: pointer; transition: all var(--t-instant); }
+.billingOptionSelected { border-color: var(--gold); background: var(--gold-pale); }
+.billingOption input { width: auto; }
+
+.reviewSection { margin-bottom: var(--space-6); padding-bottom: var(--space-6); border-bottom: 0.5px solid var(--border); }
+.reviewSection:last-child { border-bottom: none; }
+.reviewSection h3 { font-family: var(--font-sans); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-40); margin: 0 0 var(--space-4) 0; }
+.reviewSection p { font-family: var(--font-sans); font-size: 14px; color: var(--ink-80); margin: var(--space-1) 0; }
+
+.formActions { display: flex; justify-content: flex-end; gap: var(--space-4); margin-top: var(--space-8); padding-top: var(--space-6); border-top: 0.5px solid var(--border); }
+.primaryButton { padding: var(--space-2) var(--space-8); border-radius: var(--r-pill); background: var(--gold); border: none; font-family: var(--font-sans); font-size: 14px; font-weight: 500; color: var(--ink); cursor: pointer; transition: opacity var(--t-instant); }
+.primaryButton:hover { opacity: 0.85; }
+.primaryButton:disabled { opacity: 0.5; cursor: not-allowed; }
+.secondaryButton { padding: var(--space-2) var(--space-6); border-radius: var(--r-pill); background: transparent; border: 0.5px solid var(--border); font-family: var(--font-sans); font-size: 14px; font-weight: 500; color: var(--ink-60); cursor: pointer; transition: all var(--t-instant); }
+.secondaryButton:hover { background: var(--surface-3); color: var(--ink); }

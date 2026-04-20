@@ -58,6 +58,7 @@ export class SeederService implements OnApplicationBootstrap {
             year = await this.yearRepo.save(this.yearRepo.create({
                 school_id: school.id,
                 name: '2025-26',
+                year_name: '2025-26',
                 start_date: new Date('2025-04-01'),
                 end_date: new Date('2026-03-31'),
                 status: 'active',

@@ -7,6 +7,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { HealthController } from './health/health.controller';
 import { TeacherController } from './teacher.controller';
+import { IntelligenceGraphController } from './intelligence-graph.controller';
+import { DashboardController } from './dashboard.controller';
+import { FinanceController } from './finance.controller';
+import { ParentController } from './parent.controller';
+import { HrController } from './hr.controller';
 
 @Module({
   imports: [
@@ -33,7 +38,7 @@ import { TeacherController } from './teacher.controller';
           transport: Transport.TCP,
           options: {
             host: config.get('SCHOOL_SERVICE_HOST', 'school-service'),
-            port: config.get<number>('SCHOOL_SERVICE_PORT', 3001),
+            port: config.get<number>('SCHOOL_SERVICE_PORT', 3000),
           },
         }),
         inject: [ConfigService],
@@ -41,7 +46,7 @@ import { TeacherController } from './teacher.controller';
     ]),
     HttpModule,
   ],
-  controllers: [AppController, HealthController, TeacherController],
+  controllers: [AppController, HealthController, TeacherController, IntelligenceGraphController, DashboardController, FinanceController, ParentController, HrController],
   providers: [AppService],
 })
 export class AppModule {}

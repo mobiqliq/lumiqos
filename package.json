@@ -11,6 +11,7 @@
         "backend/user-service",
         "backend/ai-service",
         "frontend",
+        "frontend/shared",
         "mobile"
     ],
     "scripts": {

@@ -300,4 +300,59 @@ export class ParentService {
             relations: ['teacher']
         });
     }
+
+    async getStudentSummary(studentId: string, schoolId: string) {
+        const student = await this.studentRepo.findOne({ where: { id: studentId, school_id: schoolId } });
+        if (!student) return { error: 'Student not found' };
+
+        const activeYear = await this.academicYearRepo.findOne({ where: { school_id: schoolId, status: 'active' } });
+
+        const todayStr = new Date().toISOString().split('T')[0];
+
+        const [attendanceMetrics, homeworkPending, feeStatus] = await Promise.all([
+            this.attendanceRepo.createQueryBuilder('att')
+                .where('att.school_id = :schoolId', { schoolId })
+                .andWhere('att.student_id = :studentId', { studentId: student.id })
+                .select([
+                    'COUNT(*) as total',
+                    'SUM(CASE WHEN att.status = \'present\' THEN 1 ELSE 0 END) as present_count'
+                ])
+                .getRawOne(),
+
+            this.submissionRepo.count({
+                where: { school_id: schoolId, student_id: student.id, status: 'submitted' }
+            }),
+
+            this.invoiceRepo.createQueryBuilder('inv')
+                .where('inv.school_id = :schoolId', { schoolId })
+                .andWhere('inv.student_id = :studentId', { studentId: student.id })
+                .select([
+                    'SUM(inv.remaining_balance) as outstanding',
+                    'COUNT(CASE WHEN inv.due_date < :today AND inv.remaining_balance > 0 THEN 1 END) as overdue'
+                ])
+                .setParameter('today', todayStr)
+                .getRawOne(),
+        ]);
+
+        const total = Number(attendanceMetrics?.total || 0);
+        const present = Number(attendanceMetrics?.present_count || 0);
+
+        return {
+            student: {
+                id: student.id,
+                name: `${student.first_name} ${student.last_name}`,
+                school_id: schoolId,
+            },
+            attendance: {
+                total_days: total,
+                present_days: present,
+                percentage: total > 0 ? ((present / total) * 100).toFixed(1) : '0.0',
+            },
+            homework_pending: homeworkPending,
+            fees: {
+                outstanding: Number(feeStatus?.outstanding || 0),
+                overdue_count: Number(feeStatus?.overdue || 0),
+            },
+        };
+    }
 }

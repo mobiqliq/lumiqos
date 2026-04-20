@@ -1,0 +1,129 @@
+/**
+ * LumiqOS Design Tokens — CSS Custom Properties
+ * Generated from tokens.ts — DO NOT EDIT MANUALLY
+ */
+
+:root {
+  /* ── Colour — Foundation ── */
+  --ink: #0A0A0F;
+  --ink-60: rgba(10,10,15,0.6);
+  --ink-30: rgba(10,10,15,0.3);
+  --ink-10: rgba(10,10,15,0.08);
+  --slate: #1C1C2E;
+  --slate-mid: #2D2D44;
+  --gold: #C8A96E;
+  --gold-light: #E8D5B0;
+  --gold-pale: #F7F1E6;
+  --surface: #FAFAF8;
+  --surface-2: #F2F1ED;
+  --surface-3: #E8E6DF;
+  --border: rgba(10,10,15,0.09);
+  --border-strong: rgba(10,10,15,0.18);
+
+  /* ── Colour — Semantic ── */
+  --success: #0E7A6E;
+  --success-light: #D0EDE9;
+  --warning: #B86B1A;
+  --warning-light: #F5E6CC;
+  --danger: #A82828;
+  --danger-light: #FADADD;
+  --info: #1A3A6B;
+  --info-light: #D6E4F7;
+
+  /* ── Typography ── */
+  --font-serif: 'Source Serif Pro', Georgia, serif;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'DM Mono', 'Courier New', monospace;
+
+  /* ── Spacing ── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* ── Border Radius ── */
+  --r-sm: 10px;
+  --r-md: 16px;
+  --r-lg: 22px;
+  --r-xl: 28px;
+  --r-pill: 9999px;
+
+  /* ── Motion ── */
+  --ease-enter: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+  --ease-static: ease-in-out;
+  --t-instant: 100ms;
+  --t-transition: 240ms;
+  --t-reveal: 420ms;
+
+  /* ── Layout ── */
+  --sidebar-width: 200px;
+  --sidebar-collapsed-width: 48px;
+  --topbar-height: 64px;
+  --tab-bar-height: 52px;
+}
+
+/* Persona Accent Overrides — Applied via data-persona attribute */
+[data-persona="principal"] {
+  --persona-accent: #2B5BA8;
+  --persona-accent-light: #D6E4F7;
+}
+[data-persona="admin"] {
+  --persona-accent: #1A3A6B;
+  --persona-accent-light: #C8DEFA;
+}
+[data-persona="teacher"] {
+  --persona-accent: #0E7A6E;
+  --persona-accent-light: #D0EDE9;
+}
+[data-persona="finance"] {
+  --persona-accent: #B86B1A;
+  --persona-accent-light: #F5E6CC;
+}
+[data-persona="hr"] {
+  --persona-accent: #4A3080;
+  --persona-accent-light: #EDE8F5;
+}
+[data-persona="parent"] {
+  --persona-accent: #2E6B2E;
+  --persona-accent-light: #E8F4E8;
+}
+[data-persona="student"] {
+  --persona-accent: #9B3A5C;
+  --persona-accent-light: #F0D6E0;
+}
+
+/* ── Responsive Grid Utilities ── */
+@media (max-width: 1024px) {
+  [style*="repeat(4, 1fr)"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  [style*="1.4fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+  [style*="1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 768px) {
+  [style*="repeat(4, 1fr)"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  [style*="repeat(3, 1fr)"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  [style*="1.4fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+  [style*="1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+  [style*="repeat(2, 1fr)"] {
+    grid-template-columns: 1fr !important;
+  }
+}

@@ -1,82 +1,73 @@
-import axios from 'axios';
-
 const API_BASE = '/api';
+
+// Dev mock login - bypasses real auth for frontend development
+const MOCK_LOGIN_RESPONSE = {
+    access_token: 'dev-mock-token',
+    user: {
+        id: 'dev-user',
+        email: 'teacher@school.lumiqos.dev',
+        role: 'teacher',
+        name: 'Dev Teacher',
+        school_id: '11111111-1111-1111-1111-111111111111',
+    }
+};
 
 export async function apiRequest(endpoint, options = {}) {
     const token = localStorage.getItem('school_token');
+    const headers = {
+        'Content-Type': 'application/json',
+        ...(token && { Authorization: `Bearer ${token}` }),
+        'x-school-id': localStorage.getItem('school_id') || '11111111-1111-1111-1111-111111111111',
+        ...options.headers,
+    };
+
+    // Mock login for development
+    if (endpoint.includes('/auth/login') && options.method === 'POST') {
+        console.log('🔧 Dev mock login activated');
+        return MOCK_LOGIN_RESPONSE;
+    }
 
     try {
-        // Attempt reaching the live NestJS backend
-        const response = await axios({
-            url: `${API_BASE}${endpoint}`,
-            method: options.method || 'GET',
-            data: options.body ? JSON.parse(options.body) : undefined,
-            headers: {
-                'Content-Type': 'application/json',
-                ...(token && { Authorization: `Bearer ${token}` }),
-                ...options.headers
-            },
-            timeout: 2500 // Quick timeout to trigger offline cache
-        });
-        return response.data;
-    } catch (err) {
-        // MOAT: Seamless Zero-Downtime Offline Fallback
-        console.warn(`[LumiqOS Edge] Live backend unreachable for ${endpoint}. Falling back to edge cache. Error: ${err.message}`);
-
-        // Smart routing to demoData based on endpoint
-        if (endpoint.includes('/schools')) return demoData?.school ? [demoData.school] : [];
-        if (endpoint.includes('/students')) return demoData?.students ? demoData.students : [];
-        if (endpoint.includes('/auth/login')) {
-            if (err.status) throw err; // Real validation error from backend
-            return { token: 'mock-offline-token' }; // Mock success if backend is just down
+        const res = await fetch(`${API_BASE}${endpoint}`, { ...options, headers });
+        if (!res.ok) {
+            const error = await res.json().catch(() => ({ message: 'Request failed' }));
+            throw { status: res.status, ...error };
         }
-
-        return [];
+        return res.json();
+    } catch (err) {
+        if (err.status) throw err;
+        throw { status: 0, message: 'Network error — is the API gateway running?' };
     }
 }
 
 export const api = {
-    login: (email, password) => apiRequest('/auth/login', { method: 'POST', body: JSON.stringify({ email, password }) }),
+    login: (email, password) =>
+        apiRequest('/auth/login', { method: 'POST', body: JSON.stringify({ email, password }) }),
+
+    getHealthServices: () => apiRequest('/health/services').catch(() => []),
+
     getSchools: () => apiRequest('/schools').catch(() => []),
+
     getStudents: () => apiRequest('/students').catch(() => []),
+
+    getDashboard: () => apiRequest('/dashboard/overview').catch(() => null),
 };
 
-export const ROLES = {
-    principal: { key: 'principal', label: 'Principal', icon: '🎓', email: 'principal@greenfield.edu', color: '#8b5cf6' },
-    admin: { key: 'admin', label: 'Administrator', icon: '🏢', email: 'admin@greenfield.edu', color: '#3b82f6' },
-    teacher: { key: 'teacher', label: 'Teacher', icon: '👨‍🏫', email: 'teacher@greenfield.edu', color: '#10b981' },
-    parent: { key: 'parent', label: 'Parent', icon: '👪', email: 'parent@greenfield.edu', color: '#f59e0b' },
-    finance: { key: 'finance', label: 'Finance', icon: '💰', email: 'finance@greenfield.edu', color: '#ef4444' },
-    hr: { key: 'hr', label: 'HR', icon: '👤', email: 'hr@greenfield.edu', color: '#06b6d4' },
-    student: { key: 'student', label: 'Student', icon: '🎒', email: 'student@greenfield.edu', color: '#f43f5e' },
-};
-
-export let demoData = {
-    school: {},
-    students: [],
-    teachers: [],
-    classes: [],
-    announcements: [],
-    fees: [],
-    timetable: [],
-    insights: { principal: [], teacher: [], parent: [], finance: [], hr: [] },
-    copilotConversations: { principal: [], teacher: [], parent: [], student: [], admin: [], hr: [], finance: [], fees: [], attendance: [], students: [], assignments: [], report_cards: [] },
-    reportCards: [],
-    admissionsPipeline: [],
-    expenses: []
-};
-
-export async function initializeDemoData() {
-    try {
-        const response = await axios.get(`${API_BASE}/demo-data`, { timeout: 3000 });
-        if (response.data) {
-            demoData = response.data;
-            console.log("✅ LumiqOS demo data synchronized from backend.");
-            return true;
+// Initialize demo data (mock)
+export const demoData = {
+    insights: {
+        teacher: {
+            title: 'AI Insight',
+            message: '3 students need attention. Reyansh Singh\'s mastery is below 70%.'
         }
-    } catch (err) {
-        console.warn("⚠️ Demo data endpoint not available — using defaults. App will use live APIs.", err.message);
-    }
-    return false;
-}
+    },
+    students: [
+        { id: '1', name: 'Aarav Sharma', class_name: 'Class 10' },
+        { id: '2', name: 'Ishita Patel', class_name: 'Class 10' },
+        { id: '3', name: 'Reyansh Singh', class_name: 'Class 10' },
+    ]
+};
 
+export const initializeDemoData = async () => {
+    // No-op for now
+};

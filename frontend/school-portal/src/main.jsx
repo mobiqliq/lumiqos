@@ -1,19 +1,11 @@
+import '@lumiqos/shared-frontend/theme.css';
+import '@lumiqos/shared-frontend/fonts.css';
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
-import './i18n.js'
-import axios from 'axios';
-
-// Global Axios Configuration
-axios.interceptors.request.use((config) => {
-  const token = localStorage.getItem('school_token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-}, (error) => {
-  return Promise.reject(error);
-});
+import '@lumiqos/shared-frontend/theme.css'
+import '@lumiqos/shared-frontend/fonts.css'
+import './i18n'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

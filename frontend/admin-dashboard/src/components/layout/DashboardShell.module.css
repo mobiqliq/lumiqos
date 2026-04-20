@@ -1,0 +1,230 @@
+.shell {
+  display: flex;
+  min-height: 100vh;
+  background: var(--surface);
+}
+
+.sidebar {
+  width: var(--sidebar-width);
+  background: var(--slate);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: width var(--t-transition) var(--ease-enter);
+}
+
+.sidebar.collapsed {
+  width: var(--sidebar-collapsed-width);
+}
+
+.sidebarHeader {
+  padding: var(--space-6) var(--space-4);
+  border-bottom: 0.5px solid rgba(255,255,255,0.08);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.logoMark {
+  width: 36px;
+  height: 36px;
+  background: var(--gold);
+  border-radius: var(--r-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--ink);
+}
+
+.logoText {
+  font-family: var(--font-serif);
+  font-size: 17px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: white;
+}
+
+.nav {
+  flex: 1;
+  padding: var(--space-4) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.navSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.navLabel {
+  padding: 0 var(--space-4);
+  font-family: var(--font-sans);
+  font-size: 8px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  color: rgba(255,255,255,0.2);
+  margin-bottom: var(--space-1);
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.4);
+  text-decoration: none;
+  transition: color var(--t-instant) var(--ease-static);
+  position: relative;
+}
+
+.navItem:hover {
+  color: rgba(255,255,255,0.75);
+}
+
+.navItem.active {
+  color: rgba(255,255,255,0.92);
+  font-weight: 500;
+}
+
+.navItem.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 25%;
+  bottom: 25%;
+  width: 2px;
+  background: var(--gold);
+  border-radius: 0 2px 2px 0;
+}
+
+.navIcon {
+  font-size: 16px;
+  width: 20px;
+  text-align: center;
+}
+
+.collapsed .navLabel,
+.collapsed .logoText,
+.collapsed .navItem span:not(.navIcon) {
+  display: none;
+}
+
+.collapseBtn {
+  position: absolute;
+  bottom: var(--space-4);
+  right: -12px;
+  width: 24px;
+  height: 24px;
+  background: var(--slate-mid);
+  border: 0.5px solid var(--border);
+  border-radius: 50%;
+  color: white;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--t-instant);
+}
+
+.collapseBtn:hover {
+  background: var(--gold);
+  color: var(--ink);
+}
+
+.canvas {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-x: auto;
+}
+
+.topbar {
+  height: var(--topbar-height);
+  padding: 0 var(--space-6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 0.5px solid var(--border);
+  background: var(--surface);
+}
+
+.search input {
+  height: 36px;
+  padding: 0 var(--space-4);
+  border-radius: var(--r-sm);
+  border: 0.5px solid var(--border);
+  background: var(--surface-2);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--ink);
+  min-width: 280px;
+}
+
+.search input::placeholder {
+  color: var(--ink-30);
+}
+
+.search input:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(200,169,110,0.15);
+}
+
+.topbarActions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.iconBtn {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--r-sm);
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--t-instant);
+}
+
+.iconBtn:hover {
+  background: var(--surface-2);
+}
+
+.userAvatar {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--r-sm);
+  background: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.content {
+  flex: 1;
+  padding: var(--space-6);
+  overflow-y: auto;
+}

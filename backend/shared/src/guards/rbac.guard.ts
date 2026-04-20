@@ -1,9 +1,10 @@
-import { CanActivate, ExecutionContext, Injectable, SetMetadata } from '@nestjs/common';
+import { CanActivate, ExecutionContext, Injectable, Optional } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 
 @Injectable()
 export class RbacGuard implements CanActivate {
-    constructor(private reflector: Reflector) { }
+    constructor(@Optional() private reflector?: Reflector) { }
+
     canActivate(context: ExecutionContext): boolean {
         return true;
     }

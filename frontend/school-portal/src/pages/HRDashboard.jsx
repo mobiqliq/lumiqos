@@ -1,65 +1,109 @@
-import { demoData } from '../api/client';
-import InsightCard from '../components/InsightCard';
-import { useTranslation } from 'react-i18next';
+import { useState, useEffect } from 'react';
+import KPICard from '../components/common/KPICard';
+
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+const SCHOOL_ID = '11111111-1111-1111-1111-111111111111';
 
 export default function HRDashboard() {
-    const { t } = useTranslation();
-    const insights = demoData?.insights?.hr || [];
-    const teachers = demoData?.teachers || [];
-    return (
-        <div className="page-content">
-            <div className="page-header"><div><h2>👤 {t("People & Culture")}</h2><p>{t("Staff management and HR intelligence")}</p></div></div>
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-            <div className="section-label">🧠 {t("HR Insights")}</div>
-            <div className="insights-grid">
-                {insights.map((ins, i) => <InsightCard key={i} {...ins} />)}
-            </div>
+  useEffect(() => {
+    fetch(`${API_BASE}/api/hr/overview`, {
+      headers: { 'x-school-id': SCHOOL_ID }
+    })
+      .then(res => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+      })
+      .then(json => { setData(json); setLoading(false); })
+      .catch(err => { setError(err.message); setLoading(false); });
+  }, []);
 
-            <div className="stats-grid" style={{ gridTemplateColumns: 'repeat(4, 1fr)' }}>
-                <div className="card stat-card"><div className="stat-icon purple">👨‍🏫</div><div className="stat-info"><span className="stat-label">{t("Total Staff")}</span><span className="stat-value">28</span></div></div>
-                <div className="card stat-card"><div className="stat-icon green">✅</div><div className="stat-info"><span className="stat-label">{t("Present Today")}</span><span className="stat-value">26</span></div></div>
-                <div className="card stat-card"><div className="stat-icon orange">🏖️</div><div className="stat-info"><span className="stat-label">{t("On Leave")}</span><span className="stat-value">2</span></div></div>
-                <div className="card stat-card"><div className="stat-icon blue">📋</div><div className="stat-info"><span className="stat-label">{t("Vacancies")}</span><span className="stat-value">1</span></div></div>
-            </div>
+  if (loading) return (
+    <div style={{ padding: 40, fontFamily: 'var(--font-sans)', color: 'var(--ink-60)', fontSize: 14 }}>
+      Loading HR data...
+    </div>
+  );
 
-            <div className="card table-card" style={{ marginBottom: 20 }}>
-                <h3>{t("Staff Leave Tracker")}</h3>
-                <table className="data-table">
-                    <thead><tr><th>{t("Name")}</th><th>{t("Subject")}</th><th>{t("Leaves Used")}</th><th>{t("Balance")}</th><th>{t("Status")}</th><th>{t("Rating")}</th></tr></thead>
-                    <tbody>
-                        {teachers.map(teacher => (
-                            <tr key={teacher.id}>
-                                <td className="name-cell">{teacher.name}</td><td>{teacher.subject}</td>
-                                <td>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                                        <div style={{ width: 80, height: 6, background: 'var(--bg-primary)', borderRadius: 3 }}>
-                                            <div style={{ width: `${(teacher.leavesTaken / teacher.leavesTotal) * 100}%`, height: '100%', borderRadius: 3, background: teacher.leavesTaken > 10 ? 'var(--danger)' : teacher.leavesTaken > 5 ? 'var(--warning)' : 'var(--success)' }} />
-                                        </div>
-                                        <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>{teacher.leavesTaken}/{teacher.leavesTotal}</span>
-                                    </div>
-                                </td>
-                                <td>{teacher.leavesTotal - teacher.leavesTaken}</td>
-                                <td><span className={`badge ${teacher.status === 'on-leave' ? 'pending' : 'active'}`}>{t(teacher.status)}</span></td>
-                                <td><span style={{ color: 'var(--warning)' }}>{'⭐'.repeat(Math.round(teacher.rating))}</span> <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>{teacher.rating}</span></td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
+  if (error) return (
+    <div style={{ padding: 40, fontFamily: 'var(--font-sans)', color: 'red', fontSize: 14 }}>
+      Error: {error}
+    </div>
+  );
 
-            <div className="card" style={{ padding: 24 }}>
-                <h3 style={{ marginBottom: 16 }}>📋 {t("Recruitment Pipeline")}</h3>
-                <div style={{ padding: 16, background: 'var(--bg-secondary)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}>
-                    <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 8 }}>{t("Physics Teacher — Senior Position")}</div>
-                    <div style={{ display: 'flex', gap: 20, fontSize: 13, color: 'var(--text-secondary)' }}>
-                        <span>{t("📅 Open: 45 days")}</span><span>{t("📩 Applications: 12")}</span><span>{t("✅ Shortlisted: 3")}</span><span>{t("📞 Interviewed: 1")}</span>
-                    </div>
-                    <div style={{ marginTop: 12, display: 'flex', gap: 8 }}>
-                        <button className="btn btn-sm btn-primary">{t("Review Applications")}</button>
-                        <button className="btn btn-sm btn-secondary">{t("Schedule Interview")}</button>
-                    </div>
-                </div>
+  const fmt = (n) => n?.toLocaleString('en-IN') ?? '—';
+  const activeRate = data.total_staff > 0
+    ? Math.round((data.active_staff / data.total_staff) * 100)
+    : 0;
+
+  return (
+    <div>
+      <div style={{ marginBottom: 'var(--space-6)' }}>
+        <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: 26, fontWeight: 400, color: 'var(--ink)', margin: 0 }}>
+          HR Dashboard
+        </h1>
+        <p style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: 'var(--ink-60)' }}>
+          Staff management and workforce overview
+        </p>
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 'var(--space-4)', marginBottom: 'var(--space-6)' }}>
+        <KPICard label="Total Staff" value={fmt(data.total_staff)} delta="registered" deltaType="success" />
+        <KPICard label="Active Staff" value={fmt(data.active_staff)} delta={`${activeRate}% active rate`} deltaType={activeRate >= 90 ? 'success' : 'warning'} />
+        <KPICard label="Inactive Staff" value={fmt(data.inactive_staff)} delta="on leave or inactive" deltaType={data.inactive_staff > 0 ? 'warning' : 'success'} />
+        <KPICard label="Subject Assignments" value={fmt(data.teacher_subject_assignments)} delta="teacher-subject links" deltaType="neutral" />
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-4)' }}>
+        <div style={{ background: 'var(--surface-2)', border: '0.5px solid var(--border)', borderRadius: 'var(--r-md)', padding: '20px' }}>
+          <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: 14, fontWeight: 500, marginTop: 0, marginBottom: 16 }}>
+            Staff Summary
+          </h3>
+          {[
+            { label: 'Total Staff', value: fmt(data.total_staff) },
+            { label: 'Active', value: fmt(data.active_staff) },
+            { label: 'Inactive', value: fmt(data.inactive_staff) },
+            { label: 'Active Rate', value: `${activeRate}%` },
+            { label: 'Subject Assignments', value: fmt(data.teacher_subject_assignments) },
+          ].map((item, i, arr) => (
+            <div key={item.label} style={{
+              display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+              padding: '10px 0', borderBottom: i < arr.length - 1 ? '0.5px solid var(--border)' : 'none'
+            }}>
+              <span style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: 'var(--ink-60)' }}>{item.label}</span>
+              <span style={{ fontFamily: 'var(--font-sans)', fontSize: 14, fontWeight: 600, color: 'var(--ink)' }}>{item.value}</span>
             </div>
+          ))}
         </div>
-    );
+
+        <div style={{ background: 'var(--surface-2)', border: '0.5px solid var(--border)', borderRadius: 'var(--r-md)', padding: '20px' }}>
+          <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: 14, fontWeight: 500, marginTop: 0, marginBottom: 16 }}>
+            Role Distribution
+          </h3>
+          {data.role_distribution.length === 0 ? (
+            <div style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: 'var(--ink-60)', padding: '20px 0' }}>
+              No staff roles assigned yet.
+            </div>
+          ) : (
+            data.role_distribution.map((role, i) => (
+              <div key={role.role} style={{ marginBottom: 14 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
+                  <span style={{ fontFamily: 'var(--font-sans)', fontSize: 13 }}>{role.role}</span>
+                  <span style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: 'var(--ink-60)' }}>{role.count}</span>
+                </div>
+                <div style={{ height: 4, background: 'var(--ink-10)', borderRadius: 2 }}>
+                  <div style={{
+                    width: `${data.total_staff > 0 ? (role.count / data.total_staff) * 100 : 0}%`,
+                    height: 4, background: 'var(--gold)', borderRadius: 2
+                  }} />
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      </div>
+    </div>
+  );
 }
