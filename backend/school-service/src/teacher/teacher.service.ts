@@ -13,7 +13,7 @@ export class TeacherService {
   ) {}
 
   async getLessonPlan(topic: string): Promise<any> {
-    const { schoolId, userId } = TenantContext.getStore();
+    const _store = TenantContext.getStore(); const schoolId = _store?.schoolId ?? ''; const userId = _store?.userId ?? '';
 
     try {
       const response = await fetch('http://localhost:3000/ai/generate-lesson-plan', {
@@ -42,7 +42,7 @@ export class TeacherService {
   }
 
   async findAllPlans(): Promise<any[]> {
-    const { schoolId, userId } = TenantContext.getStore();
+    const _store = TenantContext.getStore(); const schoolId = _store?.schoolId ?? ''; const userId = _store?.userId ?? '';
     return this.lessonPlanRepo.find({
       where: { 
         school_id: schoolId,

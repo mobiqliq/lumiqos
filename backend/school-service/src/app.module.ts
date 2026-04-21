@@ -10,6 +10,13 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { FinanceModule } from './finance/finance.module';
 import { ParentModule } from './parent/parent.module';
 import { HrModule } from './hr/hr.module';
+import { SubstitutionModule } from './substitution/substitution.module';
+import { TimetableModule } from './timetable/timetable.module';
+import { ReportCardsModule } from './report-cards/report-cards.module';
+import { ExamsModule } from './exams/exams.module';
+import { HomeworkModule } from './homework/homework.module';
+import { CommunicationModule } from './communication/communication.module';
+import { SeederModule } from './database/seeder.module';
 import * as AllEntities from '@lumiqos/shared/src/entities';
 import { LoggingMiddleware } from './middleware/logging.middleware';
 
@@ -34,6 +41,13 @@ import { LoggingMiddleware } from './middleware/logging.middleware';
     FinanceModule,
     ParentModule,
     HrModule,
+    SubstitutionModule,
+    TimetableModule,
+    ReportCardsModule,
+    ExamsModule,
+    HomeworkModule,
+    CommunicationModule,
+    SeederModule,
   ],
   providers: [
     Reflector,

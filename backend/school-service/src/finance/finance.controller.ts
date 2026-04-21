@@ -13,7 +13,7 @@ export class FinanceController {
     @Get('overview')
     getFinanceOverview(@Req() req: Request) {
         const schoolId = (req.headers['x-school-id'] as string) || TenantContext.getStore()?.schoolId;
-        return this.financeService.getFinanceOverview(schoolId);
+        return this.financeService.getFinanceOverview(schoolId as string);
     }
 
     @Post('fee-categories')

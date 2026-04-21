@@ -14,13 +14,13 @@ export class IntelligenceGraphController {
 
   @Post('populate')
   async populateGraph() {
-    const { schoolId } = TenantContext.getStore();
+    const store = TenantContext.getStore(); const schoolId = store?.schoolId ?? '';
     return this.graphService.populateGraphFromAcademicData(schoolId);
   }
 
   @Post('student/:studentId/calculate-mastery')
   async calculateMastery(@Param('studentId') studentId: string) {
-    const { schoolId } = TenantContext.getStore();
+    const store = TenantContext.getStore(); const schoolId = store?.schoolId ?? '';
     return this.graphService.calculateStudentSkillMastery(studentId, schoolId);
   }
 
@@ -47,14 +47,14 @@ export class IntelligenceGraphController {
   @UseInterceptors(CacheInterceptor)
   @Get('class/:classId/heatmap')
   async getClassHeatmap(@Param('classId') classId: string) {
-    const { schoolId } = TenantContext.getStore();
+    const store = TenantContext.getStore(); const schoolId = store?.schoolId ?? '';
     return this.graphService.getClassHeatmap(classId, schoolId);
   }
 
   @UseInterceptors(CacheInterceptor)
   @Get('class/:classId/struggling-students')
   async getStrugglingStudents(@Param('classId') classId: string) {
-    const { schoolId } = TenantContext.getStore();
+    const store = TenantContext.getStore(); const schoolId = store?.schoolId ?? '';
     return this.graphService.getStrugglingStudents(classId, schoolId);
   }
 

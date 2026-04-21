@@ -10,6 +10,6 @@ export class HrController {
     @Get('overview')
     getHrOverview(@Req() req: Request) {
         const schoolId = (req.headers['x-school-id'] as string) || TenantContext.getStore()?.schoolId;
-        return this.hrService.getHrOverview(schoolId);
+        return this.hrService.getHrOverview(schoolId as string);
     }
 }
