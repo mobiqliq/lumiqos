@@ -215,7 +215,7 @@ export class ReportCardsService {
         const schoolId = store.schoolId;
         return this.reportCardRepo.find({
             where: { school_id: schoolId, exam_id: examId, class_id: classId, ...(sectionId ? { section_id: sectionId } : {}) },
-            relations: ['student'],
+            
             order: { rank: 'ASC' }
         });
     }
@@ -226,14 +226,14 @@ export class ReportCardsService {
         const schoolId = store.schoolId;
         const reportCards = await this.reportCardRepo.find({
             where: { school_id: schoolId, student_id: studentId },
-            relations: ['exam', 'exam.exam_type']
+            relations: ['exam']
         });
 
         // Attach subjects directly for complete view
         for (const rc of reportCards) {
             const subjects = await this.reportCardSubjectRepo.find({
                 where: { report_card_id: rc.report_card_id, school_id: schoolId },
-                relations: ['subject']
+                
             });
             (rc as any).subjects = subjects;
         }

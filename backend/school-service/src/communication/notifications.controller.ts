@@ -1,12 +1,9 @@
-import { Controller, Post, Get, Put, Body, Param, UseGuards } from '@nestjs/common';
+import { Controller, Post, Get, Put, Body, Param } from '@nestjs/common';
 import { CommunicationService } from './communication.service';
-import { JwtAuthGuard } from '@lumiqos/shared/index';
-import { RbacGuard } from '@lumiqos/shared/index';
 import { RequirePermissions } from '@lumiqos/shared/index';
 import { CurrentUser } from '@lumiqos/shared/index';
 
 @Controller('notifications')
-@UseGuards(JwtAuthGuard, RbacGuard)
 export class NotificationsController {
     constructor(private readonly communicationService: CommunicationService) { }
 

@@ -1,11 +1,8 @@
-import { Controller, Post, Get, Put, Body, Param, Query, UseGuards } from '@nestjs/common';
+import { Controller, Post, Get, Put, Body, Param, Query } from '@nestjs/common';
 import { HomeworkService } from './homework.service';
-import { JwtAuthGuard } from '@lumiqos/shared/index';
-import { RbacGuard } from '@lumiqos/shared/index';
 import { RequirePermissions } from '@lumiqos/shared/index';
 
 @Controller('homework')
-@UseGuards(JwtAuthGuard, RbacGuard)
 export class HomeworkController {
     constructor(private readonly homeworkService: HomeworkService) { }
 

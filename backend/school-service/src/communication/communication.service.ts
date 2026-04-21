@@ -29,6 +29,7 @@ export class CommunicationService {
     async createNotification(dto: any, creatorId: string) {
         const store = TenantContext.getStore();
         if (!store) throw new Error('Tenant context missing');
+        if (!store) throw new Error('Tenant context missing');
         const schoolId = store.schoolId;
 
         // Validation rule: Only one targeting level
@@ -122,6 +123,7 @@ export class CommunicationService {
     async getNotifications(userId: string) {
         const store = TenantContext.getStore();
         if (!store) throw new Error('Tenant context missing');
+        if (!store) throw new Error('Tenant context missing');
         const schoolId = store.schoolId;
         return this.recipientRepo.find({
             where: { school_id: schoolId, user_id: userId },
@@ -133,6 +135,7 @@ export class CommunicationService {
     async markNotificationRead(notificationId: string, userId: string) {
         const store = TenantContext.getStore();
         if (!store) throw new Error('Tenant context missing');
+        if (!store) throw new Error('Tenant context missing');
         const schoolId = store.schoolId;
         await this.recipientRepo.update(
             { school_id: schoolId, notification_id: notificationId, user_id: userId },
@@ -143,6 +146,7 @@ export class CommunicationService {
 
     async createThread(studentId: string, teacherId: string, currentUser: any) {
         const store = TenantContext.getStore();
+        if (!store) throw new Error('Tenant context missing');
         if (!store) throw new Error('Tenant context missing');
         const schoolId = store.schoolId;
 
@@ -216,6 +220,7 @@ export class CommunicationService {
     private async validateThreadAccess(threadId: string, currentUser: any) {
         const store = TenantContext.getStore();
         if (!store) throw new Error('Tenant context missing');
+        if (!store) throw new Error('Tenant context missing');
         const schoolId = store.schoolId;
         const thread = await this.threadRepo.findOne({ where: { thread_id: threadId, school_id: schoolId } });
         if (!thread) throw new NotFoundException('Thread not found');
@@ -245,6 +250,7 @@ export class CommunicationService {
     async sendMessage(threadId: string, messageText: string, currentUser: any) {
         const store = TenantContext.getStore();
         if (!store) throw new Error('Tenant context missing');
+        if (!store) throw new Error('Tenant context missing');
         const schoolId = store.schoolId;
 
         await this.validateThreadAccess(threadId, currentUser);
@@ -262,6 +268,7 @@ export class CommunicationService {
 
     async getThreadMessages(threadId: string, currentUser: any) {
         const store = TenantContext.getStore();
+        if (!store) throw new Error('Tenant context missing');
         if (!store) throw new Error('Tenant context missing');
         const schoolId = store.schoolId;
         await this.validateThreadAccess(threadId, currentUser);

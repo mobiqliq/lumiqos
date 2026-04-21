@@ -1,9 +1,7 @@
-import { Controller, Post, Body, UseGuards, Req } from '@nestjs/common';
+import { Controller, Post, Body, Req } from '@nestjs/common';
 import { TimetableService } from './timetable.service';
-import { JwtAuthGuard } from '@lumiqos/shared/index';
 
 @Controller('timetable')
-@UseGuards(JwtAuthGuard)
 export class TimetableController {
     constructor(private readonly timetableService: TimetableService) { }
 

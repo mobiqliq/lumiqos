@@ -1,11 +1,8 @@
-import { Controller, Get, Post, Body, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body } from '@nestjs/common';
 import { SubstitutionService } from './substitution.service';
-import { JwtAuthGuard } from '@lumiqos/shared/index';
-import { RbacGuard } from '@lumiqos/shared/index';
 import { RequirePermissions } from '@lumiqos/shared/index';
 
 @Controller('substitution')
-@UseGuards(JwtAuthGuard, RbacGuard)
 export class SubstitutionController {
     constructor(private readonly substitutionService: SubstitutionService) { }
 

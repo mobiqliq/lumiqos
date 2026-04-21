@@ -1,11 +1,8 @@
-import { Controller, Post, Get, Body, Param, Query, UseGuards, BadRequestException } from '@nestjs/common';
+import { Controller, Post, Get, Body, Param, Query, BadRequestException } from '@nestjs/common';
 import { ReportCardsService } from './report-cards.service';
-import { JwtAuthGuard } from '@lumiqos/shared/index';
-import { RbacGuard } from '@lumiqos/shared/index';
 import { RequirePermissions } from '@lumiqos/shared/index';
 
 @Controller('report-cards')
-@UseGuards(JwtAuthGuard, RbacGuard)
 export class ReportCardsController {
     constructor(private readonly reportCardsService: ReportCardsService) { }
 

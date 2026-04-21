@@ -50,7 +50,7 @@ export class ExamsService {
         if (!store) throw new Error('Tenant context missing');
         return this.examRepo.find({
             where: { school_id: store.schoolId },
-            relations: ['exam_type', 'academic_year']
+            
         });
     }
 
@@ -208,9 +208,7 @@ export class ExamsService {
 
         // Fetch marks for these subjects using In() block
         return this.studentMarksRepo.createQueryBuilder('marks')
-            .innerJoinAndSelect('marks.exam_subject', 'exam_subject')
-            .innerJoinAndSelect('exam_subject.subject', 'subject')
-            .innerJoinAndSelect('marks.student', 'student') // To get student details
+            
             .where('marks.school_id = :schoolId', { schoolId: store.schoolId })
             .andWhere('marks.exam_subject_id IN (:...subjectIds)', { subjectIds })
             .getMany();
@@ -222,7 +220,7 @@ export class ExamsService {
 
         return this.studentMarksRepo.find({
             where: { student_id: studentId, school_id: store.schoolId },
-            relations: ['exam_subject', 'exam_subject.exam', 'exam_subject.subject'],
+            
             order: { created_at: 'DESC' }
         });
     }
