@@ -35,6 +35,19 @@ services:
     build:
       context: ./backend
       dockerfile: ai-service/Dockerfile
+    env_file:
+      - ./backend/ai-service/.env
+    depends_on:
+      - lumiqos_db
+
+  auth-service:
+    build:
+      context: ./backend
+      dockerfile: auth-service/Dockerfile
+    env_file:
+      - ./backend/auth-service/.env
+    ports:
+      - "3002:3002"
     depends_on:
       - lumiqos_db
 

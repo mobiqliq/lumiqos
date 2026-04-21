@@ -139,6 +139,8 @@ export class SeederService implements OnApplicationBootstrap {
             { first_name: 'Vikram',   last_name: 'Rao',     email: 'hr@testschool.edu',            role_id: 'hr' },
             { first_name: 'Kavitha',  last_name: 'Nair',    email: 'teacher4@testschool.edu',      role_id: 'teacher' },
         ];
+        // bcrypt hash of 'Test@1234' (cost 10)
+        const DEFAULT_PASSWORD_HASH = '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi';
         const seededUsers: Record<string, User> = {};
         for (const s of staffData) {
             let user = await this.userRepo.findOne({ where: { email: s.email } });
@@ -148,6 +150,7 @@ export class SeederService implements OnApplicationBootstrap {
                     school_id: TEST_SCHOOL_ID,
                     status: 'active',
                     is_active: true,
+                    password_hash: DEFAULT_PASSWORD_HASH,
                 }));
                 console.log(`Seeded staff: ${s.email}`);
             }

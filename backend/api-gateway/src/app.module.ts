@@ -12,6 +12,13 @@ import { DashboardController } from './dashboard.controller';
 import { FinanceController } from './finance.controller';
 import { ParentController } from './parent.controller';
 import { HrController } from './hr.controller';
+import { SubstitutionController } from './substitution.controller';
+import { TimetableController } from './timetable.controller';
+import { ReportCardsController } from './report-cards.controller';
+import { ExamsController } from './exams.controller';
+import { HomeworkController } from './homework.controller';
+import { CommunicationController } from './communication.controller';
+import { AuthController } from './auth.controller';
 
 @Module({
   imports: [
@@ -46,7 +53,7 @@ import { HrController } from './hr.controller';
     ]),
     HttpModule,
   ],
-  controllers: [AppController, HealthController, TeacherController, IntelligenceGraphController, DashboardController, FinanceController, ParentController, HrController],
+  controllers: [AppController, HealthController, TeacherController, IntelligenceGraphController, DashboardController, FinanceController, ParentController, HrController, SubstitutionController, TimetableController, ReportCardsController, ExamsController, HomeworkController, CommunicationController, AuthController],
   providers: [AppService],
 })
 export class AppModule {}
