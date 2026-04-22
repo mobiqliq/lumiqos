@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
+import { api } from '../api/client';
 import KPICard from '../components/common/KPICard';
-
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3000';
-const SCHOOL_ID = '11111111-1111-1111-1111-111111111111';
+import PageHeader from '../components/common/PageHeader';
 
 const DEMO_STUDENTS = [
   { id: '04d76549-cc74-4bd6-bb3b-c8dac2b48229', name: 'Aarav Sharma' },
@@ -11,7 +10,7 @@ const DEMO_STUDENTS = [
 ];
 
 export default function StudentDashboard() {
-  const [selectedStudent, setSelectedStudent] = useState(DEMO_STUDENTS[0]);
+  const [selected, setSelected] = useState(DEMO_STUDENTS[0]);
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -19,92 +18,83 @@ export default function StudentDashboard() {
   useEffect(() => {
     setLoading(true);
     setError(null);
-    fetch(`${API_BASE}/api/parent/summary/${selectedStudent.id}`, {
-      headers: { 'x-school-id': SCHOOL_ID }
-    })
-      .then(res => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return res.json();
-      })
-      .then(json => { setData(json); setLoading(false); })
-      .catch(err => { setError(err.message); setLoading(false); });
-  }, [selectedStudent]);
+    api.getParentSummary(selected.id)
+      .then(setData)
+      .catch(e => setError(e.message || 'Failed to load'))
+      .finally(() => setLoading(false));
+  }, [selected]);
+
+  const card = { background: 'var(--bg-surface)', border: '1px solid var(--border)', borderRadius: 'var(--r-lg)', padding: '20px' };
+  const row = (last) => ({ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '9px 0', borderBottom: last ? 'none' : '1px solid var(--border)' });
+  const lbl = { fontSize: 'var(--text-sm)', color: 'var(--text-muted)' };
+  const val = { fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--text-primary)', fontFamily: 'var(--font-mono)' };
 
   return (
     <div>
-      <div style={{ marginBottom: 'var(--space-6)', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-        <div>
-          <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: 26, fontWeight: 400, color: 'var(--ink)', margin: 0 }}>
-            Student Dashboard
-          </h1>
-          <p style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: 'var(--ink-60)' }}>
-            Your academic progress and overview
-          </p>
-        </div>
-        <div style={{ display: 'flex', gap: 8 }}>
-          {DEMO_STUDENTS.map(s => (
-            <button key={s.id} onClick={() => setSelectedStudent(s)} style={{
-              padding: '6px 14px', borderRadius: 'var(--r-sm)', border: '0.5px solid var(--border)',
-              background: selectedStudent.id === s.id ? 'var(--gold)' : 'var(--surface-2)',
-              color: selectedStudent.id === s.id ? 'white' : 'var(--ink)',
-              fontFamily: 'var(--font-sans)', fontSize: 13, cursor: 'pointer'
-            }}>
-              {s.name.split(' ')[0]}
-            </button>
-          ))}
-        </div>
-      </div>
+      <PageHeader
+        title="Student Dashboard"
+        subtitle="Your academic progress and overview"
+        actions={
+          <div style={{ display: 'flex', gap: 8 }}>
+            {DEMO_STUDENTS.map(s => (
+              <button key={s.id} onClick={() => setSelected(s)} style={{
+                padding: '6px 14px', borderRadius: 'var(--r-md)',
+                border: '1px solid var(--border)',
+                background: selected.id === s.id ? 'var(--accent)' : 'var(--bg-surface)',
+                color: selected.id === s.id ? '#fff' : 'var(--text-secondary)',
+                fontSize: 'var(--text-sm)', cursor: 'pointer',
+                fontFamily: 'var(--font-sans)',
+              }}>
+                {s.name.split(' ')[0]}
+              </button>
+            ))}
+          </div>
+        }
+      />
 
-      {loading && <div style={{ padding: 40, fontFamily: 'var(--font-sans)', color: 'var(--ink-60)', fontSize: 14 }}>Loading...</div>}
-      {error && <div style={{ padding: 40, fontFamily: 'var(--font-sans)', color: 'red', fontSize: 14 }}>Error: {error}</div>}
+      {loading && <div style={{ padding: 'var(--sp-6)', color: 'var(--text-muted)', fontSize: 'var(--text-sm)' }}>Loading…</div>}
+      {error && <div style={{ padding: 'var(--sp-6)', color: 'var(--danger)', fontSize: 'var(--text-sm)' }}>Error: {error}</div>}
 
       {data && !loading && (
         <>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 'var(--space-4)', marginBottom: 'var(--space-6)' }}>
-            <KPICard label="Student" value={data.student.name} delta="active" deltaType="success" />
-            <KPICard label="Attendance" value={`${data.attendance.percentage}%`} delta={`${data.attendance.present_days} of ${data.attendance.total_days} days`} deltaType={Number(data.attendance.percentage) >= 75 ? 'success' : 'warning'} />
-            <KPICard label="Homework Pending" value={data.homework_pending} delta="submissions due" deltaType={data.homework_pending > 0 ? 'warning' : 'success'} />
-            <KPICard label="Outstanding Fees" value={`₹${(data.fees.outstanding / 100).toFixed(0)}`} delta={`${data.fees.overdue_count} overdue`} deltaType={data.fees.outstanding > 0 ? 'warning' : 'success'} />
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 'var(--sp-4)', marginBottom: 'var(--sp-6)' }}>
+            <KPICard label="Student"          value={data.student.name}                               delta="active"                                        deltaType="success" />
+            <KPICard label="Attendance"       value={`${data.attendance.percentage}%`}                delta={`${data.attendance.present_days} of ${data.attendance.total_days} days`} deltaType={Number(data.attendance.percentage) >= 75 ? 'success' : 'warning'} />
+            <KPICard label="Homework Pending" value={data.homework_pending}                           delta="submissions due"                               deltaType={data.homework_pending > 0 ? 'warning' : 'success'} />
+            <KPICard label="Outstanding Fees" value={`₹${(data.fees.outstanding / 100).toFixed(0)}`} delta={`${data.fees.overdue_count} overdue`}           deltaType={data.fees.outstanding > 0 ? 'warning' : 'success'} />
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-4)' }}>
-            <div style={{ background: 'var(--surface-2)', border: '0.5px solid var(--border)', borderRadius: 'var(--r-md)', padding: '20px' }}>
-              <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: 14, fontWeight: 500, marginTop: 0, marginBottom: 16 }}>
-                Attendance Overview
-              </h3>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--sp-4)' }}>
+            <div style={card}>
+              <h3 style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--text-primary)', marginTop: 0, marginBottom: 16 }}>Attendance Overview</h3>
               <div style={{ position: 'relative', height: 160, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <svg viewBox="0 0 120 120" style={{ width: 140, height: 140 }}>
-                  <circle cx="60" cy="60" r="50" fill="none" stroke="var(--ink-10)" strokeWidth="12" />
-                  <circle cx="60" cy="60" r="50" fill="none" stroke="var(--gold)" strokeWidth="12"
+                  <circle cx="60" cy="60" r="50" fill="none" stroke="var(--bg-raised)" strokeWidth="12" />
+                  <circle cx="60" cy="60" r="50" fill="none" stroke="var(--accent)" strokeWidth="12"
                     strokeDasharray={`${Number(data.attendance.percentage) * 3.14} 314`}
                     strokeLinecap="round" transform="rotate(-90 60 60)" />
                 </svg>
                 <div style={{ position: 'absolute', textAlign: 'center' }}>
-                  <div style={{ fontFamily: 'var(--font-sans)', fontSize: 22, fontWeight: 700, color: 'var(--ink)' }}>
+                  <div style={{ fontSize: 'var(--text-xl)', fontWeight: 700, color: 'var(--text-primary)', fontFamily: 'var(--font-mono)' }}>
                     {data.attendance.percentage}%
                   </div>
-                  <div style={{ fontFamily: 'var(--font-sans)', fontSize: 11, color: 'var(--ink-60)' }}>attendance</div>
+                  <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>attendance</div>
                 </div>
               </div>
             </div>
 
-            <div style={{ background: 'var(--surface-2)', border: '0.5px solid var(--border)', borderRadius: 'var(--r-md)', padding: '20px' }}>
-              <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: 14, fontWeight: 500, marginTop: 0, marginBottom: 16 }}>
-                Academic Status
-              </h3>
+            <div style={card}>
+              <h3 style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--text-primary)', marginTop: 0, marginBottom: 16 }}>Academic Status</h3>
               {[
-                { label: 'Total Days Recorded', value: data.attendance.total_days },
-                { label: 'Days Present', value: data.attendance.present_days },
-                { label: 'Days Absent', value: data.attendance.total_days - data.attendance.present_days },
-                { label: 'Pending Submissions', value: data.homework_pending },
-                { label: 'Fee Outstanding', value: `₹${(data.fees.outstanding / 100).toFixed(0)}` },
+                { label: 'Total Days Recorded',  value: data.attendance.total_days },
+                { label: 'Days Present',         value: data.attendance.present_days },
+                { label: 'Days Absent',          value: data.attendance.total_days - data.attendance.present_days },
+                { label: 'Pending Submissions',  value: data.homework_pending },
+                { label: 'Fee Outstanding',      value: `₹${(data.fees.outstanding / 100).toFixed(0)}` },
               ].map((item, i, arr) => (
-                <div key={item.label} style={{
-                  display: 'flex', justifyContent: 'space-between',
-                  padding: '7px 0', borderBottom: i < arr.length - 1 ? '0.5px solid var(--border)' : 'none'
-                }}>
-                  <span style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: 'var(--ink-60)' }}>{item.label}</span>
-                  <span style={{ fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: 600, color: 'var(--ink)' }}>{item.value}</span>
+                <div key={item.label} style={row(i === arr.length - 1)}>
+                  <span style={lbl}>{item.label}</span>
+                  <span style={val}>{item.value}</span>
                 </div>
               ))}
             </div>

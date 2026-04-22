@@ -78,23 +78,23 @@ export default function TeacherDashboard() {
 
   const getMasteryColor = (mastery) => {
     const val = parseFloat(mastery);
-    if (val >= 80) return 'var(--success)';
+    if (val >= 80) return 'var(--positive)';
     if (val >= 60) return 'var(--warning)';
     return 'var(--danger)';
   };
 
   if (loading) {
     return (
-      <div style={{ padding: 'var(--space-6)' }}>
-        <div style={{ marginBottom: 'var(--space-6)' }}>
-          <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: 26, fontWeight: 400, color: 'var(--ink)', margin: 0 }}>
+      <div style={{ padding: 'var(--sp-6)' }}>
+        <div style={{ marginBottom: 'var(--sp-6)' }}>
+          <h1 style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-xl)', fontWeight: 400, color: 'var(--text-primary)', margin: 0 }}>
             Teacher Dashboard
           </h1>
-          <p style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: 'var(--ink-60)' }}>
+          <p style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>
             Loading analytics...
           </p>
         </div>
-        <div style={{ textAlign: 'center', padding: 40, color: 'var(--ink-60)' }}>
+        <div style={{ textAlign: 'center', padding: 40, color: 'var(--text-muted)' }}>
           Fetching student performance data...
         </div>
       </div>
@@ -103,16 +103,16 @@ export default function TeacherDashboard() {
 
   if (error) {
     return (
-      <div style={{ padding: 'var(--space-6)' }}>
-        <div style={{ marginBottom: 'var(--space-6)' }}>
-          <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: 26, fontWeight: 400, color: 'var(--ink)', margin: 0 }}>
+      <div style={{ padding: 'var(--sp-6)' }}>
+        <div style={{ marginBottom: 'var(--sp-6)' }}>
+          <h1 style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-xl)', fontWeight: 400, color: 'var(--text-primary)', margin: 0 }}>
             Teacher Dashboard
           </h1>
         </div>
         <div style={{
-          background: 'var(--danger-light)',
+          background: 'var(--danger-muted)',
           border: '1px solid var(--danger)',
-          borderRadius: 'var(--r-md)',
+          borderRadius: 'var(--r-lg)',
           padding: 20,
           color: 'var(--danger)'
         }}>
@@ -124,7 +124,7 @@ export default function TeacherDashboard() {
               background: 'var(--danger)',
               color: 'white',
               border: 'none',
-              borderRadius: 'var(--r-sm)',
+              borderRadius: 'var(--r-md)',
               padding: '6px 12px',
               cursor: 'pointer'
             }}
@@ -140,35 +140,35 @@ export default function TeacherDashboard() {
   const strugglingCount = strugglingStudents?.length || 0;
 
   return (
-    <div style={{ padding: 'var(--space-6)' }}>
-      <div style={{ marginBottom: 'var(--space-6)' }}>
-        <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: 26, fontWeight: 400, color: 'var(--ink)', margin: 0 }}>
+    <div style={{ padding: 'var(--sp-6)' }}>
+      <div style={{ marginBottom: 'var(--sp-6)' }}>
+        <h1 style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-xl)', fontWeight: 400, color: 'var(--text-primary)', margin: 0 }}>
           Teacher Dashboard
         </h1>
-        <p style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: 'var(--ink-60)' }}>
+        <p style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>
           Class 10 • {studentCount} Students
         </p>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 'var(--space-4)', marginBottom: 'var(--space-6)' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 'var(--sp-4)', marginBottom: 'var(--sp-6)' }}>
         <KPICard label="Today's Attendance" value="38/42" delta="4 absent" deltaType="warning" />
         <KPICard label="Assignments Due" value="3" delta="By Friday" deltaType="neutral" />
         <KPICard label="Avg Class Score" value="74.3%" delta="+3.2%" deltaType="success" />
         <KPICard label="Student Alerts" value={strugglingCount.toString()} delta="Need attention" deltaType={strugglingCount > 0 ? 'warning' : 'neutral'} />
       </div>
 
-      <div style={{ marginBottom: 'var(--space-4)' }}>
+      <div style={{ marginBottom: 'var(--sp-4)' }}>
         <select
           value={selectedClassId}
           onChange={(e) => setSelectedClassId(e.target.value)}
           style={{
             padding: '8px 16px',
-            borderRadius: 'var(--r-sm)',
-            border: '0.5px solid var(--border)',
-            background: 'var(--surface-2)',
+            borderRadius: 'var(--r-md)',
+            border: '1px solid var(--border)',
+            background: 'var(--bg-surface)',
             fontFamily: 'var(--font-sans)',
-            fontSize: 14,
-            color: 'var(--ink)',
+            fontSize: 'var(--text-base)',
+            color: 'var(--text-primary)',
             cursor: 'pointer'
           }}
         >
@@ -179,22 +179,22 @@ export default function TeacherDashboard() {
 
       {heatmapData && (
         <div style={{
-          background: 'var(--surface-2)',
-          border: '0.5px solid var(--border)',
-          borderRadius: 'var(--r-md)',
+          background: 'var(--bg-surface)',
+          border: '1px solid var(--border)',
+          borderRadius: 'var(--r-lg)',
           padding: '20px',
-          marginBottom: 'var(--space-6)',
+          marginBottom: 'var(--sp-6)',
           overflowX: 'auto'
         }}>
-          <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: 14, fontWeight: 500, color: 'var(--ink)', marginTop: 0, marginBottom: 16 }}>
+          <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-base)', fontWeight: 500, color: 'var(--text-primary)', marginTop: 0, marginBottom: 16 }}>
             Skill Mastery Heatmap
           </h3>
-          <table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: 'var(--font-sans)', fontSize: 12 }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: 'var(--font-sans)', fontSize: 'var(--text-sm)' }}>
             <thead>
               <tr>
-                <th style={{ textAlign: 'left', padding: 8, borderBottom: '0.5px solid var(--border)' }}>Student</th>
+                <th style={{ textAlign: 'left', padding: 8, borderBottom: '1px solid var(--border)' }}>Student</th>
                 {heatmapData.skills.slice(0, 6).map(skill => (
-                  <th key={skill.id} style={{ padding: 8, borderBottom: '0.5px solid var(--border)', color: 'var(--ink-60)' }}>
+                  <th key={skill.id} style={{ padding: 8, borderBottom: '1px solid var(--border)', color: 'var(--text-muted)' }}>
                     {skill.name.replace('Topic: ', '')}
                   </th>
                 ))}
@@ -203,13 +203,13 @@ export default function TeacherDashboard() {
             <tbody>
               {heatmapData.heatmap.map(student => (
                 <tr key={student.studentId}>
-                  <td style={{ padding: 8, borderBottom: '0.5px solid var(--border)', fontWeight: 500 }}>
+                  <td style={{ padding: 8, borderBottom: '1px solid var(--border)', fontWeight: 500 }}>
                     {student.name}
                   </td>
                   {student.skills.slice(0, 6).map(skill => (
                     <td key={skill.skillId} style={{
                       padding: 8,
-                      borderBottom: '0.5px solid var(--border)',
+                      borderBottom: '1px solid var(--border)',
                       color: getMasteryColor(skill.mastery),
                       fontWeight: 500
                     }}>
@@ -223,25 +223,25 @@ export default function TeacherDashboard() {
         </div>
       )}
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-4)' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--sp-4)' }}>
         <div style={{
-          background: 'var(--surface-2)',
-          border: '0.5px solid var(--border)',
-          borderRadius: 'var(--r-md)',
+          background: 'var(--bg-surface)',
+          border: '1px solid var(--border)',
+          borderRadius: 'var(--r-lg)',
           padding: '20px'
         }}>
-          <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: 14, fontWeight: 500, color: 'var(--ink)', marginTop: 0, marginBottom: 16 }}>
+          <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-base)', fontWeight: 500, color: 'var(--text-primary)', marginTop: 0, marginBottom: 16 }}>
             Students Needing Attention
           </h3>
           {strugglingStudents.length === 0 ? (
-            <p style={{ color: 'var(--ink-60)' }}>No struggling students identified.</p>
+            <p style={{ color: 'var(--text-muted)' }}>No struggling students identified.</p>
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               {strugglingStudents.map(student => (
                 <div key={student.studentId} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                   <div>
                     <div style={{ fontWeight: 500 }}>{student.name}</div>
-                    <div style={{ fontSize: 11, color: 'var(--ink-60)' }}>
+                    <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>
                       Avg Mastery: {student.averageMastery}%
                     </div>
                   </div>
@@ -250,12 +250,12 @@ export default function TeacherDashboard() {
                     disabled={radarLoading}
                     style={{
                       background: 'transparent',
-                      border: '0.5px solid var(--border)',
-                      borderRadius: 'var(--r-sm)',
+                      border: '1px solid var(--border)',
+                      borderRadius: 'var(--r-md)',
                       padding: '4px 12px',
-                      fontSize: 11,
+                      fontSize: 'var(--text-xs)',
                       cursor: 'pointer',
-                      color: 'var(--ink-60)'
+                      color: 'var(--text-muted)'
                     }}
                   >
                     View Radar
@@ -267,9 +267,9 @@ export default function TeacherDashboard() {
         </div>
 
         <div style={{
-          background: 'var(--gold-pale)',
-          border: '1px solid var(--gold-light)',
-          borderRadius: '14px',
+          background: 'var(--accent-muted)',
+          border: '1px solid var(--border)',
+          borderRadius: 'var(--r-lg)',
           padding: '16px',
           position: 'relative',
           overflow: 'hidden'
@@ -280,16 +280,16 @@ export default function TeacherDashboard() {
             fontWeight: 600,
             letterSpacing: '0.13em',
             textTransform: 'uppercase',
-            color: 'var(--gold)',
+            color: 'var(--accent)',
             marginBottom: 8,
             display: 'flex',
             alignItems: 'center',
             gap: 8
           }}>
             🧠 AI Insight
-            <span style={{ flex: 1, height: 1, background: 'rgba(200,169,110,0.3)' }} />
+            <span style={{ flex: 1, height: 1, background: 'var(--border)' }} />
           </div>
-          <p style={{ fontFamily: 'var(--font-sans)', fontSize: 12, fontWeight: 300, lineHeight: 1.65, color: 'var(--ink-65)', margin: 0 }}>
+          <p style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-sm)', fontWeight: 300, lineHeight: 1.65, color: 'var(--text-muted)', margin: 0 }}>
             {strugglingCount > 0
               ? `${strugglingCount} student${strugglingCount > 1 ? 's' : ''} showing mastery below 70%. Consider targeted intervention.`
               : 'All students are performing at or above expectations. Keep up the great work!'}
@@ -311,13 +311,13 @@ export default function TeacherDashboard() {
           zIndex: 1001
         }} onClick={() => setSelectedStudentRadar(null)}>
           <div style={{
-            background: 'var(--surface)',
+            background: 'var(--bg-surface)',
             borderRadius: 'var(--r-lg)',
             padding: 24,
             maxWidth: 500,
             width: '100%'
           }} onClick={e => e.stopPropagation()}>
-            <h3 style={{ fontFamily: 'var(--font-serif)', marginTop: 0 }}>
+            <h3 style={{ fontFamily: 'var(--font-sans)', marginTop: 0 }}>
               {selectedStudentRadar.studentName} - Domain Mastery
             </h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -327,11 +327,11 @@ export default function TeacherDashboard() {
                     <span>{domain.domain}</span>
                     <span style={{ color: getMasteryColor(domain.mastery) }}>{domain.mastery}%</span>
                   </div>
-                  <div style={{ height: 4, background: 'var(--ink-10)', borderRadius: 2 }}>
+                  <div style={{ height: 4, background: 'var(--bg-raised)', borderRadius: 2 }}>
                     <div style={{
                       width: `${domain.mastery}%`,
                       height: 4,
-                      background: 'var(--gold)',
+                      background: 'var(--accent)',
                       borderRadius: 2
                     }} />
                   </div>
@@ -343,7 +343,7 @@ export default function TeacherDashboard() {
               style={{
                 marginTop: 20,
                 padding: '8px 16px',
-                background: 'var(--gold)',
+                background: 'var(--accent)',
                 border: 'none',
                 borderRadius: 'var(--r-pill)',
                 cursor: 'pointer'
