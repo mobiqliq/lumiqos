@@ -205,7 +205,7 @@ Command: docker compose build <service> && docker compose up -d <service>
 
 | Issue                              | Severity | Notes                                        |
 |------------------------------------|----------|----------------------------------------------|
-| permissions[] empty in JWT         | High     | role_permission table not seeded             |
+| permissions[] empty in JWT         | ✅ Fixed  | 20 permissions seeded, 7 roles mapped, JWT populated |
 | synchronize:true in TypeORM        | High     | Replace with migrations before prod          |
 | Docker frontend image stale        | Medium   | School-portal pre-redesign, needs rebuild    |
 | School portal fetch failures       | Medium   | school_token + x-school-id not wired in dev  |
