@@ -1,115 +1,72 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import styles from './Schools.module.css';
-
-// Mock data - will be replaced with API call
-const MOCK_SCHOOLS = [
-  { id: '1', name: 'Greenfield Academy', subdomain: 'greenfield', plan: 'Premium', status: 'active', students: 1250, adminEmail: 'admin@greenfield.edu', createdAt: '2025-08-15' },
-  { id: '2', name: 'Delhi Public School', subdomain: 'dps', plan: 'Enterprise', status: 'active', students: 3400, adminEmail: 'admin@dps.edu', createdAt: '2025-06-01' },
-  { id: '3', name: 'St. Xavier\'s High School', subdomain: 'stxaviers', plan: 'Premium', status: 'active', students: 2100, adminEmail: 'principal@stxaviers.edu', createdAt: '2025-09-10' },
-  { id: '4', name: 'Modern School', subdomain: 'modern', plan: 'Starter', status: 'suspended', students: 980, adminEmail: 'admin@modern.edu', createdAt: '2025-11-20' },
-  { id: '5', name: 'Sanskriti School', subdomain: 'sanskriti', plan: 'Premium', status: 'pending', students: 0, adminEmail: 'setup@sanskriti.edu', createdAt: '2026-01-05' },
-];
-
-const getStatusBadge = (status) => {
-  const statusMap = {
-    active: { label: 'Active', className: styles.statusActive },
-    suspended: { label: 'Suspended', className: styles.statusSuspended },
-    pending: { label: 'Pending', className: styles.statusPending },
-  };
-  return statusMap[status] || { label: status, className: '' };
-};
-
-const getPlanBadge = (plan) => {
-  const planMap = {
-    Starter: styles.planStarter,
-    Premium: styles.planPremium,
-    Enterprise: styles.planEnterprise,
-  };
-  return planMap[plan] || '';
-};
+import { api } from '../api/client';
+import PageHeader from '../components/common/PageHeader';
+import DataTable from '../components/common/DataTable';
+import StatusBadge from '../components/common/StatusBadge';
+import s from './Schools.module.css';
 
 export default function Schools() {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filterStatus, setFilterStatus] = useState('all');
+  const [schools, setSchools] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all');
 
-  const filteredSchools = MOCK_SCHOOLS.filter(school => {
-    const matchesSearch = school.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          school.subdomain.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesStatus = filterStatus === 'all' || school.status === filterStatus;
-    return matchesSearch && matchesStatus;
+  useEffect(() => {
+    api.getAdminSchools()
+      .then(d => setSchools(Array.isArray(d) ? d : (d?.schools ?? [])))
+      .catch(() => setSchools([]))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const filtered = schools.filter(sc => {
+    const q = search.toLowerCase();
+    const matchSearch = !q || sc.name?.toLowerCase().includes(q) || sc.schoolCode?.toLowerCase().includes(q);
+    const matchStatus = statusFilter === 'all' || sc.subscriptionStatus === statusFilter || sc.status === statusFilter;
+    return matchSearch && matchStatus;
   });
 
+  const columns = [
+    { key: 'name',   label: 'School',  render: (v) => <span className={s.schoolName}>{v}</span> },
+    { key: 'schoolCode', label: 'Code', render: (v) => <span className={s.mono}>{v || '—'}</span> },
+    { key: 'planName',   label: 'Plan', render: (v) => <StatusBadge status={v?.toLowerCase() || 'starter'} /> },
+    { key: 'subscriptionStatus', label: 'Status', render: (v) => <StatusBadge status={v || 'active'} /> },
+    { key: 'studentCount', label: 'Students', render: (v) => <span className={s.mono}>{(v ?? 0).toLocaleString()}</span> },
+    { key: 'id', label: 'Actions', width: '100px', render: (_, row) => (
+      <div className={s.actions}>
+        <button className={s.actionBtn} title="View">↗</button>
+        <button className={s.actionBtn} title="Edit">✎</button>
+      </div>
+    )},
+  ];
+
   return (
-    <div className={styles.container}>
-      <div className={styles.pageHeader}>
-        <h1 className={styles.pageTitle}>Schools</h1>
-        <p className={styles.pageSubtitle}>Manage all tenant schools on the platform</p>
+    <div>
+      <PageHeader
+        title="Schools"
+        subtitle="All tenant schools on the platform"
+        actions={
+          <Link to="/schools/onboarding" className={s.primaryBtn}>+ Onboard School</Link>
+        }
+      />
+
+      <div className={s.toolbar}>
+        <input
+          className={s.search}
+          type="search"
+          placeholder="Search by name or code…"
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+        />
+        <select className={s.select} value={statusFilter} onChange={e => setStatusFilter(e.target.value)}>
+          <option value="all">All Status</option>
+          <option value="active">Active</option>
+          <option value="pending">Pending</option>
+          <option value="suspended">Suspended</option>
+        </select>
       </div>
 
-      <div className={styles.actionsBar}>
-        <div className={styles.searchWrapper}>
-          <input
-            type="search"
-            placeholder="Search by name or subdomain..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className={styles.searchInput}
-          />
-        </div>
-        <div className={styles.filters}>
-          <select
-            value={filterStatus}
-            onChange={(e) => setFilterStatus(e.target.value)}
-            className={styles.filterSelect}
-          >
-            <option value="all">All Status</option>
-            <option value="active">Active</option>
-            <option value="pending">Pending</option>
-            <option value="suspended">Suspended</option>
-          </select>
-        </div>
-        <Link to="/schools/onboarding" className={styles.primaryButton}>
-          + Onboard School
-        </Link>
-      </div>
-
-      <div className={styles.tableWrapper}>
-        <table className={styles.table}>
-          <thead>
-            <tr>
-              <th>School</th>
-              <th>Subdomain</th>
-              <th>Plan</th>
-              <th>Students</th>
-              <th>Status</th>
-              <th>Created</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredSchools.map(school => {
-              const statusBadge = getStatusBadge(school.status);
-              const planClass = getPlanBadge(school.plan);
-              return (
-                <tr key={school.id}>
-                  <td className={styles.schoolName}>{school.name}</td>
-                  <td className={styles.subdomain}>{school.subdomain}.lumiqos.io</td>
-                  <td><span className={`${styles.planBadge} ${planClass}`}>{school.plan}</span></td>
-                  <td>{school.students.toLocaleString()}</td>
-                  <td><span className={`${styles.statusBadge} ${statusBadge.className}`}>{statusBadge.label}</span></td>
-                  <td>{school.createdAt}</td>
-                  <td className={styles.actions}>
-                    <button className={styles.actionBtn} title="View Details">👁️</button>
-                    <button className={styles.actionBtn} title="Edit">✏️</button>
-                    <button className={styles.actionBtn} title="More">⋯</button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+      <DataTable columns={columns} rows={filtered} loading={loading} empty="No schools found" />
     </div>
   );
 }

@@ -1,38 +1,134 @@
-.dashboard { display: flex; flex-direction: column; gap: var(--space-6); }
-.pageHeader { margin-bottom: var(--space-2); }
-.pageTitle { font-family: var(--font-serif); font-size: 26px; font-weight: 400; color: var(--ink); line-height: 1.15; margin: 0 0 var(--space-1) 0; }
-.pageSubtitle { font-family: var(--font-sans); font-size: 13px; font-weight: 300; color: var(--ink-60); margin: 0; }
-.kpiGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-4); }
-.chartsRow { display: grid; grid-template-columns: 1.4fr 1fr; gap: var(--space-4); }
-.chartCard { background: var(--surface-2); border: 0.5px solid var(--border); border-radius: var(--r-md); padding: 18px 20px; }
-.cardTitle { font-family: var(--font-sans); font-size: 9.5px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.12em; color: var(--ink-40); margin: 0 0 var(--space-4) 0; }
-.barChartPlaceholder { height: 140px; display: flex; align-items: flex-end; }
-.mockBars { display: flex; align-items: flex-end; justify-content: space-around; width: 100%; height: 100%; }
-.mockBarWrapper { display: flex; flex-direction: column; align-items: center; width: 100%; height: 100%; justify-content: flex-end; }
-.mockBar { width: 32px; background: var(--ink-10); border-radius: 4px 4px 2px 2px; position: relative; min-height: 4px; }
-.mockBarWrapper:first-child .mockBar { background: var(--gold); }
-.barValue { position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-family: var(--font-sans); font-size: 10px; color: var(--ink-60); white-space: nowrap; }
-.barLabel { font-family: var(--font-sans); font-size: 9px; color: var(--ink-35); margin-top: var(--space-1); }
-.progressList { display: flex; flex-direction: column; gap: var(--space-4); }
-.progressItem { display: flex; align-items: center; gap: var(--space-2); }
-.progressLabel { font-family: var(--font-sans); font-size: 11.5px; color: var(--ink-55); width: 140px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.progressBarTrack { flex: 1; height: 2px; background: var(--ink-10); border-radius: 2px; }
-.progressBarFill { height: 2px; background: var(--gold); border-radius: 2px; }
-.progressValue { font-family: var(--font-sans); font-size: 10.5px; color: var(--ink-35); width: 30px; text-align: right; }
-.bottomRow { display: grid; grid-template-columns: 1.4fr 1fr; gap: var(--space-4); }
-.listCard { background: var(--surface-2); border: 0.5px solid var(--border); border-radius: var(--r-md); padding: 18px 20px; }
-.activityList { display: flex; flex-direction: column; }
-.activityItem { display: flex; align-items: center; padding: 9px 0; border-bottom: 0.5px solid var(--border); }
-.activityItem:last-child { border-bottom: none; }
-.activityIcon { width: 30px; height: 30px; background: var(--persona-accent-light, #D6E4F7); border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 14px; margin-right: var(--space-2); }
-.activityContent { flex: 1; display: flex; flex-direction: column; }
-.activitySchool { font-family: var(--font-sans); font-size: 12px; font-weight: 400; color: var(--ink-80); }
-.activityAction { font-family: var(--font-sans); font-size: 10.5px; font-weight: 300; color: var(--ink-35); }
-.activityTime { font-family: var(--font-sans); font-size: 10px; color: var(--ink-35); }
-.insightCard { background: var(--gold-pale); border: 1px solid var(--gold-light); border-radius: 14px; padding: 16px; position: relative; overflow: hidden; }
-.insightCard::before { content: ''; position: absolute; top: -20px; right: -20px; width: 80px; height: 80px; border-radius: 50%; background: rgba(200,169,110,0.2); filter: blur(20px); pointer-events: none; }
-.aiTag { font-family: var(--font-sans); font-size: 8.5px; font-weight: 600; letter-spacing: 0.13em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
-.aiTag::after { content: ''; flex: 1; height: 1px; background: rgba(200,169,110,0.3); }
-.insightText { font-family: var(--font-sans); font-size: 12px; font-weight: 300; line-height: 1.65; color: var(--ink-65); margin: 0 0 var(--space-4) 0; }
-.insightAction { background: transparent; border: none; padding: 0; font-family: var(--font-sans); font-size: 11px; font-weight: 500; color: var(--gold); cursor: pointer; transition: opacity var(--t-instant); }
-.insightAction:hover { opacity: 0.75; }
+.kpiGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-6);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-4);
+}
+
+.card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: var(--sp-5) var(--sp-6);
+}
+
+.cardTitle {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--sp-4);
+  letter-spacing: -0.01em;
+}
+
+.subList { display: flex; flex-direction: column; gap: var(--sp-3); }
+
+.subRow {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+.subPlan {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  width: 90px;
+  flex-shrink: 0;
+}
+
+.subTrack {
+  flex: 1;
+  height: 4px;
+  background: var(--bg-raised);
+  border-radius: var(--r-pill);
+  overflow: hidden;
+}
+
+.subFill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: var(--r-pill);
+  transition: width var(--t-slow) var(--ease-enter);
+}
+
+.subCount {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  width: 24px;
+  text-align: right;
+}
+
+.activityList { display: flex; flex-direction: column; gap: var(--sp-3); }
+
+.activityRow {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+}
+
+.activityDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  margin-top: 5px;
+  flex-shrink: 0;
+}
+
+.activityBody {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.activitySchool {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.activityAction {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+.activityTime {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  white-space: nowrap;
+  font-family: var(--font-mono);
+}
+
+.error {
+  background: var(--danger-muted);
+  color: var(--danger);
+  border: 1px solid var(--danger);
+  border-radius: var(--r-md);
+  padding: var(--sp-3) var(--sp-4);
+  font-size: var(--text-sm);
+  margin-bottom: var(--sp-4);
+}
+
+.empty {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  padding: var(--sp-6) 0;
+  text-align: center;
+}
+
+@media (max-width: 1279px) {
+  .kpiGrid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 767px) {
+  .kpiGrid { grid-template-columns: 1fr; }
+  .row { grid-template-columns: 1fr; }
+}

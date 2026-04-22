@@ -1,23 +1,12 @@
-import styles from './KPICard.module.css';
+import s from './KPICard.module.css';
 
-export default function KPICard({ label, value, delta, deltaType = 'neutral' }) {
-  const getDeltaColor = () => {
-    switch (deltaType) {
-      case 'success': return 'var(--success)';
-      case 'warning': return 'var(--warning)';
-      case 'danger': return 'var(--danger)';
-      default: return 'var(--ink-60)';
-    }
-  };
-
+export default function KPICard({ label, value, delta, deltaType = 'neutral', mono = false }) {
   return (
-    <div className={styles.card}>
-      <span className={styles.label}>{label}</span>
-      <span className={styles.value}>{value}</span>
+    <div className={s.card}>
+      <span className={s.label}>{label}</span>
+      <span className={`${s.value} ${mono ? s.mono : ''}`}>{value}</span>
       {delta && (
-        <span className={styles.delta} style={{ color: getDeltaColor() }}>
-          {deltaType === 'success' ? '↑' : deltaType === 'danger' ? '↓' : '•'} {delta}
-        </span>
+        <span className={`${s.delta} ${s[deltaType] || ''}`}>{delta}</span>
       )}
     </div>
   );
