@@ -16,7 +16,11 @@ import { Syllabus } from '@lumiqos/shared/src/entities/syllabus.entity';
 import { CurriculumMapping } from '@lumiqos/shared/src/entities/curriculum-mapping.entity';
 import { TeacherSubject } from '@lumiqos/shared/src/entities/teacher-subject.entity';
 import { Board } from '@lumiqos/shared/src/entities/board.entity';
+import { SaasPlan } from '@lumiqos/shared/src/entities/saas-plan.entity';
+import { TenantSubscription } from '@lumiqos/shared/src/entities/tenant-subscription.entity';
 import { Role } from '@lumiqos/shared/src/entities/role.entity';
+import { Permission } from '@lumiqos/shared/src/entities/permission.entity';
+import { RolePermission } from '@lumiqos/shared/src/entities/role-permission.entity';
 
 const TEST_SCHOOL_ID = '11111111-1111-1111-1111-111111111111';
 const TEST_CLASS_ID  = '33333333-3333-3333-3333-333333333333';
@@ -40,7 +44,11 @@ export class SeederService implements OnApplicationBootstrap {
         @InjectRepository(CurriculumMapping) private readonly mappingRepo: Repository<CurriculumMapping>,
         @InjectRepository(TeacherSubject) private readonly teacherSubjectRepo: Repository<TeacherSubject>,
         @InjectRepository(Board) private readonly boardConfigRepo: Repository<Board>,
+        @InjectRepository(SaasPlan) private readonly planRepo: Repository<SaasPlan>,
+        @InjectRepository(TenantSubscription) private readonly subRepo: Repository<TenantSubscription>,
         @InjectRepository(Role) private readonly roleRepo: Repository<Role>,
+        @InjectRepository(Permission) private readonly permissionRepo: Repository<Permission>,
+        @InjectRepository(RolePermission) private readonly rolePermissionRepo: Repository<RolePermission>,
     ) { }
 
     async onApplicationBootstrap() {
@@ -203,6 +211,122 @@ export class SeederService implements OnApplicationBootstrap {
                 console.log(`Seeded TeacherSubject: ${a.teacher.email} → ${a.subject_id}`);
             }
         }
+
+        // 8. Seed SaaS Plans
+        const plansData = [
+            { name: 'Starter', plan_id: 'starter', max_students: 500, max_teachers: 30, ai_features_enabled: false, analytics_enabled: false },
+            { name: 'Growth', plan_id: 'growth', max_students: 2000, max_teachers: 100, ai_features_enabled: true, analytics_enabled: false },
+            { name: 'Enterprise', plan_id: 'enterprise', max_students: 99999, max_teachers: 9999, ai_features_enabled: true, analytics_enabled: true },
+        ];
+        const seededPlans: Record<string, SaasPlan> = {};
+        for (const p of plansData) {
+            let plan = await this.planRepo.findOne({ where: { plan_id: p.plan_id } });
+            if (!plan) {
+                plan = await this.planRepo.save(this.planRepo.create(p));
+                console.log(`Seeded plan: ${p.name}`);
+            }
+            seededPlans[p.plan_id] = plan;
+        }
+
+        // 9. Seed Tenant Subscriptions for all schools
+        const allSchools = await this.schoolRepo.find();
+        const planKeys = ['starter', 'growth', 'enterprise'];
+        for (let i = 0; i < allSchools.length; i++) {
+            const s = allSchools[i];
+            const exists = await this.subRepo.findOne({ where: { school_id: s.id } });
+            if (!exists) {
+                const planKey = planKeys[i % planKeys.length];
+                await this.subRepo.save(this.subRepo.create({
+                    school_id: s.id,
+                    plan_id: seededPlans[planKey].id,
+                    status: 'active',
+                    current_period_end: new Date('2027-03-31'),
+                }));
+                console.log(`Seeded subscription: ${s.name} -> ${planKey}`);
+            }
+        }
+
+        // 9. Seed Permissions and RolePermissions
+        const PERMISSIONS = [
+            { permission_id: 'dashboard.view',       name: 'View Dashboard',        module: 'dashboard',    action: 'view' },
+            { permission_id: 'students.view',        name: 'View Students',         module: 'students',     action: 'view' },
+            { permission_id: 'students.manage',      name: 'Manage Students',       module: 'students',     action: 'manage' },
+            { permission_id: 'attendance.view',      name: 'View Attendance',       module: 'attendance',   action: 'view' },
+            { permission_id: 'attendance.manage',    name: 'Manage Attendance',     module: 'attendance',   action: 'manage' },
+            { permission_id: 'homework.view',        name: 'View Homework',         module: 'homework',     action: 'view' },
+            { permission_id: 'homework.manage',      name: 'Manage Homework',       module: 'homework',     action: 'manage' },
+            { permission_id: 'exams.view',           name: 'View Exams',            module: 'exams',        action: 'view' },
+            { permission_id: 'exams.manage',         name: 'Manage Exams',          module: 'exams',        action: 'manage' },
+            { permission_id: 'finance.view',         name: 'View Finance',          module: 'finance',      action: 'view' },
+            { permission_id: 'finance.manage',       name: 'Manage Finance',        module: 'finance',      action: 'manage' },
+            { permission_id: 'hr.view',              name: 'View HR',               module: 'hr',           action: 'view' },
+            { permission_id: 'hr.manage',            name: 'Manage HR',             module: 'hr',           action: 'manage' },
+            { permission_id: 'reports.view',         name: 'View Reports',          module: 'reports',      action: 'view' },
+            { permission_id: 'analytics.view',       name: 'View Analytics',        module: 'analytics',    action: 'view' },
+            { permission_id: 'settings.manage',      name: 'Manage Settings',       module: 'settings',     action: 'manage' },
+            { permission_id: 'timetable.view',       name: 'View Timetable',        module: 'timetable',    action: 'view' },
+            { permission_id: 'timetable.manage',     name: 'Manage Timetable',      module: 'timetable',    action: 'manage' },
+            { permission_id: 'communication.view',   name: 'View Communication',    module: 'communication',action: 'view' },
+            { permission_id: 'communication.manage', name: 'Manage Communication',  module: 'communication',action: 'manage' },
+        ];
+
+        for (const p of PERMISSIONS) {
+            const exists = await this.permissionRepo.findOne({ where: { permission_id: p.permission_id } });
+            if (!exists) {
+                await this.permissionRepo.save(this.permissionRepo.create(p));
+            }
+        }
+        console.log('Permissions seeded');
+
+        // Role → permission mapping
+        const ROLE_PERMISSIONS: Record<string, string[]> = {
+            principal: [
+                'dashboard.view','students.view','students.manage',
+                'attendance.view','attendance.manage','homework.view','homework.manage',
+                'exams.view','exams.manage','finance.view','hr.view','hr.manage',
+                'reports.view','analytics.view','settings.manage',
+                'timetable.view','timetable.manage','communication.view','communication.manage',
+            ],
+            teacher: [
+                'dashboard.view','students.view','attendance.view','attendance.manage',
+                'homework.view','homework.manage','exams.view','exams.manage',
+                'reports.view','timetable.view','communication.view','communication.manage',
+            ],
+            administrator: [
+                'dashboard.view','students.view','students.manage',
+                'attendance.view','exams.view','reports.view',
+                'timetable.view','timetable.manage','communication.view','communication.manage',
+                'settings.manage',
+            ],
+            finance: [
+                'dashboard.view','finance.view','finance.manage','reports.view',
+            ],
+            hr: [
+                'dashboard.view','hr.view','hr.manage','reports.view',
+            ],
+            parent: [
+                'dashboard.view','students.view','attendance.view',
+                'homework.view','exams.view','finance.view','communication.view',
+            ],
+            student: [
+                'dashboard.view','attendance.view','homework.view',
+                'exams.view','finance.view','communication.view',
+            ],
+        };
+
+        for (const [roleId, permIds] of Object.entries(ROLE_PERMISSIONS)) {
+            for (const permId of permIds) {
+                const exists = await this.rolePermissionRepo.findOne({
+                    where: { role_id: roleId, permission_id: permId },
+                });
+                if (!exists) {
+                    await this.rolePermissionRepo.save(
+                        this.rolePermissionRepo.create({ role_id: roleId, permission_id: permId })
+                    );
+                }
+            }
+        }
+        console.log('RolePermissions seeded');
 
         console.log('--- IDEMPOTENT SEEDING COMPLETE ---');
     }
