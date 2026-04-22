@@ -168,11 +168,12 @@ SeederModule, AdminModule
 - Dev port: 5175 | Docker port: 5173 | data-surface="school" (light)
 - Shell: DashboardShell.jsx — same sidebar pattern, light surface, role-aware nav
 - 7 roles: principal, teacher, administrator, finance, hr, parent, student
-- Login page: ✅ renders correctly
-- Role dashboards: "Failed to fetch" in dev — school_token + x-school-id not wired
-- Docker image: STALE — serves pre-redesign build (phase 27), needs rebuild
+- Login page: ✅ renders correctly, real JWT auth, all 7 personas login
+- Role dashboards: ✅ all 7 redesigned, new tokens, wired via api/client.js
+- Shared components: KPICard, PageHeader, DataTable, StatusBadge, AIInsightStrip
+- Docker image: needs rebuild to pick up phase 30 changes
 - PWA: devOptions.enabled=false (Codespace SW CORS issue)
-- Auth: school_token + school_role + school_user in localStorage
+- Auth: school_token + school_role + school_user + school_id in localStorage
 
 ---
 
@@ -212,7 +213,7 @@ Command: docker compose build <service> && docker compose up -d <service>
 | synchronize:true in TypeORM        | High     | Replace with migrations before prod          |
 | Docker frontend image stale        | ✅ Fixed  | Rebuilt with phase 29 redesign, port 5173:5175 mapped |
 | School portal fetch failures       | ✅ Fixed  | Real JWT auth, x-school-id wired in api/client.js |
-| School portal pages not redesigned | Medium   | Phase 29 Step 6 not started                  |
+| School portal pages not redesigned | ✅ Fixed  | All 7 role dashboards redesigned, new tokens, api/client wired |
 | No API versioning (/api/v1/)       | Medium   | Deferred                                     |
 | Communication needs JWT context    | Medium   | createThread/sendMessage need user context   |
 | Two duplicate "Test School" rows   | Low      | No school_code, harmless in dev              |
@@ -227,7 +228,7 @@ Command: docker compose build <service> && docker compose up -d <service>
 1. ✅ Seed role_permission table → RBAC live, 19 permissions in JWT
 2. ✅ Rebuild Docker frontend image → port 5173:5175 fixed
 3. ✅ Wire school_token + x-school-id → all 7 personas login with real JWT
-4. School portal role dashboard visual redesign (Phase 29 Step 6)
+4. ✅ School portal role dashboard visual redesign — all 7 dashboards done
 5. Replace synchronize:true with TypeORM migrations
 6. API versioning /api/v1/
 7. Communication endpoints JWT user context
