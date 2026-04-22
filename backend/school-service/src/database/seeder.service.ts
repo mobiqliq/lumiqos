@@ -163,6 +163,10 @@ export class SeederService implements OnApplicationBootstrap {
                     password_hash: DEFAULT_PASSWORD_HASH,
                 }));
                 console.log(`Seeded staff: ${s.email}`);
+            } else if (!user.password_hash || user.password_hash.length < 10) {
+                user.password_hash = DEFAULT_PASSWORD_HASH;
+                await this.userRepo.save(user);
+                console.log(`Fixed password_hash for: ${s.email}`);
             }
             seededUsers[s.email] = user;
         }
