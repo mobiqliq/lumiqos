@@ -207,7 +207,7 @@ Command: docker compose build <service> && docker compose up -d <service>
 |------------------------------------|----------|----------------------------------------------|
 | permissions[] empty in JWT         | ✅ Fixed  | 20 permissions seeded, 7 roles mapped, JWT populated |
 | synchronize:true in TypeORM        | High     | Replace with migrations before prod          |
-| Docker frontend image stale        | Medium   | School-portal pre-redesign, needs rebuild    |
+| Docker frontend image stale        | ✅ Fixed  | Rebuilt with phase 29 redesign, port 5173:5175 mapped |
 | School portal fetch failures       | Medium   | school_token + x-school-id not wired in dev  |
 | School portal pages not redesigned | Medium   | Phase 29 Step 6 not started                  |
 | No API versioning (/api/v1/)       | Medium   | Deferred                                     |
