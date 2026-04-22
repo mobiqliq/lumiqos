@@ -168,6 +168,7 @@ SeederModule, AdminModule
 - Dev port: 5175 | Docker port: 5173 | data-surface="school" (light)
 - Shell: DashboardShell.jsx — same sidebar pattern, light surface, role-aware nav
 - 7 roles: principal, teacher, administrator, finance, hr, parent, student
+- DASHBOARD_BY_ROLE maps both 'admin' and 'administrator' keys → AdminDashboard
 - Login page: ✅ renders correctly, real JWT auth, all 7 personas login
 - Role dashboards: ✅ all 7 redesigned, new tokens, wired via api/client.js
 - Shared components: KPICard, PageHeader, DataTable, StatusBadge, AIInsightStrip
