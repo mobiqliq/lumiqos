@@ -1,8 +1,9 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import './index.css'
 import App from './App.jsx'
-import '@lumiqos/shared-frontend/theme.css'
-import '@lumiqos/shared-frontend/fonts.css'
+
+document.documentElement.setAttribute('data-surface', 'operator')
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
