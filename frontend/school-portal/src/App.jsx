@@ -12,6 +12,7 @@ import StudentDashboard from './pages/StudentDashboard';
 const DASHBOARD_BY_ROLE = {
   principal: PrincipalDashboard,
   admin: AdminDashboard,
+  administrator: AdminDashboard,
   teacher: TeacherDashboard,
   finance: FinanceDashboard,
   hr: HRDashboard,
