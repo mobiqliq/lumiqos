@@ -59,6 +59,7 @@ NOTE: User Service and Billing Service from original spec do NOT exist yet.
 | hr@testschool.edu            | hr            |
 | parent@testschool.edu        | parent        |
 | student@testschool.edu       | student       |
+Note: All password_hash values verified correct (bcrypt of 'password'). Seeder auto-repairs empty hashes on boot.
 
 ### SaaS Plans: Starter, Growth, Enterprise (1 subscription per school, all active)
 ### Known DB issue: 2 duplicate "Test School" rows, no school_code — harmless in dev
@@ -223,9 +224,9 @@ Command: docker compose build <service> && docker compose up -d <service>
 
 ## Phase 30 — Next Steps (ordered by priority)
 
-1. Seed role_permission table → unblock RBAC
-2. Rebuild Docker frontend image → fix stale school-portal
-3. Wire school_token + x-school-id in school-portal dev → fix fetch failures
+1. ✅ Seed role_permission table → RBAC live, 19 permissions in JWT
+2. ✅ Rebuild Docker frontend image → port 5173:5175 fixed
+3. ✅ Wire school_token + x-school-id → all 7 personas login with real JWT
 4. School portal role dashboard visual redesign (Phase 29 Step 6)
 5. Replace synchronize:true with TypeORM migrations
 6. API versioning /api/v1/
