@@ -18,10 +18,10 @@ export default function Dashboard() {
   }, []);
 
   const kpis = [
-    { label: 'Total Schools',        value: loading ? '…' : (data?.totalSchools ?? '—'),       delta: data?.schoolsDelta,  deltaType: 'success' },
-    { label: 'Active Users (30d)',    value: loading ? '…' : (data?.activeUsers ?? '—'),        delta: data?.usersDelta,    deltaType: 'success' },
-    { label: 'Monthly Revenue',       value: loading ? '…' : (data?.mrr ?? '—'),               delta: data?.mrrDelta,      deltaType: 'success' },
-    { label: 'System Health',         value: loading ? '…' : (data?.systemHealth ?? '99.9%'),   delta: 'All services operational', deltaType: 'neutral' },
+    { label: 'Total Schools',        value: loading ? '…' : (data?.total_schools ?? '—'),      deltaType: 'success' },
+    { label: 'Active Users',         value: loading ? '…' : (data?.total_users ?? '—'),         deltaType: 'success' },
+    { label: 'Active Subscriptions', value: loading ? '…' : (data?.active_subscriptions ?? '—'), deltaType: 'success' },
+    { label: 'System Health',        value: loading ? '…' : '99.9%', delta: 'All services operational', deltaType: 'neutral' },
   ];
 
   return (
@@ -38,15 +38,15 @@ export default function Dashboard() {
       <div className={s.row}>
         <div className={s.card}>
           <h3 className={s.cardTitle}>Subscription Breakdown</h3>
-          {data?.subscriptions ? (
+          {data?.plan_breakdown?.length ? (
             <div className={s.subList}>
-              {Object.entries(data.subscriptions).map(([plan, count]) => (
+              {data.plan_breakdown.map(({ plan, count }) => (
                 <div key={plan} className={s.subRow}>
                   <span className={s.subPlan}>{plan}</span>
                   <div className={s.subTrack}>
-                    <div className={s.subFill} style={{ width: `${Math.min(100, (count / (data.totalSchools || 1)) * 100)}%` }} />
+                    <div className={s.subFill} style={{ width: `${Math.min(100, ((count||0) / (data.total_schools || 1)) * 100)}%` }} />
                   </div>
-                  <span className={s.subCount}>{count}</span>
+                  <span className={s.subCount}>{count ?? 0}</span>
                 </div>
               ))}
             </div>
@@ -58,7 +58,7 @@ export default function Dashboard() {
         <div className={s.card}>
           <h3 className={s.cardTitle}>Recent Tenant Activity</h3>
           <div className={s.activityList}>
-            {(data?.recentActivity || [
+            {(data?.recent_activity || [
               { school: 'Loading…', action: '—', time: '—' },
             ]).map((item, i) => (
               <div key={i} className={s.activityRow}>

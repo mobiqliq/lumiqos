@@ -19,13 +19,13 @@ export default function Revenue() {
     <div>
       <PageHeader title="Revenue" subtitle="Platform-wide subscription revenue" />
       <div className={s.kpiGrid}>
-        <KPICard label="MRR"            value={loading ? '…' : (data?.totalMrr ?? '—')} delta={data?.mrrDelta} deltaType="success" />
-        <KPICard label="ARR"            value={loading ? '…' : (data?.totalArr ?? '—')} deltaType="success" />
-        <KPICard label="Active Tenants" value={loading ? '…' : (data?.activeTenants ?? '—')} deltaType="neutral" />
-        <KPICard label="Avg per Tenant" value={loading ? '…' : (data?.avgRevenue ?? '—')} deltaType="neutral" />
+        <KPICard label="Revenue Collected" value={loading ? '…' : (data?.total_revenue_collected != null ? '₹' + Number(data.total_revenue_collected).toLocaleString('en-IN') : '—')} deltaType="success" />
+        <KPICard label="Active Subscriptions" value={loading ? '…' : (data?.active_subscriptions ?? '—')} deltaType="success" />
+        <KPICard label="Total Schools" value={loading ? '…' : (data?.total_schools ?? '—')} deltaType="neutral" />
+        <KPICard label="Inactive" value={loading ? '…' : (data?.inactive_subscriptions ?? 0)} deltaType="neutral" />
       </div>
       <div className={s.card}>
-        <p style={{color:'var(--text-muted)',fontSize:'var(--text-sm)'}}>Detailed revenue charts coming in Phase 30.</p>
+        <p style={{color:'var(--text-muted)',fontSize:'var(--text-sm)'}}>Detailed revenue charts — Phase 30.</p>
       </div>
     </div>
   );
