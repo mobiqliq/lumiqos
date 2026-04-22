@@ -146,8 +146,10 @@ export class SeederService implements OnApplicationBootstrap {
             { first_name: 'Meena',    last_name: 'Joshi',   email: 'finance@testschool.edu',       role_id: 'finance' },
             { first_name: 'Vikram',   last_name: 'Rao',     email: 'hr@testschool.edu',            role_id: 'hr' },
             { first_name: 'Kavitha',  last_name: 'Nair',    email: 'teacher4@testschool.edu',      role_id: 'teacher' },
+            { first_name: 'Ananya',   last_name: 'Iyer',    email: 'parent@testschool.edu',        role_id: 'parent' },
+            { first_name: 'Rohan',    last_name: 'Mehta',   email: 'student@testschool.edu',       role_id: 'student' },
         ];
-        // bcrypt hash of 'Test@1234' (cost 10)
+        // bcrypt hash of 'password' (cost 10)
         const DEFAULT_PASSWORD_HASH = '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi';
         const seededUsers: Record<string, User> = {};
         for (const s of staffData) {

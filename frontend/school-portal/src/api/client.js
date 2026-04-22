@@ -1,73 +1,56 @@
 const API_BASE = '/api';
 
-// Dev mock login - bypasses real auth for frontend development
-const MOCK_LOGIN_RESPONSE = {
-    access_token: 'dev-mock-token',
-    user: {
-        id: 'dev-user',
-        email: 'teacher@school.lumiqos.dev',
-        role: 'teacher',
-        name: 'Dev Teacher',
-        school_id: '11111111-1111-1111-1111-111111111111',
-    }
-};
-
 export async function apiRequest(endpoint, options = {}) {
-    const token = localStorage.getItem('school_token');
-    const headers = {
-        'Content-Type': 'application/json',
-        ...(token && { Authorization: `Bearer ${token}` }),
-        'x-school-id': localStorage.getItem('school_id') || '11111111-1111-1111-1111-111111111111',
-        ...options.headers,
-    };
+  const token = localStorage.getItem('school_token');
+  const schoolId = localStorage.getItem('school_id') || '11111111-1111-1111-1111-111111111111';
 
-    // Mock login for development
-    if (endpoint.includes('/auth/login') && options.method === 'POST') {
-        console.log('🔧 Dev mock login activated');
-        return MOCK_LOGIN_RESPONSE;
-    }
+  const headers = {
+    'Content-Type': 'application/json',
+    'x-school-id': schoolId,
+    ...(token && { Authorization: `Bearer ${token}` }),
+    ...options.headers,
+  };
 
-    try {
-        const res = await fetch(`${API_BASE}${endpoint}`, { ...options, headers });
-        if (!res.ok) {
-            const error = await res.json().catch(() => ({ message: 'Request failed' }));
-            throw { status: res.status, ...error };
-        }
-        return res.json();
-    } catch (err) {
-        if (err.status) throw err;
-        throw { status: 0, message: 'Network error — is the API gateway running?' };
-    }
+  const res = await fetch(`${API_BASE}${endpoint}`, { ...options, headers });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw { status: res.status, ...data };
+  return data;
 }
 
 export const api = {
-    login: (email, password) =>
-        apiRequest('/auth/login', { method: 'POST', body: JSON.stringify({ email, password }) }),
+  // Auth
+  login: (email, password) =>
+    apiRequest('/auth/login', { method: 'POST', body: JSON.stringify({ email, password }) }),
 
-    getHealthServices: () => apiRequest('/health/services').catch(() => []),
+  // Dashboard
+  getDashboard: () => apiRequest('/dashboard/overview'),
 
-    getSchools: () => apiRequest('/schools').catch(() => []),
+  // Finance
+  getFinanceOverview: () => apiRequest('/finance/overview'),
 
-    getStudents: () => apiRequest('/students').catch(() => []),
+  // HR
+  getHrOverview: () => apiRequest('/hr/overview'),
 
-    getDashboard: () => apiRequest('/dashboard/overview').catch(() => null),
-};
+  // Parent
+  getParentSummary: (studentId) => apiRequest(`/parent/summary/${studentId}`),
 
-// Initialize demo data (mock)
-export const demoData = {
-    insights: {
-        teacher: {
-            title: 'AI Insight',
-            message: '3 students need attention. Reyansh Singh\'s mastery is below 70%.'
-        }
-    },
-    students: [
-        { id: '1', name: 'Aarav Sharma', class_name: 'Class 10' },
-        { id: '2', name: 'Ishita Patel', class_name: 'Class 10' },
-        { id: '3', name: 'Reyansh Singh', class_name: 'Class 10' },
-    ]
-};
+  // Intelligence Graph
+  getClassHeatmap: (classId) => apiRequest(`/intelligence-graph/class/${classId}/heatmap`),
+  getStudentRadar: (studentId) => apiRequest(`/intelligence-graph/student/${studentId}/radar`),
 
-export const initializeDemoData = async () => {
-    // No-op for now
+  // Substitution
+  getAbsences: () => apiRequest('/substitution/absences'),
+
+  // Exams
+  getExams: () => apiRequest('/exams'),
+
+  // Homework
+  getHomework: () => apiRequest('/homework/class'),
+
+  // Report Cards
+  getReportCards: (examId, classId) =>
+    apiRequest(`/report-cards/class?exam_id=${examId}&class_id=${classId}`),
+
+  // Timetable
+  getTimetable: () => apiRequest('/timetable'),
 };
