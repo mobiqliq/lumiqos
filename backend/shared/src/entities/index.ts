@@ -73,3 +73,7 @@ export * from './xceliq-score.entity';
 export * from './xceliq-score-dimension.entity';
 export * from './school-tier-config.entity';
 export * from './role-bundle.entity';
+
+export * from './chat-channel.entity';
+export * from './chat-message.entity';
+export * from './chat-member.entity';

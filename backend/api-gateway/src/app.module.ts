@@ -24,6 +24,7 @@ import { SchoolConfigController } from './school-config.controller';
 import { StudentIdentityController } from './student-identity.controller';
 import { XceliQScoreController } from './xceliq-score.controller';
 import { SchoolTierController } from './school-tier.controller';
+import { XceliQChatController } from './xceliq-chat.controller';
 
 @Module({
   imports: [
@@ -58,7 +59,7 @@ import { SchoolTierController } from './school-tier.controller';
     ]),
     HttpModule,
   ],
-  controllers: [AppController, HealthController, TeacherController, IntelligenceGraphController, DashboardController, FinanceController, ParentController, HrController, SubstitutionController, TimetableController, ReportCardsController, ExamsController, HomeworkController, CommunicationController, AuthController, AdminController, SchoolConfigController, StudentIdentityController, XceliQScoreController, SchoolTierController],
+  controllers: [AppController, HealthController, TeacherController, IntelligenceGraphController, DashboardController, FinanceController, ParentController, HrController, SubstitutionController, TimetableController, ReportCardsController, ExamsController, HomeworkController, CommunicationController, AuthController, AdminController, SchoolConfigController, StudentIdentityController, XceliQScoreController, SchoolTierController, XceliQChatController],
   providers: [AppService],
 })
 export class AppModule {}
