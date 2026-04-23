@@ -1,8 +1,8 @@
 # XceliQOS — Architecture Memory
 
 > This file is the AI's mandatory context loader. Read this BEFORE making any code changes.
-> Last Updated: 2026-04-23 — Phase 31 Sprint 2 IN PROGRESS (31.4 COMPLETE)
-> Branch: main | HEAD: 4841933
+> Last Updated: 2026-04-23 — Phase 31 Sprint 2 COMPLETE (31.4–31.6)
+> Branch: main | HEAD: 2ea9d82
 
 ---
 
@@ -287,8 +287,8 @@ All require: x-school-id header
 | Item | Description | Status |
 |------|-------------|--------|
 | 31.4 | XceliQChat — Internal Staff Communication | ✅ Complete |
-| 31.5 | Parent-School Communication Platform | ⬜ Pending |
-| 31.6 | Homework Transparency Triangle | ⬜ Pending |
+| 31.5 | Parent-School Communication Platform | ✅ Complete |
+| 31.6 | Homework Transparency Triangle | ✅ Complete |
 
 ### New Entities (31.4)
 - ChatChannel — channel with type enum: class/subject/department/whole_school/direct
@@ -309,6 +309,43 @@ All require: x-school-id header
 | POST | /api/chat/channels/:id/polls/:messageId/vote | Cast vote |
 | POST | /api/chat/channels/:id/acknowledge | Acknowledge announcement |
 | POST | /api/chat/channels/:id/read | Mark channel read |
+
+
+### New Entities (31.5)
+- ParentMessageThread — parent↔school thread, SLA tracking, escalation, resolve/open status
+- ParentMessage — in-platform message, sender_type, sentiment flag, read tracking (staff+parent side)
+- BroadcastAnnouncement — principal/admin broadcast, audience type, trigger type, read_count
+- BroadcastReadReceipt — per-user read receipt for broadcasts
+
+### New Endpoints (31.5) — all require x-school-id + x-user-id
+| Method | Path | Description |
+|--------|------|-------------|
+| POST | /api/parent-comms/threads | Create thread (parent initiates) |
+| GET | /api/parent-comms/threads | List threads for user (role-aware) |
+| GET | /api/parent-comms/threads/:id | Get thread + messages (enriched: parent/student/guardian names) |
+| POST | /api/parent-comms/threads/:id/messages | Send message in thread |
+| PATCH | /api/parent-comms/threads/:id/status | Resolve/escalate thread |
+| POST | /api/parent-comms/broadcasts | Create broadcast |
+| GET | /api/parent-comms/broadcasts | List broadcasts |
+| POST | /api/parent-comms/broadcasts/:id/read | Mark broadcast read |
+| GET | /api/parent-comms/broadcasts/:id/receipts | Read receipt list (admin) |
+
+### New Entities (31.6)
+- HomeworkFeedback — Growth Mindset triad (strength/improvement/encouragement), AI draft (jsonb), teacher_confirmed, is_late, parent_visible, parent_notified
+
+### New Endpoints (31.6) — all require x-school-id
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | /api/homework-transparency/student/:studentId | Student view: assignments + status + countdown |
+| GET | /api/homework-transparency/parent/:studentId | Parent view: assignments + feedback (parent_visible only) |
+| GET | /api/homework-transparency/teacher/queue | Teacher correction queue (submitted, no confirmed feedback) |
+| POST | /api/homework-transparency/submissions/:id/feedback | Submit structured feedback |
+| POST | /api/homework-transparency/submissions/:id/notify-parent | Trigger parent notification |
+| GET | /api/homework-transparency/analytics/class?class_id= | Completion rates by subject/type |
+
+### Test Data Note
+- Student enrollment seeded directly: id=eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee, admission_number=TEST-001
+- Links student 55555555 → class 33333333, school 11111111, year 22222222
 
 ### WS Deferral Note
 Real-time WebSocket layer deferred to Sprint 3 infrastructure.
