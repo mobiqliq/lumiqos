@@ -69,3 +69,5 @@ export * from './weekly-timetable.entity';
 export * from './subject-allocation.entity';
 export * from './student-identity.entity';
 export * from './student-passport.entity';
+export * from './xceliq-score.entity';
+export * from './xceliq-score-dimension.entity';
