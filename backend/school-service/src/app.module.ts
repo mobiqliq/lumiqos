@@ -23,6 +23,7 @@ import { StudentIdentityModule } from './student-identity/student-identity.modul
 import { XceliQScoreModule } from './xceliq-score/xceliq-score.module';
 import { SchoolTierModule } from './school-tier/school-tier.module';
 import { XceliQChatModule } from './xceliq-chat/xceliq-chat.module';
+import { ParentCommsModule } from './parent-comms/parent-comms.module';
 import * as AllEntities from '@xceliqos/shared/src/entities';
 import { LoggingMiddleware } from './middleware/logging.middleware';
 
@@ -60,6 +61,7 @@ import { LoggingMiddleware } from './middleware/logging.middleware';
     XceliQScoreModule,
     SchoolTierModule,
     XceliQChatModule,
+    ParentCommsModule,
   ],
   providers: [
     Reflector,

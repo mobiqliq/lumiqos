@@ -77,3 +77,8 @@ export * from './role-bundle.entity';
 export * from './chat-channel.entity';
 export * from './chat-message.entity';
 export * from './chat-member.entity';
+
+export * from './parent-message-thread.entity';
+export * from './parent-message.entity';
+export * from './broadcast-announcement.entity';
+export * from './broadcast-read-receipt.entity';
