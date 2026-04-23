@@ -82,3 +82,4 @@ export * from './parent-message-thread.entity';
 export * from './parent-message.entity';
 export * from './broadcast-announcement.entity';
 export * from './broadcast-read-receipt.entity';
+export * from './homework-feedback.entity';
