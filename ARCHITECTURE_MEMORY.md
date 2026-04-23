@@ -1,7 +1,7 @@
 # XceliQOS — Architecture Memory
 
 > This file is the AI's mandatory context loader. Read this BEFORE making any code changes.
-> Last Updated: 2026-04-23 — Phase 31 Sprint 2 COMPLETE (31.4–31.6)
+> Last Updated: 2026-04-23 — Phase 31 Sprint 3 IN PROGRESS (31.7 COMPLETE)
 > Branch: main | HEAD: 2ea9d82
 
 ---
@@ -350,6 +350,56 @@ All require: x-school-id header
 ### WS Deferral Note
 Real-time WebSocket layer deferred to Sprint 3 infrastructure.
 REST API + full data model complete. WS will consume same entities.
+
+
+## Phase 31 — Sprint 3 Status
+
+| Item | Description | Status |
+|------|-------------|--------|
+| 31.7 | Exam Creation Engine + Board Syllabus + Curriculum Map | ✅ Complete |
+| 31.8 | Curriculum Calendar v2.0 | ⬜ Pending |
+| 31.9 | XceliQRevise (Spaced Repetition) | ⬜ Pending |
+
+### New Entities (31.7)
+- QuestionBank — board_id+board_topic_id scoped, Bloom level, difficulty, NEP competency, all question types
+- ExamQuestion — exam assembly junction, section label, allocated marks, answer sheet zone coords
+- ExamAnswerSheet — PDF template config, QR payload, section structure, draft/published/archived
+- StudentAnswerSheet — image upload, OCR extraction result, confidence map, teacher confirmation, result notification
+- ItemAnalysis — discrimination index, difficulty index, option distribution, flagging
+- BoardSyllabus — operator-managed canonical topics per board+grade+subject, versioned
+- SchoolCurriculumMap — textbook+chapter→board_topic mapping, versioned, archived never deleted, one-click restore
+
+### New Endpoints (31.7) — all require x-school-id
+| Method | Path | Description |
+|--------|------|-------------|
+| POST | /api/exam-engine/questions | Add question to bank |
+| GET | /api/exam-engine/questions | List/filter questions |
+| POST | /api/exam-engine/questions/bulk | Bulk import |
+| GET | /api/exam-engine/questions/:id | Get question |
+| PATCH | /api/exam-engine/questions/:id | Update question |
+| POST | /api/exam-engine/exams/:id/assemble | AI assemble exam from params |
+| GET | /api/exam-engine/exams/:id/questions | Get assembled questions |
+| POST | /api/exam-engine/exams/:id/answer-sheet | Create answer sheet template |
+| POST | /api/exam-engine/exams/:id/sheets/upload | Upload student answer sheet photo |
+| GET | /api/exam-engine/exams/:id/sheets | List student sheets |
+| POST | /api/exam-engine/sheets/:id/confirm | Teacher confirms marks |
+| POST | /api/exam-engine/sheets/:id/notify-result | Notify student+parent |
+| POST | /api/exam-engine/exams/:id/item-analysis | Run item analysis |
+| GET | /api/exam-engine/exams/:id/item-analysis | Get item analysis |
+| GET | /api/exam-engine/board-syllabus | Get board syllabus topics |
+| POST | /api/exam-engine/curriculum-map | Create curriculum map |
+| GET | /api/exam-engine/curriculum-map | Get active curriculum map |
+| GET | /api/exam-engine/curriculum-map/history | Full version history |
+| POST | /api/exam-engine/curriculum-map/:id/restore | One-click restore archived map |
+| GET | /api/exam-engine/curriculum-map/coverage | Coverage % + unmapped topics |
+
+### Board Affiliation Architecture
+- School.board field = board_affiliation (already existed)
+- Operator sets board during onboarding only
+- QuestionBank.metadata.board_id = board filter (jsonb)
+- All question queries auto-filter by school board
+- BoardSyllabus: canonical, operator-managed, never school-editable
+- SchoolCurriculumMap: school-managed, academic-year scoped, versioned+archived
 
 ## Known Issues / Technical Debt
 
