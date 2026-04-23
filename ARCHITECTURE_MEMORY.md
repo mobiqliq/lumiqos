@@ -1,8 +1,8 @@
 # XceliQOS — Architecture Memory
 
 > This file is the AI's mandatory context loader. Read this BEFORE making any code changes.
-> Last Updated: 2026-04-23 — Phase 31 Sprint 1 In Progress (31.0, 31.1 Complete)
-> Branch: main | HEAD: ca53386
+> Last Updated: 2026-04-23 — Phase 31 Sprint 1 In Progress (31.0, 31.1, 31.2 Complete)
+> Branch: main | HEAD: f40a17e
 
 ---
 
@@ -209,8 +209,8 @@ Command: docker compose build <service> && docker compose up -d <service>
 
 ## Phase 31 — Sprint 1 In Progress
 
-### Current Focus: 31.2 XceliQScore v1.0
-- Previously completed: 31.0 School Calendar & Timetable Config, 31.1 Student Persistent Identity Layer
+### Current Focus: 31.3 Adaptive Role Architecture (Tier 1/2/3)
+- Previously completed: 31.0 School Calendar & Timetable Config, 31.1 Student Persistent Identity Layer, 31.2 XceliQScore v1.0
 - Prerequisite for: all curriculum/workload/compliance calculations
 - New entities required: SchoolCalendarConfig, TimetablePeriod, WeeklyTimetable, SubjectAllocation
 - New module: SchoolConfigModule (school-config-service long term, school-service for now)
@@ -239,6 +239,15 @@ All require: x-school-id header
 - WeeklyTimetable — subject-period-class-teacher allocation per day
 - SubjectAllocation — periods per week per subject per class, NEP compliance flag
 
+| GET | /api/xceliq-score/config?academic_year_id= | Get/create dimension weight config |
+| POST | /api/xceliq-score/config | Upsert dimension weights (must sum to 100) |
+| GET | /api/xceliq-score/:student_id?academic_year_id= | Get current score + trajectory |
+| POST | /api/xceliq-score/:student_id/calculate | Calculate score from dimension inputs |
+
+### New Entities (31.2)
+- XceliQScore — composite + 10 dimension scores, growth delta, Growth Mindset narrative
+- XceliQScoreDimension — school-configurable weights (default: Academic Mastery 25%, etc.)
+
 ### New Entities (31.1)
 - StudentIdentity — federated UUID above school_id, school_history, consent flags
 - StudentPassport — cross-school mastery map, intervention record, XceliQScore history, SEL observations, transfer log
@@ -248,7 +257,7 @@ All require: x-school-id header
 |------|-------------|--------|
 | 31.0 | School Calendar & Timetable Config Engine | ✅ Complete |
 | 31.1 | Student Persistent Identity Layer | ✅ Complete |
-| 31.2 | XceliQScore v1.0 (10-dimension scoring) | 🔲 Pending |
+| 31.2 | XceliQScore v1.0 (10-dimension scoring) | ✅ Complete |
 | 31.3 | Adaptive Role Architecture (Tier 1/2/3) | 🔲 Pending |
 
 
