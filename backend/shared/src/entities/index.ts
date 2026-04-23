@@ -62,3 +62,8 @@ export * from './student-skill-mastery.entity';
 export * from './student-concept-mastery.entity';
 export * from './topic-skill-map.entity';
 export * from './topic-concept-map.entity';
+
+export * from './school-calendar-config.entity';
+export * from './timetable-period.entity';
+export * from './weekly-timetable.entity';
+export * from './subject-allocation.entity';

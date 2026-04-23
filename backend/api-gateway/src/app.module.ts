@@ -20,6 +20,7 @@ import { HomeworkController } from './homework.controller';
 import { CommunicationController } from './communication.controller';
 import { AuthController } from './auth.controller';
 import { AdminController } from './admin.controller';
+import { SchoolConfigController } from './school-config.controller';
 
 @Module({
   imports: [
@@ -54,7 +55,7 @@ import { AdminController } from './admin.controller';
     ]),
     HttpModule,
   ],
-  controllers: [AppController, HealthController, TeacherController, IntelligenceGraphController, DashboardController, FinanceController, ParentController, HrController, SubstitutionController, TimetableController, ReportCardsController, ExamsController, HomeworkController, CommunicationController, AuthController, AdminController],
+  controllers: [AppController, HealthController, TeacherController, IntelligenceGraphController, DashboardController, FinanceController, ParentController, HrController, SubstitutionController, TimetableController, ReportCardsController, ExamsController, HomeworkController, CommunicationController, AuthController, AdminController, SchoolConfigController],
   providers: [AppService],
 })
 export class AppModule {}
