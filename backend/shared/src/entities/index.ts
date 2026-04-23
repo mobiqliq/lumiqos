@@ -71,3 +71,5 @@ export * from './student-identity.entity';
 export * from './student-passport.entity';
 export * from './xceliq-score.entity';
 export * from './xceliq-score-dimension.entity';
+export * from './school-tier-config.entity';
+export * from './role-bundle.entity';

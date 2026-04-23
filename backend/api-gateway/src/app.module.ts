@@ -23,6 +23,7 @@ import { AdminController } from './admin.controller';
 import { SchoolConfigController } from './school-config.controller';
 import { StudentIdentityController } from './student-identity.controller';
 import { XceliQScoreController } from './xceliq-score.controller';
+import { SchoolTierController } from './school-tier.controller';
 
 @Module({
   imports: [
@@ -57,7 +58,7 @@ import { XceliQScoreController } from './xceliq-score.controller';
     ]),
     HttpModule,
   ],
-  controllers: [AppController, HealthController, TeacherController, IntelligenceGraphController, DashboardController, FinanceController, ParentController, HrController, SubstitutionController, TimetableController, ReportCardsController, ExamsController, HomeworkController, CommunicationController, AuthController, AdminController, SchoolConfigController, StudentIdentityController, XceliQScoreController],
+  controllers: [AppController, HealthController, TeacherController, IntelligenceGraphController, DashboardController, FinanceController, ParentController, HrController, SubstitutionController, TimetableController, ReportCardsController, ExamsController, HomeworkController, CommunicationController, AuthController, AdminController, SchoolConfigController, StudentIdentityController, XceliQScoreController, SchoolTierController],
   providers: [AppService],
 })
 export class AppModule {}

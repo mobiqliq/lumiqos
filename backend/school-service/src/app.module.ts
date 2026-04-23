@@ -21,6 +21,7 @@ import { AdminModule } from './admin/admin.module';
 import { SchoolConfigModule } from './school-config/school-config.module';
 import { StudentIdentityModule } from './student-identity/student-identity.module';
 import { XceliQScoreModule } from './xceliq-score/xceliq-score.module';
+import { SchoolTierModule } from './school-tier/school-tier.module';
 import * as AllEntities from '@xceliqos/shared/src/entities';
 import { LoggingMiddleware } from './middleware/logging.middleware';
 
@@ -56,6 +57,7 @@ import { LoggingMiddleware } from './middleware/logging.middleware';
     SchoolConfigModule,
     StudentIdentityModule,
     XceliQScoreModule,
+    SchoolTierModule,
   ],
   providers: [
     Reflector,
