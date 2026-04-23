@@ -19,6 +19,7 @@ import { CommunicationModule } from './communication/communication.module';
 import { SeederModule } from './database/seeder.module';
 import { AdminModule } from './admin/admin.module';
 import { SchoolConfigModule } from './school-config/school-config.module';
+import { StudentIdentityModule } from './student-identity/student-identity.module';
 import * as AllEntities from '@xceliqos/shared/src/entities';
 import { LoggingMiddleware } from './middleware/logging.middleware';
 
@@ -52,6 +53,7 @@ import { LoggingMiddleware } from './middleware/logging.middleware';
     SeederModule,
     AdminModule,
     SchoolConfigModule,
+    StudentIdentityModule,
   ],
   providers: [
     Reflector,

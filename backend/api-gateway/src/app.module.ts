@@ -21,6 +21,7 @@ import { CommunicationController } from './communication.controller';
 import { AuthController } from './auth.controller';
 import { AdminController } from './admin.controller';
 import { SchoolConfigController } from './school-config.controller';
+import { StudentIdentityController } from './student-identity.controller';
 
 @Module({
   imports: [
@@ -55,7 +56,7 @@ import { SchoolConfigController } from './school-config.controller';
     ]),
     HttpModule,
   ],
-  controllers: [AppController, HealthController, TeacherController, IntelligenceGraphController, DashboardController, FinanceController, ParentController, HrController, SubstitutionController, TimetableController, ReportCardsController, ExamsController, HomeworkController, CommunicationController, AuthController, AdminController, SchoolConfigController],
+  controllers: [AppController, HealthController, TeacherController, IntelligenceGraphController, DashboardController, FinanceController, ParentController, HrController, SubstitutionController, TimetableController, ReportCardsController, ExamsController, HomeworkController, CommunicationController, AuthController, AdminController, SchoolConfigController, StudentIdentityController],
   providers: [AppService],
 })
 export class AppModule {}
