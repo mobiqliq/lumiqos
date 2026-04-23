@@ -58,6 +58,7 @@ export class SeederService implements OnApplicationBootstrap {
         let school = await this.schoolRepo.findOne({ where: { school_code: 'GFA-2026' } });
         if (!school) {
             school = await this.schoolRepo.save(this.schoolRepo.create({
+                id: TEST_SCHOOL_ID,
                 name: 'Greenfield Academy',
                 school_code: 'GFA-2026',
                 region: 'ap-south-1',
