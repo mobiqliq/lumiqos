@@ -158,7 +158,7 @@ export default function Attendance() {
                         <div className="card" style={{ padding: 20, border: '2px solid var(--accent)', background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.05), transparent)' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
                                 <span style={{ fontSize: 20 }}>🧠</span>
-                                <h3 style={{ fontSize: 16 }}>Lumiq AI Insights</h3>
+                                <h3 style={{ fontSize: 16 }}>XceliQ AI Insights</h3>
                             </div>
                             <div style={{ fontSize: 13, lineHeight: 1.6 }}>
                                 <p style={{ fontWeight: 600, color: 'var(--accent)', marginBottom: 8 }}>{aiInsight.summary}</p>

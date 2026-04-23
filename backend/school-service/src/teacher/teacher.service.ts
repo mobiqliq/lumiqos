@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { LessonPlan, TenantContext } from '@lumiqos/shared';
+import { LessonPlan, TenantContext } from '@xceliqos/shared';
 
 @Injectable()
 export class TeacherService {

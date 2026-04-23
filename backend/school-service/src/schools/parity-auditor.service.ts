@@ -1,10 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PlannedSchedule, ScheduleStatus } from '@lumiqos/shared/src/entities/planned-schedule.entity';
-import { Class } from '@lumiqos/shared/src/entities/class.entity';
-import { Subject } from '@lumiqos/shared/src/entities/subject.entity';
-import { Section } from '@lumiqos/shared/src/entities/section.entity';
+import { PlannedSchedule, ScheduleStatus } from '@xceliqos/shared/src/entities/planned-schedule.entity';
+import { Class } from '@xceliqos/shared/src/entities/class.entity';
+import { Subject } from '@xceliqos/shared/src/entities/subject.entity';
+import { Section } from '@xceliqos/shared/src/entities/section.entity';
 
 export interface ParityAlert {
     class_id: string;

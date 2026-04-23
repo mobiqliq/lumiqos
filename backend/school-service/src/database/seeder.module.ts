@@ -1,26 +1,26 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SeederService } from './seeder.service';
-import { School } from '@lumiqos/shared/src/entities/school.entity';
-import { Student } from '@lumiqos/shared/src/entities/student.entity';
-import { AcademicYear } from '@lumiqos/shared/src/entities/academic-year.entity';
-import { Class } from '@lumiqos/shared/src/entities/class.entity';
-import { Section } from '@lumiqos/shared/src/entities/section.entity';
-import { StudentEnrollment } from '@lumiqos/shared/src/entities/student-enrollment.entity';
-import { User } from '@lumiqos/shared/src/entities/user.entity';
-import { StudentAttendance } from '@lumiqos/shared/src/entities/student-attendance.entity';
-import { AttendanceSession } from '@lumiqos/shared/src/entities/attendance-session.entity';
-import { FeeInvoice } from '@lumiqos/shared/src/entities/fee-invoice.entity';
-import { Subject } from '@lumiqos/shared/src/entities/subject.entity';
-import { Syllabus } from '@lumiqos/shared/src/entities/syllabus.entity';
-import { CurriculumMapping } from '@lumiqos/shared/src/entities/curriculum-mapping.entity';
-import { TeacherSubject } from '@lumiqos/shared/src/entities/teacher-subject.entity';
-import { Board } from '@lumiqos/shared/src/entities/board.entity';
-import { SaasPlan } from '@lumiqos/shared/src/entities/saas-plan.entity';
-import { TenantSubscription } from '@lumiqos/shared/src/entities/tenant-subscription.entity';
-import { Role } from '@lumiqos/shared/src/entities/role.entity';
-import { Permission } from '@lumiqos/shared/src/entities/permission.entity';
-import { RolePermission } from '@lumiqos/shared/src/entities/role-permission.entity';
+import { School } from '@xceliqos/shared/src/entities/school.entity';
+import { Student } from '@xceliqos/shared/src/entities/student.entity';
+import { AcademicYear } from '@xceliqos/shared/src/entities/academic-year.entity';
+import { Class } from '@xceliqos/shared/src/entities/class.entity';
+import { Section } from '@xceliqos/shared/src/entities/section.entity';
+import { StudentEnrollment } from '@xceliqos/shared/src/entities/student-enrollment.entity';
+import { User } from '@xceliqos/shared/src/entities/user.entity';
+import { StudentAttendance } from '@xceliqos/shared/src/entities/student-attendance.entity';
+import { AttendanceSession } from '@xceliqos/shared/src/entities/attendance-session.entity';
+import { FeeInvoice } from '@xceliqos/shared/src/entities/fee-invoice.entity';
+import { Subject } from '@xceliqos/shared/src/entities/subject.entity';
+import { Syllabus } from '@xceliqos/shared/src/entities/syllabus.entity';
+import { CurriculumMapping } from '@xceliqos/shared/src/entities/curriculum-mapping.entity';
+import { TeacherSubject } from '@xceliqos/shared/src/entities/teacher-subject.entity';
+import { Board } from '@xceliqos/shared/src/entities/board.entity';
+import { SaasPlan } from '@xceliqos/shared/src/entities/saas-plan.entity';
+import { TenantSubscription } from '@xceliqos/shared/src/entities/tenant-subscription.entity';
+import { Role } from '@xceliqos/shared/src/entities/role.entity';
+import { Permission } from '@xceliqos/shared/src/entities/permission.entity';
+import { RolePermission } from '@xceliqos/shared/src/entities/role-permission.entity';
 
 @Module({
     imports: [

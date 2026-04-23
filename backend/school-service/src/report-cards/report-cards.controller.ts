@@ -1,6 +1,6 @@
 import { Controller, Post, Get, Body, Param, Query, BadRequestException } from '@nestjs/common';
 import { ReportCardsService } from './report-cards.service';
-import { RequirePermissions } from '@lumiqos/shared/index';
+import { RequirePermissions } from '@xceliqos/shared/index';
 
 @Controller('report-cards')
 export class ReportCardsController {

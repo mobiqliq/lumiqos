@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, In } from 'typeorm';
-import { LessonPlan } from '@lumiqos/shared/src/entities/lesson-plan.entity';
-import { PlannedSchedule } from '@lumiqos/shared/src/entities/planned-schedule.entity';
-import { Subject } from '@lumiqos/shared/src/entities/subject.entity';
-import { SchoolCalendar, DayType } from '@lumiqos/shared/src/entities/school-calendar.entity';
+import { LessonPlan } from '@xceliqos/shared/src/entities/lesson-plan.entity';
+import { PlannedSchedule } from '@xceliqos/shared/src/entities/planned-schedule.entity';
+import { Subject } from '@xceliqos/shared/src/entities/subject.entity';
+import { SchoolCalendar, DayType } from '@xceliqos/shared/src/entities/school-calendar.entity';
 
 @Injectable()
 export class ComplianceAuditorService {

@@ -15,7 +15,7 @@ export default function Sidebar() {
         <aside className="sidebar">
             <div className="sidebar-brand">
                 <div className="logo">L</div>
-                <h1>LumiqOS</h1>
+                <h1>XceliQOS</h1>
             </div>
             <nav className="sidebar-nav">
                 {navItems.map((item) => (
@@ -32,7 +32,7 @@ export default function Sidebar() {
             <div style={{ padding: '16px 24px', borderTop: '1px solid var(--border)' }}>
                 <button
                     className="nav-item"
-                    onClick={() => { localStorage.removeItem('lumiq_token'); navigate('/login'); }}
+                    onClick={() => { localStorage.removeItem('xceliq_token'); navigate('/login'); }}
                     style={{ color: 'var(--danger)' }}
                 >
                     <span className="icon">🚪</span>

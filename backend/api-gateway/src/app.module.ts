@@ -19,6 +19,7 @@ import { ExamsController } from './exams.controller';
 import { HomeworkController } from './homework.controller';
 import { CommunicationController } from './communication.controller';
 import { AuthController } from './auth.controller';
+import { AdminController } from './admin.controller';
 
 @Module({
   imports: [
@@ -27,11 +28,11 @@ import { AuthController } from './auth.controller';
       imports: [ConfigModule],
       useFactory: (config: ConfigService) => ({
         type: 'postgres',
-        host: config.get('DB_HOST', 'lumiqos_db'),
+        host: config.get('DB_HOST', 'xceliqos_db'),
         port: config.get<number>('DB_PORT', 5432),
         username: config.get('DB_USERNAME', 'postgres'),
         password: config.get('DB_PASSWORD', 'postgres'),
-        database: config.get('DB_DATABASE', 'lumiq'),
+        database: config.get('DB_DATABASE', 'xceliq'),
         autoLoadEntities: true,
         synchronize: true,
       }),
@@ -53,7 +54,7 @@ import { AuthController } from './auth.controller';
     ]),
     HttpModule,
   ],
-  controllers: [AppController, HealthController, TeacherController, IntelligenceGraphController, DashboardController, FinanceController, ParentController, HrController, SubstitutionController, TimetableController, ReportCardsController, ExamsController, HomeworkController, CommunicationController, AuthController],
+  controllers: [AppController, HealthController, TeacherController, IntelligenceGraphController, DashboardController, FinanceController, ParentController, HrController, SubstitutionController, TimetableController, ReportCardsController, ExamsController, HomeworkController, CommunicationController, AuthController, AdminController],
   providers: [AppService],
 })
 export class AppModule {}

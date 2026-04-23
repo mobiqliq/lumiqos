@@ -355,7 +355,7 @@ export default function LessonPlanner() {
                                         <span>📝</span> Formative Assessment (Exit Ticket) (10 Mins)
                                     </h3>
                                     <div style={{ padding: 24, background: 'rgba(245, 158, 11, 0.1)', borderRadius: 'var(--radius-md)', border: '1px solid var(--warning)' }}>
-                                        <p style={{ fontSize: 13, marginBottom: 16, color: 'var(--text-secondary)' }}>Hand this out 10 minutes before the bell rings. Use the LumiqOS Teacher App to scan responses to measure class grasp.</p>
+                                        <p style={{ fontSize: 13, marginBottom: 16, color: 'var(--text-secondary)' }}>Hand this out 10 minutes before the bell rings. Use the XceliQOS Teacher App to scan responses to measure class grasp.</p>
                                         <div style={{ fontWeight: 600, marginBottom: 8 }}>1. {plan.exitTicket.q1}</div>
                                         <div style={{ fontWeight: 600 }}>2. {plan.exitTicket.q2}</div>
                                         <div style={{ marginTop: 16, display: 'flex', gap: 8 }}>

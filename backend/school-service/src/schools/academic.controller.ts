@@ -10,9 +10,9 @@ import { WhatIfSimulatorService } from './what-if-simulator.service';
 import { OnboardingService } from './onboarding.service';
 import { TeacherHealthService } from './teacher-health.service';
 import { ResourceAuditorService } from './resource-auditor.service';
-import { JwtAuthGuard } from '@lumiqos/shared/index';
-import { RbacGuard } from '@lumiqos/shared/index';
-import { RequirePermissions } from '@lumiqos/shared/index';
+import { JwtAuthGuard } from '@xceliqos/shared/index';
+import { RbacGuard } from '@xceliqos/shared/index';
+import { RequirePermissions } from '@xceliqos/shared/index';
 
 @Controller('academic')
 @UseGuards(JwtAuthGuard, RbacGuard)

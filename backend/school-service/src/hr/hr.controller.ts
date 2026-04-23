@@ -1,6 +1,6 @@
 import { Controller, Get, Req } from '@nestjs/common';
 import { HrService } from './hr.service';
-import { TenantContext } from '@lumiqos/shared/index';
+import { TenantContext } from '@xceliqos/shared/index';
 import type { Request } from 'express';
 
 @Controller('hr')

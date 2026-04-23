@@ -1,5 +1,5 @@
 export default function TopBar() {
-    const user = JSON.parse(localStorage.getItem('lumiq_user') || '{}');
+    const user = JSON.parse(localStorage.getItem('xceliq_user') || '{}');
     const initials = (user.name || user.email || 'A').charAt(0).toUpperCase();
 
     return (

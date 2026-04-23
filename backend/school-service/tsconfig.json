@@ -2,8 +2,8 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@lumiqos/shared": ["../shared/src/index.ts"],
-      "@lumiqos/shared/*": ["../shared/src/*"]
+      "@xceliqos/shared": ["../shared/src/index.ts"],
+      "@xceliqos/shared/*": ["../shared/src/*"]
     },
     "module": "nodenext",
     "moduleResolution": "nodenext",

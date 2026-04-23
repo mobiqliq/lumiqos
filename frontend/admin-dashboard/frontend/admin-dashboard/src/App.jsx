@@ -4,7 +4,7 @@ import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 
 function App() {
-  const isAuthenticated = !!localStorage.getItem('lumiq_token');
+  const isAuthenticated = !!localStorage.getItem('xceliq_token');
 
   return (
     <Router>

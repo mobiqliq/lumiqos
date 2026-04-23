@@ -1,17 +1,17 @@
 import { Injectable, BadRequestException, ForbiddenException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, In } from 'typeorm';
-import { Notification } from '@lumiqos/shared/src/entities/notification.entity';
-import { NotificationRecipient } from '@lumiqos/shared/src/entities/notification-recipient.entity';
-import { MessageThread } from '@lumiqos/shared/src/entities/message-thread.entity';
-import { Message } from '@lumiqos/shared/src/entities/message.entity';
-import { StudentEnrollment } from '@lumiqos/shared/src/entities/student-enrollment.entity';
-import { StudentGuardian } from '@lumiqos/shared/src/entities/student-guardian.entity';
-import { TeacherSubject } from '@lumiqos/shared/src/entities/teacher-subject.entity';
-import { TenantContext } from '@lumiqos/shared/index';
-import { EnrollmentStatus } from '@lumiqos/shared/index';
-import { User } from '@lumiqos/shared/src/entities/user.entity';
-import { Role } from '@lumiqos/shared/src/entities/role.entity';
+import { Notification } from '@xceliqos/shared/src/entities/notification.entity';
+import { NotificationRecipient } from '@xceliqos/shared/src/entities/notification-recipient.entity';
+import { MessageThread } from '@xceliqos/shared/src/entities/message-thread.entity';
+import { Message } from '@xceliqos/shared/src/entities/message.entity';
+import { StudentEnrollment } from '@xceliqos/shared/src/entities/student-enrollment.entity';
+import { StudentGuardian } from '@xceliqos/shared/src/entities/student-guardian.entity';
+import { TeacherSubject } from '@xceliqos/shared/src/entities/teacher-subject.entity';
+import { TenantContext } from '@xceliqos/shared/index';
+import { EnrollmentStatus } from '@xceliqos/shared/index';
+import { User } from '@xceliqos/shared/src/entities/user.entity';
+import { Role } from '@xceliqos/shared/src/entities/role.entity';
 
 @Injectable()
 export class CommunicationService {

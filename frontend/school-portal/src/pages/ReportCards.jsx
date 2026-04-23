@@ -95,7 +95,7 @@ export default function ReportCards() {
                     <div style={{ fontSize: 64, marginBottom: 24 }}>🤖</div>
                     <h3 style={{ marginBottom: 12, fontSize: '24px' }}>{t("Auto-Generate Report Cards")}</h3>
                     <p style={{ color: 'var(--text-muted)', marginBottom: 32, lineHeight: '1.6' }}>
-                        {t("LumiqOS AI will compile grades, attendance data, and teacher remarks into professional report cards for all students across Greenfield Academy.")}
+                        {t("XceliQOS AI will compile grades, attendance data, and teacher remarks into professional report cards for all students across Greenfield Academy.")}
                     </p>
                     <button className="btn btn-primary btn-lg" onClick={() => setGenerated(true)} style={{ padding: '16px 32px' }}>{t("Generate for Class 10A")}</button>
                 </div>

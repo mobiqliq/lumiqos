@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { TeacherSubject } from '@lumiqos/shared/src/entities/teacher-subject.entity';
-import { User } from '@lumiqos/shared/src/entities/user.entity';
+import { TeacherSubject } from '@xceliqos/shared/src/entities/teacher-subject.entity';
+import { User } from '@xceliqos/shared/src/entities/user.entity';
 
 @Injectable()
 export class ResourceAuditorService {

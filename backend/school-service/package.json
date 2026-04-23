@@ -25,7 +25,7 @@
     "migration:revert": "npm run typeorm -- migration:revert -d ./src/database/data-source.ts"
   },
   "dependencies": {
-    "@lumiqos/shared": "file:../shared",
+    "@xceliqos/shared": "file:../shared",
     "@nestjs/axios": "^4.0.1",
     "@nestjs/cache-manager": "^3.1.0",
     "@nestjs/common": "^11.0.1",

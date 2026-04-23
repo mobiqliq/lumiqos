@@ -1,8 +1,8 @@
 import { Controller, Post, Get, Body, Param, Query, UseGuards } from '@nestjs/common';
 import { AttendanceService } from './attendance.service';
-import { JwtAuthGuard } from '@lumiqos/shared/index';
-import { RbacGuard } from '@lumiqos/shared/index';
-import { RequirePermissions } from '@lumiqos/shared/index';
+import { JwtAuthGuard } from '@xceliqos/shared/index';
+import { RbacGuard } from '@xceliqos/shared/index';
+import { RequirePermissions } from '@xceliqos/shared/index';
 
 @Controller('attendance')
 @UseGuards(JwtAuthGuard, RbacGuard)

@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Param, UseGuards, Req, Query } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { CurriculumService } from './curriculum.service';
-import { JwtAuthGuard } from '@lumiqos/shared/index';
+import { JwtAuthGuard } from '@xceliqos/shared/index';
 
 @Controller('curriculum')
 @UseGuards(JwtAuthGuard)

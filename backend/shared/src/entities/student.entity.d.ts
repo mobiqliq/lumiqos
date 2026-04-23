@@ -4,7 +4,7 @@ export declare class Student {
     last_name: string;
     email: string;
     student_id: string;
-    lumiq_id: string;
+    xceliq_id: string;
     school_id: string;
     admission_number: string;
     status: string;

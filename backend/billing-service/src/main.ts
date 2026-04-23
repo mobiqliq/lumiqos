@@ -9,6 +9,6 @@ async function bootstrap() {
 
     const port = process.env.PORT ?? 3006;
     await app.listen(port);
-    console.log(`LumiqOS SaaS Billing & Provisioning running on port ${port}`);
+    console.log(`XceliQOS SaaS Billing & Provisioning running on port ${port}`);
 }
 bootstrap();

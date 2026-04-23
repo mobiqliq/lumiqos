@@ -1,6 +1,6 @@
 import { PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
 
-export abstract class LumiqosBaseEntity {
+export abstract class XceliQosBaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

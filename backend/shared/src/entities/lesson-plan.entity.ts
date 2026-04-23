@@ -1,5 +1,5 @@
 import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
-import { LumiqosBaseEntity } from './base.entity';
+import { XceliQosBaseEntity } from './base.entity';
 import { School } from './school.entity';
 import { User } from './user.entity';
 import { Subject } from './subject.entity';
@@ -7,7 +7,7 @@ import { Class } from './class.entity';
 import { CurriculumUnit } from './curriculum-unit.entity';
 
 @Entity('lesson_plans_v3')
-export class LessonPlan extends LumiqosBaseEntity {
+export class LessonPlan extends XceliQosBaseEntity {
   @Column({ nullable: true })
   title: string;
 

@@ -1,7 +1,7 @@
 {
   "name": "ai-service",
   "version": "1.0.0",
-  "description": "LumiqOS AI Intelligence Layer",
+  "description": "XceliQOS AI Intelligence Layer",
   "main": "dist/main.js",
   "scripts": {
     "build": "nest build",

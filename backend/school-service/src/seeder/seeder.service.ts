@@ -1,11 +1,11 @@
 import { Injectable, OnApplicationBootstrap, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { School } from '@lumiqos/shared/src/entities/school.entity';
-import { User } from '@lumiqos/shared/src/entities/user.entity';
-import { Class } from '@lumiqos/shared/src/entities/class.entity';
-import { Subject } from '@lumiqos/shared/src/entities/subject.entity';
-import { Role } from '@lumiqos/shared/src/entities/role.entity';
+import { School } from '@xceliqos/shared/src/entities/school.entity';
+import { User } from '@xceliqos/shared/src/entities/user.entity';
+import { Class } from '@xceliqos/shared/src/entities/class.entity';
+import { Subject } from '@xceliqos/shared/src/entities/subject.entity';
+import { Role } from '@xceliqos/shared/src/entities/role.entity';
 import { v4 as uuid } from 'uuid';
 
 @Injectable()
@@ -24,11 +24,11 @@ export class SeederService implements OnApplicationBootstrap {
     this.logger.log('Running Idempotent Database Seeder...');
 
     // 1. Seed School
-    let school = await this.schoolRepo.findOne({ where: { name: 'Lumiqos Demo Academy' } });
+    let school = await this.schoolRepo.findOne({ where: { name: 'XceliQos Demo Academy' } });
     if (!school) {
       school = this.schoolRepo.create({
         id: '11111111-1111-1111-1111-111111111111',
-        name: 'Lumiqos Demo Academy',
+        name: 'XceliQos Demo Academy',
         is_active: true,
       });
       await this.schoolRepo.save(school);
@@ -47,13 +47,13 @@ export class SeederService implements OnApplicationBootstrap {
     }
 
     // 3. Seed User (Teacher)
-    let user = await this.userRepo.findOne({ where: { email: 'teacher@lumiqos.edu' } });
+    let user = await this.userRepo.findOne({ where: { email: 'teacher@xceliqos.edu' } });
     if (!user) {
       user = this.userRepo.create({
         id: '33333333-3333-3333-3333-333333333333',
         school_id: school.id,
         role_id: role.id,
-        email: 'teacher@lumiqos.edu',
+        email: 'teacher@xceliqos.edu',
         first_name: 'Demo',
         last_name: 'Teacher',
         is_active: true,

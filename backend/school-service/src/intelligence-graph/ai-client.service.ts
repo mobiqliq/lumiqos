@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
-import { ResilientHttpClient, getAIServiceUrl } from '@lumiqos/shared';
+import { ResilientHttpClient, getAIServiceUrl } from '@xceliqos/shared';
 import { IntelligenceGraphService } from './intelligence-graph.service';
 
 @Injectable()

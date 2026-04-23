@@ -1,12 +1,12 @@
 import { Entity, Column, ManyToOne, JoinColumn, Index } from 'typeorm';
 import { SyllabusTopic } from './syllabus-topic.entity';
 import { Skill } from './skill.entity';
-import { LumiqosBaseEntity } from './base.entity';
+import { XceliQosBaseEntity } from './base.entity';
 
 @Entity('topic_skill_map')
 @Index(['topic_id', 'skill_id'], { unique: true })
 @Index(['school_id'])
-export class TopicSkillMap extends LumiqosBaseEntity {
+export class TopicSkillMap extends XceliQosBaseEntity {
   @Column({ type: 'uuid' })
   @Index()
   topic_id: string;

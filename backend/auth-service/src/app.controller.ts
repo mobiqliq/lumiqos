@@ -6,7 +6,7 @@ export class AppController {
 
   @Get()
   getHello(): string {
-    return 'LumiqOS Auth Service';
+    return 'XceliQOS Auth Service';
   }
 
   @Get('health')

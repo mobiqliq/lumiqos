@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException, Inject, forwardRef } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, MoreThan, LessThanOrEqual } from 'typeorm';
-import { PlannedSchedule, ScheduleStatus } from '@lumiqos/shared/src/entities/planned-schedule.entity';
-import { SchoolCalendar, DayType } from '@lumiqos/shared/src/entities/school-calendar.entity';
+import { PlannedSchedule, ScheduleStatus } from '@xceliqos/shared/src/entities/planned-schedule.entity';
+import { SchoolCalendar, DayType } from '@xceliqos/shared/src/entities/school-calendar.entity';
 import { AcademicService } from './academic.service';
 
 @Injectable()

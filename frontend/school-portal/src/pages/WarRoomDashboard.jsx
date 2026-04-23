@@ -265,7 +265,7 @@ export default function WarRoomDashboard() {
                     pedagogical_velocity: { value: '0.96v', status: 'COMPLIANT', evidence: 'Mean syllabus velocity is within +/- 5% of baseline.' }
                 },
                 certification: {
-                    statement: 'This curriculum DNA has been audited by LumiqOS Chronos Engine. All NCERT 2026-27 Learning Outcomes are mapped and sequentialized.',
+                    statement: 'This curriculum DNA has been audited by XceliQOS Chronos Engine. All NCERT 2026-27 Learning Outcomes are mapped and sequentialized.',
                     verification_id: 'AQ-XC82-2026-991'
                 }
             });

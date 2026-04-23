@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { School } from '@lumiqos/shared/src/entities/school.entity';
-import { User } from '@lumiqos/shared/src/entities/user.entity';
-import { Student } from '@lumiqos/shared/src/entities/student.entity';
-import { SaasPlan } from '@lumiqos/shared/src/entities/saas-plan.entity';
-import { TenantSubscription } from '@lumiqos/shared/src/entities/tenant-subscription.entity';
-import { StudentAttendance } from '@lumiqos/shared/src/entities/student-attendance.entity';
-import { FeePayment } from '@lumiqos/shared/src/entities/fee-payment.entity';
+import { School } from '@xceliqos/shared/src/entities/school.entity';
+import { User } from '@xceliqos/shared/src/entities/user.entity';
+import { Student } from '@xceliqos/shared/src/entities/student.entity';
+import { SaasPlan } from '@xceliqos/shared/src/entities/saas-plan.entity';
+import { TenantSubscription } from '@xceliqos/shared/src/entities/tenant-subscription.entity';
+import { StudentAttendance } from '@xceliqos/shared/src/entities/student-attendance.entity';
+import { FeePayment } from '@xceliqos/shared/src/entities/fee-payment.entity';
 
 @Injectable()
 export class AdminService {

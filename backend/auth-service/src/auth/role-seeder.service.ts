@@ -1,7 +1,7 @@
 import { Injectable, OnModuleInit, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User, RolePermission, Role, Permission } from '@lumiqos/shared/index';
+import { User, RolePermission, Role, Permission } from '@xceliqos/shared/index';
 
 @Injectable()
 export class RoleSeederService implements OnModuleInit {

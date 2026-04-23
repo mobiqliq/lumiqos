@@ -1,7 +1,7 @@
 {
     "name": "billing-service",
     "version": "1.0.0",
-    "description": "LumiqOS SaaS Provisioning & Billing Center",
+    "description": "XceliQOS SaaS Provisioning & Billing Center",
     "main": "dist/main.js",
     "scripts": {
         "build": "nest build",

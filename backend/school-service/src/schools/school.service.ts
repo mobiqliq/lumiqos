@@ -2,12 +2,12 @@ import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DataSource } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
-import { School } from '@lumiqos/shared/src/entities/school.entity';
-import { User } from '@lumiqos/shared/src/entities/user.entity';
-import { Role } from '@lumiqos/shared/src/entities/role.entity';
-import { Permission } from '@lumiqos/shared/src/entities/permission.entity';
-import { RolePermission } from '@lumiqos/shared/src/entities/role-permission.entity';
-import { PeriodConfiguration } from '@lumiqos/shared/src/entities/period-configuration.entity';
+import { School } from '@xceliqos/shared/src/entities/school.entity';
+import { User } from '@xceliqos/shared/src/entities/user.entity';
+import { Role } from '@xceliqos/shared/src/entities/role.entity';
+import { Permission } from '@xceliqos/shared/src/entities/permission.entity';
+import { RolePermission } from '@xceliqos/shared/src/entities/role-permission.entity';
+import { PeriodConfiguration } from '@xceliqos/shared/src/entities/period-configuration.entity';
 
 @Injectable()
 export class SchoolService {

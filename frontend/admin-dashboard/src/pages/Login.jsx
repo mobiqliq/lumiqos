@@ -6,12 +6,12 @@ export default function Login() {
   const handleDevLogin = () => {
     const mockUser = {
       id: 'platform-admin',
-      email: 'admin@lumiqos.dev',
+      email: 'admin@xceliqos.dev',
       role: 'platform_admin',
       name: 'Platform Admin',
     };
-    localStorage.setItem('lumiq_token', 'dev-mock-token');
-    localStorage.setItem('lumiq_user', JSON.stringify(mockUser));
+    localStorage.setItem('xceliq_token', 'dev-mock-token');
+    localStorage.setItem('xceliq_user', JSON.stringify(mockUser));
     navigate('/');
   };
 
@@ -41,7 +41,7 @@ export default function Login() {
             fontWeight: 700, fontSize: 18, color: 'var(--ink)'
           }}>L</div>
           <span style={{ fontSize: 22, fontWeight: 500, fontFamily: 'var(--font-serif)', color: 'var(--ink)' }}>
-            LumiqOS Admin
+            XceliQOS Admin
           </span>
         </div>
         <h2 style={{ marginBottom: 8, fontFamily: 'var(--font-serif)', fontSize: 24, fontWeight: 400 }}>
@@ -70,7 +70,7 @@ export default function Login() {
           Enter Admin Dashboard (Dev)
         </button>
         <p style={{ marginTop: 24, textAlign: 'center', fontSize: 12, color: 'var(--ink-30)' }}>
-          LumiqOS — Illuminate Every Learner
+          XceliQOS — Illuminate Every Learner
         </p>
       </div>
     </div>

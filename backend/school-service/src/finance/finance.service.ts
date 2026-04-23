@@ -1,15 +1,15 @@
 import { Injectable, BadRequestException, NotFoundException, ForbiddenException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { FeeCategory } from '@lumiqos/shared/src/entities/fee-category.entity';
-import { FeeStructure } from '@lumiqos/shared/src/entities/fee-structure.entity';
-import { StudentFeeAccount } from '@lumiqos/shared/src/entities/student-fee-account.entity';
-import { FeeInvoice } from '@lumiqos/shared/src/entities/fee-invoice.entity';
-import { FeePayment } from '@lumiqos/shared/src/entities/fee-payment.entity';
-import { TenantContext } from '@lumiqos/shared/index';
-import { InvoiceStatus } from '@lumiqos/shared/index';
-import { Student } from '@lumiqos/shared/src/entities/student.entity';
-import { InventoryItem } from '@lumiqos/shared/src/entities/inventory-item.entity';
+import { FeeCategory } from '@xceliqos/shared/src/entities/fee-category.entity';
+import { FeeStructure } from '@xceliqos/shared/src/entities/fee-structure.entity';
+import { StudentFeeAccount } from '@xceliqos/shared/src/entities/student-fee-account.entity';
+import { FeeInvoice } from '@xceliqos/shared/src/entities/fee-invoice.entity';
+import { FeePayment } from '@xceliqos/shared/src/entities/fee-payment.entity';
+import { TenantContext } from '@xceliqos/shared/index';
+import { InvoiceStatus } from '@xceliqos/shared/index';
+import { Student } from '@xceliqos/shared/src/entities/student.entity';
+import { InventoryItem } from '@xceliqos/shared/src/entities/inventory-item.entity';
 
 @Injectable()
 export class FinanceService {

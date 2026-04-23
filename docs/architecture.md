@@ -1,6 +1,6 @@
-# LumiqOS Architecture
+# XceliQOS Architecture
 
-LumiqOS is an AI-powered operating system for modern schools that prioritizes Multi-Tenancy, Role-Based Access Control (RBAC), and Tenant Data Isolation out-of-the-box.
+XceliQOS is an AI-powered operating system for modern schools that prioritizes Multi-Tenancy, Role-Based Access Control (RBAC), and Tenant Data Isolation out-of-the-box.
 
 ## Multi-Tenant SaaS Model
 
@@ -8,7 +8,7 @@ The architecture is designed to support thousands of schools operating independe
 
 ### Shared Database Strategy (MVP)
 For rapid delivery of the Initial Prototype (MVP), we utilize a **Shared Database, Shared Schema** model using PostgreSQL:
-- **`lumiqos` database**: All data from all microservices resides here.
+- **`xceliqos` database**: All data from all microservices resides here.
 - Entities (`schools`, `users`, `roles`, `permissions`) share relational connections.
 - Microservice boundaries govern API access to this data (e.g., `school-service` handles all `/schools` mutations).
 
@@ -34,7 +34,7 @@ This eliminates database hits on every request while checking permissions:
 
 ## Tenant Isolation Mechanism
 
-Data leakage is the largest risk in multi-tenant shared-schema architectures. LumiqOS mitigates this using a **3-Layer Isolation Approach**:
+Data leakage is the largest risk in multi-tenant shared-schema architectures. XceliQOS mitigates this using a **3-Layer Isolation Approach**:
 
 1. **Token Unpacking**: `JwtAuthGuard` extracts `school_id` from the secure payload.
 2. **Execution Context**: `TenantInterceptor` uses Node.js `AsyncLocalStorage` to store the Context Payload for the lifecycle of that request.
@@ -44,7 +44,7 @@ Data leakage is the largest risk in multi-tenant shared-schema architectures. Lu
 
 ## Academic Hierarchy Model
 
-The structural foundation of a multi-tenant LumiqOS School operates upon the following extensible hierarchy:
+The structural foundation of a multi-tenant XceliQOS School operates upon the following extensible hierarchy:
 
 \`\`\`text
 School
@@ -219,7 +219,7 @@ Parent Mobile Layer
 - **Data Fidelity Constraints**: Enforces mapping on explicit DB-native bounds: Fetching `Paid` values dynamically through aggregate sums mapped over exact `FeePayment` records natively, and dropping `overdue` counts correctly mapped across past-due thresholds seamlessly.
 
 ## Strategic Layer (School Intelligence Cloud)
-LumiqOS transforms from an ERP into a Multi-Region Investor-Grade SaaS platform tracking Executive forecasts natively isolating generic billing structures formally.
+XceliQOS transforms from an ERP into a Multi-Region Investor-Grade SaaS platform tracking Executive forecasts natively isolating generic billing structures formally.
 
 ```text
 Strategic Layer
@@ -235,7 +235,7 @@ Strategic Layer
 ## Global 5-Tier Architecture Tree
 
 ```text
-LumiqOS Enterprise
+XceliQOS Enterprise
 │
 ├ Platform Layer
 │   ├ API Gateway
@@ -261,9 +261,9 @@ LumiqOS Enterprise
     └ SaaS Infrastructure
 ```
 
-## Running LumiqOS with Docker
+## Running XceliQOS with Docker
 
-LumiqOS supports full local development using Docker Compose. A single command launches the entire microservices platform including the PostgreSQL database.
+XceliQOS supports full local development using Docker Compose. A single command launches the entire microservices platform including the PostgreSQL database.
 
 ### Prerequisites
 - Docker Desktop installed and running
@@ -279,12 +279,12 @@ docker compose up --build
 
 | Service | Container Name | Port | URL |
 |---------|---------------|------|-----|
-| API Gateway | lumiqos_gateway | 3000 | http://localhost:3000 |
-| School Service | lumiqos_school | 3001 | http://localhost:3001 |
-| Auth Service | lumiqos_auth | 3002 | http://localhost:3002 |
-| AI Service | lumiqos_ai | 3005 | http://localhost:3005 |
-| Billing Service | lumiqos_billing | 3006 | http://localhost:3006 |
-| PostgreSQL | lumiqos_db | 5432 | localhost:5432 |
+| API Gateway | xceliqos_gateway | 3000 | http://localhost:3000 |
+| School Service | xceliqos_school | 3001 | http://localhost:3001 |
+| Auth Service | xceliqos_auth | 3002 | http://localhost:3002 |
+| AI Service | xceliqos_ai | 3005 | http://localhost:3005 |
+| Billing Service | xceliqos_billing | 3006 | http://localhost:3006 |
+| PostgreSQL | xceliqos_db | 5432 | localhost:5432 |
 
 ### Health Checks
 
@@ -302,9 +302,9 @@ curl http://localhost:3006/health   # Billing Service
 Docker services use the following database connection:
 - **Host**: `postgres` (Docker service name)
 - **Port**: `5432`
-- **User**: `lumiq`
-- **Password**: `lumiq`
-- **Database**: `lumiqos`
+- **User**: `xceliq`
+- **Password**: `xceliq`
+- **Database**: `xceliqos`
 
 Environment variables are set in `docker-compose.yml`. For local (non-Docker) development, services fall back to `localhost`.
 

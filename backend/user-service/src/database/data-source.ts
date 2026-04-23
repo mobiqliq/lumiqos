@@ -11,7 +11,7 @@ const AppDataSource = new DataSource({
   port: parseInt(process.env.DB_PORT || '5432', 10),
   username: process.env.DB_USER || 'postgres',
   password: process.env.DB_PASSWORD || 'postgres',
-  database: process.env.DB_NAME || 'lumiq',
+  database: process.env.DB_NAME || 'xceliq',
   synchronize: false,
   logging: process.env.NODE_ENV === 'development',
   namingStrategy: new SnakeNamingStrategy(),

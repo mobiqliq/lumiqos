@@ -53,8 +53,8 @@ export default function DashboardShell({ children }) {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('lumiq_token');
-    localStorage.removeItem('lumiq_user');
+    localStorage.removeItem('xceliq_token');
+    localStorage.removeItem('xceliq_user');
     navigate('/login');
   };
 
@@ -71,7 +71,7 @@ export default function DashboardShell({ children }) {
         >
           <div className={s.logoRow}>
             <div className={s.logoMark}>L</div>
-            {expanded && <span className={s.logoText}>LumiqOS</span>}
+            {expanded && <span className={s.logoText}>XceliQOS</span>}
           </div>
 
           <nav className={s.nav}>
@@ -144,7 +144,7 @@ export default function DashboardShell({ children }) {
 }
 
 function UserChip() {
-  const user = JSON.parse(localStorage.getItem('lumiq_user') || '{}');
+  const user = JSON.parse(localStorage.getItem('xceliq_user') || '{}');
   const initials = (user.name || user.email || 'PA').slice(0, 2).toUpperCase();
   return <div className={s.userChip}>{initials}</div>;
 }

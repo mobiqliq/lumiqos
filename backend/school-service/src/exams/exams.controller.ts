@@ -1,6 +1,6 @@
 import { Controller, Post, Get, Put, Body, Param, Query, BadRequestException } from '@nestjs/common';
 import { ExamsService } from './exams.service';
-import { RequirePermissions } from '@lumiqos/shared/index';
+import { RequirePermissions } from '@xceliqos/shared/index';
 
 @Controller('exams')
 export class ExamsController {

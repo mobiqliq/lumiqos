@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TeacherController } from './teacher.controller';
 import { TeacherService } from './teacher.service';
-import { LessonPlan, TenantContext } from '@lumiqos/shared';
+import { LessonPlan, TenantContext } from '@xceliqos/shared';
 
 @Module({
     imports: [

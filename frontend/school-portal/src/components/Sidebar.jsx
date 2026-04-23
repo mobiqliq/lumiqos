@@ -26,7 +26,7 @@ export default function Sidebar() {
                     boxShadow: '0 0 15px rgba(59, 130, 246, 0.3)',
                     fontSize: '14px'
                 }}>L</div>
-                Lumiq<span>OS</span>
+                XceliQ<span>OS</span>
             </div>
 
             <nav style={{ flex: 1 }}>

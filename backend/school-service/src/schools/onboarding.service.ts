@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { TeacherSubject } from '@lumiqos/shared/src/entities/teacher-subject.entity';
+import { TeacherSubject } from '@xceliqos/shared/src/entities/teacher-subject.entity';
 import { NCERTSeederService } from '../database/ncert-seeder.service';
 import { PedagogicalPourService } from './pedagogical-pour.service';
 
@@ -106,7 +106,7 @@ export class OnboardingService {
 
         return {
             status: "SUCCESS",
-            message: "LumiqOS Curriculum Engine Initialized",
+            message: "XceliQOS Curriculum Engine Initialized",
             stats: {
                 teachers_assigned: assignmentsToSave.length,
                 topics_seeded: totalTopicsSeeded,

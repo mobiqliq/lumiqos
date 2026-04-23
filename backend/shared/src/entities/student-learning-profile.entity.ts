@@ -1,11 +1,11 @@
 import { Entity, Column, ManyToOne, JoinColumn, Index } from 'typeorm';
 import { Student } from './student.entity';
-import { LumiqosBaseEntity } from './base.entity';
+import { XceliQosBaseEntity } from './base.entity';
 
 @Entity('student_learning_profile')
 @Index(['student_id', 'profile_type'])
 @Index(['school_id'])
-export class StudentLearningProfile extends LumiqosBaseEntity {
+export class StudentLearningProfile extends XceliQosBaseEntity {
   @Column({ type: 'uuid' })
   @Index()
   student_id: string;

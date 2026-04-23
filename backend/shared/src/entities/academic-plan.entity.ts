@@ -1,10 +1,10 @@
 import { Index } from 'typeorm';
 import { Entity, Column } from 'typeorm';
-import { LumiqosBaseEntity } from './base.entity';
+import { XceliQosBaseEntity } from './base.entity';
 
 @Index(['school_id', 'academic_year_id', 'class_id', 'subject_id'])
 @Entity('academic_plan')
-export class AcademicPlan extends LumiqosBaseEntity {
+export class AcademicPlan extends XceliQosBaseEntity {
   @Column({ type: 'uuid' })
   academic_year_id: string;
 

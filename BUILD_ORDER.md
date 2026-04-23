@@ -1,6 +1,6 @@
-# LumiqOS — Build Order
+# XceliQOS — Build Order
 
-> This file tracks the ordered build phases of LumiqOS.  
+> This file tracks the ordered build phases of XceliQOS.  
 > New features MUST be appended as the next phase. Never insert or reorder.  
 > **Phase Lock Rule**: See [PHASE_LOCK.md](./PHASE_LOCK.md) — no phase advances until the gate clears.  
 > Last Updated: 2026-04-19

@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body } from '@nestjs/common';
 import { SubstitutionService } from './substitution.service';
-import { RequirePermissions } from '@lumiqos/shared/index';
+import { RequirePermissions } from '@xceliqos/shared/index';
 
 @Controller('substitution')
 export class SubstitutionController {

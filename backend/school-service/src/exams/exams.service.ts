@@ -1,16 +1,16 @@
 import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { ExamType } from '@lumiqos/shared/src/entities/exam-type.entity';
-import { Exam } from '@lumiqos/shared/src/entities/exam.entity';
-import { ExamSubject } from '@lumiqos/shared/src/entities/exam-subject.entity';
-import { StudentMarks } from '@lumiqos/shared/src/entities/student-marks.entity';
-import { GradeScale } from '@lumiqos/shared/src/entities/grade-scale.entity';
-import { ExamStatus } from '@lumiqos/shared/index';
-import { TenantContext } from '@lumiqos/shared/index';
-import { StudentEnrollment } from '@lumiqos/shared/src/entities/student-enrollment.entity';
-import { EnrollmentStatus } from '@lumiqos/shared/index';
-import { StudentMarksStatus } from '@lumiqos/shared/index';
+import { ExamType } from '@xceliqos/shared/src/entities/exam-type.entity';
+import { Exam } from '@xceliqos/shared/src/entities/exam.entity';
+import { ExamSubject } from '@xceliqos/shared/src/entities/exam-subject.entity';
+import { StudentMarks } from '@xceliqos/shared/src/entities/student-marks.entity';
+import { GradeScale } from '@xceliqos/shared/src/entities/grade-scale.entity';
+import { ExamStatus } from '@xceliqos/shared/index';
+import { TenantContext } from '@xceliqos/shared/index';
+import { StudentEnrollment } from '@xceliqos/shared/src/entities/student-enrollment.entity';
+import { EnrollmentStatus } from '@xceliqos/shared/index';
+import { StudentMarksStatus } from '@xceliqos/shared/index';
 import { AiService } from '../ai/ai.service';
 
 @Injectable()

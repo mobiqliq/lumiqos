@@ -4,7 +4,7 @@ import { TenantController } from './tenant.controller';
 import { TenantService } from './tenant.service';
 import {
     School, AcademicYear, User, Role, SaasPlan, TenantSubscription
-} from '@lumiqos/shared/index';
+} from '@xceliqos/shared/index';
 
 @Module({
     imports: [

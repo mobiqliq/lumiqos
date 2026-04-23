@@ -1,13 +1,13 @@
 services:
-  lumiqos_db:
+  xceliqos_db:
     image: postgres:15-alpine
-    container_name: lumiqos_db
+    container_name: xceliqos_db
     ports:
       - "5432:5432"
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=lumiq
+      - POSTGRES_DB=xceliq
     volumes:
       - pgdata:/var/lib/postgresql/data
 
@@ -20,7 +20,7 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      - lumiqos_db
+      - xceliqos_db
 
   school-service:
     build:
@@ -29,7 +29,7 @@ services:
     ports:
       - "3001:3000"
     depends_on:
-      - lumiqos_db
+      - xceliqos_db
 
   ai-service:
     build:
@@ -38,7 +38,7 @@ services:
     env_file:
       - ./backend/ai-service/.env
     depends_on:
-      - lumiqos_db
+      - xceliqos_db
 
   auth-service:
     build:
@@ -49,7 +49,7 @@ services:
     ports:
       - "3002:3002"
     depends_on:
-      - lumiqos_db
+      - xceliqos_db
 
   frontend:
     build:

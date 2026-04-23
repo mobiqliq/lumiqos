@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { HrController } from './hr.controller';
 import { HrService } from './hr.service';
-import { User } from '@lumiqos/shared/src/entities/user.entity';
-import { TeacherSubject } from '@lumiqos/shared/src/entities/teacher-subject.entity';
+import { User } from '@xceliqos/shared/src/entities/user.entity';
+import { TeacherSubject } from '@xceliqos/shared/src/entities/teacher-subject.entity';
 
 @Module({
     imports: [

@@ -1,13 +1,13 @@
 import { Entity, Column, ManyToOne, JoinColumn, Index } from 'typeorm';
 import { Student } from './student.entity';
 import { Concept } from './concept.entity';
-import { LumiqosBaseEntity } from './base.entity';
+import { XceliQosBaseEntity } from './base.entity';
 
 @Entity('student_concept_mastery')
 @Index(['student_id', 'concept_id'], { unique: true })
 @Index(['school_id'])
 @Index(['last_assessed_at'])
-export class StudentConceptMastery extends LumiqosBaseEntity {
+export class StudentConceptMastery extends XceliQosBaseEntity {
   @Column({ type: 'uuid' })
   @Index()
   student_id: string;

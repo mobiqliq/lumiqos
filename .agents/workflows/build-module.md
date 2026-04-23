@@ -1,10 +1,10 @@
 ---
-description: How to build a new module in LumiqOS following layered architecture
+description: How to build a new module in XceliQOS following layered architecture
 ---
 
 # Build Module Workflow
 
-Follow these steps IN ORDER when adding any new module to LumiqOS.
+Follow these steps IN ORDER when adding any new module to XceliQOS.
 
 ## Pre-Flight
 1. Read `BUILD_RULES.md`

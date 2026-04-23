@@ -1,6 +1,6 @@
-# LumiqOS
+# XceliQOS
 
-LumiqOS — an AI-powered operating system for modern schools that manages operations, learning analytics, finance, communication, and academic intelligence.
+XceliQOS — an AI-powered operating system for modern schools that manages operations, learning analytics, finance, communication, and academic intelligence.
 
 ## Architecture
 

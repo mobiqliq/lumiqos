@@ -110,7 +110,7 @@ export default function TeacherSubstitution() {
                         type="action"
                         icon="🤖"
                         title="How AI Allocation Works"
-                        body="LumiqOS scans the school-wide timetable for teachers who have a 'free period' during the impacted times, prioritizing those who teach related subjects."
+                        body="XceliQOS scans the school-wide timetable for teachers who have a 'free period' during the impacted times, prioritizing those who teach related subjects."
                     />
                 </div>
 

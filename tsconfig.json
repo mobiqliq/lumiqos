@@ -5,8 +5,8 @@
     "target": "ES2023",
     "baseUrl": "./",
     "paths": {
-      "@lumiqos/shared": ["backend/shared/src/index.ts"],
-      "@lumiqos/shared/*": ["backend/shared/src/*"]
+      "@xceliqos/shared": ["backend/shared/src/index.ts"],
+      "@xceliqos/shared/*": ["backend/shared/src/*"]
     },
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,

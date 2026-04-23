@@ -2,12 +2,12 @@ import { Injectable, BadRequestException, NotFoundException } from '@nestjs/comm
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-import { AttendanceSession } from '@lumiqos/shared/src/entities/attendance-session.entity';
-import { StudentAttendance } from '@lumiqos/shared/src/entities/student-attendance.entity';
-import { StudentEnrollment } from '@lumiqos/shared/src/entities/student-enrollment.entity';
-import { AttendanceStatus } from '@lumiqos/shared/index';
-import { TenantContext } from '@lumiqos/shared/index';
-import { EnrollmentStatus } from '@lumiqos/shared/index';
+import { AttendanceSession } from '@xceliqos/shared/src/entities/attendance-session.entity';
+import { StudentAttendance } from '@xceliqos/shared/src/entities/student-attendance.entity';
+import { StudentEnrollment } from '@xceliqos/shared/src/entities/student-enrollment.entity';
+import { AttendanceStatus } from '@xceliqos/shared/index';
+import { TenantContext } from '@xceliqos/shared/index';
+import { EnrollmentStatus } from '@xceliqos/shared/index';
 import { AiService } from '../ai/ai.service';
 
 @Injectable()

@@ -535,7 +535,7 @@ const SchoolSettings = () => {
           <div className="glass-card" style={{ padding: '2rem', borderRadius: '24px' }}>
               <h2 style={{ fontSize: '1.5rem', fontWeight: '800', marginBottom: '8px', color: 'var(--danger)' }}>🚀 System Initializer (The Big Bang)</h2>
               <p style={{ color: 'var(--text-secondary)', marginBottom: '24px' }}>
-                  Upload your master assignments, select the board, and let LumiqOS auto-generate the 52-week calendar curriculum grid.
+                  Upload your master assignments, select the board, and let XceliQOS auto-generate the 52-week calendar curriculum grid.
               </p>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '24px' }}>

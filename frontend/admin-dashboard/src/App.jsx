@@ -17,7 +17,7 @@ const PendingApprovals= () => <div style={{padding:20,color:'var(--text-muted)'}
 const Invoices        = () => <div style={{padding:20,color:'var(--text-muted)'}}>Invoices — Phase 30</div>;
 
 function ProtectedLayout() {
-  const token = localStorage.getItem('lumiq_token');
+  const token = localStorage.getItem('xceliq_token');
   const location = useLocation();
   if (!token) return <Navigate to="/login" state={{ from: location }} replace />;
   return (

@@ -18,7 +18,7 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@lumiqos/shared": ["../shared/dist/index"]
+      "@xceliqos/shared": ["../shared/dist/index"]
     }
   }
 }

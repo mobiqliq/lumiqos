@@ -1,6 +1,6 @@
 import { Controller, Post, Get, Body, UseGuards, UseInterceptors } from '@nestjs/common';
 import { TeacherService } from './teacher.service';
-import { TenantInterceptor, JwtAuthGuard } from '@lumiqos/shared';
+import { TenantInterceptor, JwtAuthGuard } from '@xceliqos/shared';
 
 @Controller('teacher')
 @UseGuards(JwtAuthGuard)

@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { AiService } from '../ai/ai.service';
-import { TenantContext } from '@lumiqos/shared/index';
+import { TenantContext } from '@xceliqos/shared/index';
 
 @Injectable()
 export class SubstitutionService {

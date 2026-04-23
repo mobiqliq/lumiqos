@@ -18,7 +18,7 @@ import {
   StudentMarks,
   HomeworkSubmission,
   StudentAttendance
-} from '@lumiqos/shared';
+} from '@xceliqos/shared';
 
 @Module({
   imports: [

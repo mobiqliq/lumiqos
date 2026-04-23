@@ -1,9 +1,9 @@
 import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { AcademicYear } from '@lumiqos/shared/src/entities/academic-year.entity';
-import { AcademicYearStatus } from '@lumiqos/shared/index';
-import { TenantContext } from '@lumiqos/shared/index';
+import { AcademicYear } from '@xceliqos/shared/src/entities/academic-year.entity';
+import { AcademicYearStatus } from '@xceliqos/shared/index';
+import { TenantContext } from '@xceliqos/shared/index';
 
 @Injectable()
 export class AcademicYearService {

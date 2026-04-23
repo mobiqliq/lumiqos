@@ -1,9 +1,9 @@
 import { Controller, Post, Get, Body, Param, UseGuards, Req } from '@nestjs/common';
 import { FinanceService } from './finance.service';
-import { JwtAuthGuard } from '@lumiqos/shared/index';
-import { RbacGuard } from '@lumiqos/shared/index';
-import { RequirePermissions } from '@lumiqos/shared/index';
-import { TenantContext } from '@lumiqos/shared/index';
+import { JwtAuthGuard } from '@xceliqos/shared/index';
+import { RbacGuard } from '@xceliqos/shared/index';
+import { RequirePermissions } from '@xceliqos/shared/index';
+import { TenantContext } from '@xceliqos/shared/index';
 import type { Request } from 'express';
 
 @Controller('finance')

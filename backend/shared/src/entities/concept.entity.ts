@@ -1,11 +1,11 @@
 import { Entity, Column, Index } from 'typeorm';
-import { LumiqosBaseEntity } from './base.entity';
+import { XceliQosBaseEntity } from './base.entity';
 
 @Entity('concept')
 @Index(['school_id'])
 @Index(['subject_id'])
 @Index(['name'])
-export class Concept extends LumiqosBaseEntity {
+export class Concept extends XceliQosBaseEntity {
   @Column({ type: 'varchar', length: 100 })
   name: string;
 

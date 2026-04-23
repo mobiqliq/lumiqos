@@ -1,10 +1,10 @@
 {
     "compilerOptions": {
         "paths": {
-            "@lumiqos/shared/index": [
+            "@xceliqos/shared/index": [
                 "../shared/src/index"
             ],
-            "@lumiqos/shared/*": [
+            "@xceliqos/shared/*": [
                 "../shared/src/*"
             ]
         },

@@ -1,4 +1,4 @@
-# LumiqOS — Architecture Memory
+# XceliQOS — Architecture Memory
 
 > This file is the AI's mandatory context loader. Read this BEFORE making any code changes.
 > Last Updated: 2026-04-22 — Phase 29 Complete
@@ -8,7 +8,7 @@
 
 ## Product Identity
 
-- **Name**: LumiqOS
+- **Name**: XceliQOS
 - **Tagline**: AI-First School Intelligence OS
 - **Type**: Multi-Tenant SaaS Platform for K-12 Education
 - **Stack**: NestJS + React/Vite + PostgreSQL + TypeORM + Docker Compose
@@ -35,8 +35,8 @@ NOTE: User Service and Billing Service from original spec do NOT exist yet.
 ## Database
 
 - **Engine**: PostgreSQL 15
-- **Database**: lumiq | **User**: postgres | **Pass**: postgres
-- **Host**: lumiqos_db (Docker) / localhost:5432 (host)
+- **Database**: xceliq | **User**: postgres | **Pass**: postgres
+- **Host**: xceliqos_db (Docker) / localhost:5432 (host)
 - **Strategy**: Shared schema, tenant isolation via school_id on every query
 - **ORM**: TypeORM — synchronize:true (dev) — MUST replace with migrations before prod
 
@@ -162,7 +162,7 @@ SeederModule, AdminModule
   /system/audit → AuditLogs (static mock)
   /system/settings → Settings (static mock)
 - Shared components: KPICard, DataTable, StatusBadge, AIInsightStrip, PageHeader
-- Auth: lumiq_token in localStorage
+- Auth: xceliq_token in localStorage
 
 ### School Portal (frontend/school-portal/)
 - Dev port: 5175 | Docker port: 5173 | data-surface="school" (light)

@@ -74,7 +74,7 @@ export default function Onboarding() {
                   placeholder="greenfield"
                   required
                 />
-                <span className={styles.subdomainSuffix}>.lumiqos.io</span>
+                <span className={styles.subdomainSuffix}>.xceliqos.io</span>
               </div>
               <p className={styles.helperText}>This will be your school's unique URL.</p>
             </div>
@@ -204,7 +204,7 @@ export default function Onboarding() {
             <div className={styles.reviewSection}>
               <h3>School Details</h3>
               <p><strong>Name:</strong> {formData.schoolName || '—'}</p>
-              <p><strong>Subdomain:</strong> {formData.subdomain ? `${formData.subdomain}.lumiqos.io` : '—'}</p>
+              <p><strong>Subdomain:</strong> {formData.subdomain ? `${formData.subdomain}.xceliqos.io` : '—'}</p>
               <p><strong>Address:</strong> {formData.address || '—'}</p>
             </div>
             <div className={styles.reviewSection}>

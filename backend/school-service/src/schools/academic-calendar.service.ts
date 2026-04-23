@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Between } from 'typeorm';
-import { SchoolCalendar, DayType } from '@lumiqos/shared/src/entities/school-calendar.entity';
-import { TimeSlot } from '@lumiqos/shared/src/entities/time-slot.entity';
-import { AcademicYear } from '@lumiqos/shared/src/entities/academic-year.entity';
-import { TeacherSubject } from '@lumiqos/shared/src/entities/teacher-subject.entity';
-import { Class } from '@lumiqos/shared/src/entities/class.entity';
-import { Subject } from '@lumiqos/shared/src/entities/subject.entity';
-import { PlannedSchedule } from '@lumiqos/shared/src/entities/planned-schedule.entity';
+import { SchoolCalendar, DayType } from '@xceliqos/shared/src/entities/school-calendar.entity';
+import { TimeSlot } from '@xceliqos/shared/src/entities/time-slot.entity';
+import { AcademicYear } from '@xceliqos/shared/src/entities/academic-year.entity';
+import { TeacherSubject } from '@xceliqos/shared/src/entities/teacher-subject.entity';
+import { Class } from '@xceliqos/shared/src/entities/class.entity';
+import { Subject } from '@xceliqos/shared/src/entities/subject.entity';
+import { PlannedSchedule } from '@xceliqos/shared/src/entities/planned-schedule.entity';
 
 @Injectable()
 export class AcademicCalendarService {

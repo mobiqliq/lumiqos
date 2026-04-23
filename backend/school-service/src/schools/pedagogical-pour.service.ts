@@ -1,12 +1,12 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { LessonPlan } from '@lumiqos/shared/src/entities/lesson-plan.entity';
-import { SchoolCalendar, DayType } from '@lumiqos/shared/src/entities/school-calendar.entity';
-import { PlannedSchedule } from '@lumiqos/shared/src/entities/planned-schedule.entity';
-import { CurriculumUnit } from '@lumiqos/shared/src/entities/curriculum-unit.entity';
-import { Section } from '@lumiqos/shared/src/entities/section.entity';
-import { TeacherSubject } from '@lumiqos/shared/src/entities/teacher-subject.entity';
+import { LessonPlan } from '@xceliqos/shared/src/entities/lesson-plan.entity';
+import { SchoolCalendar, DayType } from '@xceliqos/shared/src/entities/school-calendar.entity';
+import { PlannedSchedule } from '@xceliqos/shared/src/entities/planned-schedule.entity';
+import { CurriculumUnit } from '@xceliqos/shared/src/entities/curriculum-unit.entity';
+import { Section } from '@xceliqos/shared/src/entities/section.entity';
+import { TeacherSubject } from '@xceliqos/shared/src/entities/teacher-subject.entity';
 
 @Injectable()
 export class PedagogicalPourService {

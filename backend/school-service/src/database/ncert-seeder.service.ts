@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Board } from '@lumiqos/shared/src/entities/board.entity';
-import { Subject } from '@lumiqos/shared/src/entities/subject.entity';
-import { CurriculumUnit } from '@lumiqos/shared/src/entities/curriculum-unit.entity';
-import { LessonPlan } from '@lumiqos/shared/src/entities/lesson-plan.entity';
-import { School } from '@lumiqos/shared/src/entities/school.entity';
+import { Board } from '@xceliqos/shared/src/entities/board.entity';
+import { Subject } from '@xceliqos/shared/src/entities/subject.entity';
+import { CurriculumUnit } from '@xceliqos/shared/src/entities/curriculum-unit.entity';
+import { LessonPlan } from '@xceliqos/shared/src/entities/lesson-plan.entity';
+import { School } from '@xceliqos/shared/src/entities/school.entity';
 
 @Injectable()
 export class NCERTSeederService {

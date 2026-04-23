@@ -3,7 +3,7 @@ import { CacheInterceptor } from '@nestjs/cache-manager';
 import { UseInterceptors } from '@nestjs/common';
 import { IntelligenceGraphService } from './intelligence-graph.service';
 import { AIClientService } from './ai-client.service';
-import { TenantContext } from '@lumiqos/shared';
+import { TenantContext } from '@xceliqos/shared';
 
 @Controller('intelligence-graph')
 export class IntelligenceGraphController {

@@ -1,19 +1,19 @@
 import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Student } from '@lumiqos/shared/src/entities/student.entity';
-import { StudentEnrollment } from '@lumiqos/shared/src/entities/student-enrollment.entity';
-import { StudentGuardian } from '@lumiqos/shared/src/entities/student-guardian.entity';
-import { StudentDocument } from '@lumiqos/shared/src/entities/student-document.entity';
-import { StudentHealthRecord } from '@lumiqos/shared/src/entities/student-health-record.entity';
-import { StudentStatus } from '@lumiqos/shared/index';
-import { EnrollmentStatus } from '@lumiqos/shared/index';
-import { TenantContext } from '@lumiqos/shared/index';
-import { AcademicYear } from '@lumiqos/shared/src/entities/academic-year.entity';
-import { Class } from '@lumiqos/shared/src/entities/class.entity';
-import { Section } from '@lumiqos/shared/src/entities/section.entity';
-import { HomeworkAssignment } from '@lumiqos/shared/src/entities/homework-assignment.entity';
-import { HomeworkSubmission } from '@lumiqos/shared/src/entities/homework-submission.entity';
+import { Student } from '@xceliqos/shared/src/entities/student.entity';
+import { StudentEnrollment } from '@xceliqos/shared/src/entities/student-enrollment.entity';
+import { StudentGuardian } from '@xceliqos/shared/src/entities/student-guardian.entity';
+import { StudentDocument } from '@xceliqos/shared/src/entities/student-document.entity';
+import { StudentHealthRecord } from '@xceliqos/shared/src/entities/student-health-record.entity';
+import { StudentStatus } from '@xceliqos/shared/index';
+import { EnrollmentStatus } from '@xceliqos/shared/index';
+import { TenantContext } from '@xceliqos/shared/index';
+import { AcademicYear } from '@xceliqos/shared/src/entities/academic-year.entity';
+import { Class } from '@xceliqos/shared/src/entities/class.entity';
+import { Section } from '@xceliqos/shared/src/entities/section.entity';
+import { HomeworkAssignment } from '@xceliqos/shared/src/entities/homework-assignment.entity';
+import { HomeworkSubmission } from '@xceliqos/shared/src/entities/homework-submission.entity';
 
 @Injectable()
 export class StudentsService {

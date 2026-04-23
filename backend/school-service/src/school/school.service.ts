@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { LessonPlan } from '@lumiqos/shared/src/entities';
+import { LessonPlan } from '@xceliqos/shared/src/entities';
 
 @Injectable()
 export class SchoolService {

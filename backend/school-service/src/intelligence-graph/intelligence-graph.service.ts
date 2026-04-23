@@ -17,7 +17,7 @@ import {
   HomeworkSubmission,
   StudentAttendance,
   TenantContext
-} from '@lumiqos/shared';
+} from '@xceliqos/shared';
 
 interface PerformanceMetrics {
   examScores: number[];

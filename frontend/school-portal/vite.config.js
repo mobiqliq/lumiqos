@@ -9,8 +9,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       injectRegister: 'auto',
       manifest: {
-        name: 'LumiqOS Intelligence Platform',
-        short_name: 'LumiqOS',
+        name: 'XceliQOS Intelligence Platform',
+        short_name: 'XceliQOS',
         description: 'AI-first Intelligence OS for Education',
         theme_color: '#3b82f6',
         icons: [

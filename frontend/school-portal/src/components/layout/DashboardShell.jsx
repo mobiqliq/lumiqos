@@ -99,7 +99,7 @@ export default function DashboardShell({ children, role = 'principal' }) {
         >
           <div className={s.logoRow}>
             <div className={s.logoMark}>L</div>
-            {expanded && <span className={s.logoText}>LumiqOS</span>}
+            {expanded && <span className={s.logoText}>XceliQOS</span>}
           </div>
 
           {expanded && (

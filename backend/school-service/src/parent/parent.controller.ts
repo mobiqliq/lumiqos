@@ -1,9 +1,9 @@
 import { Controller, Get, Post, Body, Query, Param, UseGuards, Req } from '@nestjs/common';
 import { ParentService } from './parent.service';
-import { JwtAuthGuard } from '@lumiqos/shared/index';
-import { RbacGuard } from '@lumiqos/shared/index';
-import { RequireRoles } from '@lumiqos/shared/index';
-import { TenantContext } from '@lumiqos/shared/index';
+import { JwtAuthGuard } from '@xceliqos/shared/index';
+import { RbacGuard } from '@xceliqos/shared/index';
+import { RequireRoles } from '@xceliqos/shared/index';
+import { TenantContext } from '@xceliqos/shared/index';
 
 @Controller('parent')
 export class ParentController {

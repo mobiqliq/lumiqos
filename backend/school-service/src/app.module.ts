@@ -1,4 +1,4 @@
-import { TenantInterceptor } from '@lumiqos/shared';
+import { TenantInterceptor } from '@xceliqos/shared';
 import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
 import { AcademicPlanningModule } from './academic-planning/academic-planning.module';
 import { IntelligenceGraphModule } from './intelligence-graph/intelligence-graph.module';
@@ -17,7 +17,8 @@ import { ExamsModule } from './exams/exams.module';
 import { HomeworkModule } from './homework/homework.module';
 import { CommunicationModule } from './communication/communication.module';
 import { SeederModule } from './database/seeder.module';
-import * as AllEntities from '@lumiqos/shared/src/entities';
+import { AdminModule } from './admin/admin.module';
+import * as AllEntities from '@xceliqos/shared/src/entities';
 import { LoggingMiddleware } from './middleware/logging.middleware';
 
 @Module({
@@ -25,11 +26,11 @@ import { LoggingMiddleware } from './middleware/logging.middleware';
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'lumiqos_db',
+      host: 'xceliqos_db',
       port: 5432,
       username: 'postgres',
       password: 'postgres',
-      database: 'lumiq',
+      database: 'xceliq',
       entities: Object.values(AllEntities).filter(item => typeof item === 'function'),
       synchronize: true,
       logging: true,
@@ -48,6 +49,7 @@ import { LoggingMiddleware } from './middleware/logging.middleware';
     HomeworkModule,
     CommunicationModule,
     SeederModule,
+    AdminModule,
   ],
   providers: [
     Reflector,

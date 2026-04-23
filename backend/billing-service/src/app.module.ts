@@ -15,7 +15,7 @@ import {
     FeeCategory, FeeStructure, StudentFeeAccount, FeeInvoice, FeePayment,
     AttendanceSession, StudentAttendance,
     SaasPlan, TenantSubscription, AnalyticsSnapshot
-} from '@lumiqos/shared/index';
+} from '@xceliqos/shared/index';
 
 @Module({
     imports: [
@@ -24,11 +24,11 @@ import {
         }),
         TypeOrmModule.forRoot({
             type: 'postgres',
-            host: process.env.DB_HOST || 'lumiqos_db',
+            host: process.env.DB_HOST || 'xceliqos_db',
             port: parseInt(process.env.DB_PORT || '5432', 10),
             username: process.env.DB_USER || 'postgres',
             password: process.env.DB_PASSWORD || 'postgres',
-            database: process.env.DB_NAME || 'lumiq',
+            database: process.env.DB_NAME || 'xceliq',
             autoLoadEntities: false,
             entities: [
                 User, Role, Permission, RolePermission, School, AcademicYear,

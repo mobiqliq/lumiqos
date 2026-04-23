@@ -6,7 +6,7 @@ export class AppController {
 
   @Get()
   getHello(): string {
-    return 'LumiqOS School Service';
+    return 'XceliQOS School Service';
   }
 
   @Get('health')

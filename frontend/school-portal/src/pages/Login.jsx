@@ -63,7 +63,7 @@ export default function Login() {
             fontWeight: 700, fontSize: 16, color: '#fff'
           }}>L</div>
           <span style={{ fontSize: 17, fontWeight: 600, color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>
-            LumiqOS Portal
+            XceliQOS Portal
           </span>
         </div>
 

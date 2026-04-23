@@ -1,12 +1,12 @@
 import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { HomeworkAssignment } from '@lumiqos/shared/src/entities/homework-assignment.entity';
-import { HomeworkSubmission } from '@lumiqos/shared/src/entities/homework-submission.entity';
-import { StudentEnrollment } from '@lumiqos/shared/src/entities/student-enrollment.entity';
-import { HomeworkStatus } from '@lumiqos/shared/index';
-import { TenantContext } from '@lumiqos/shared/index';
-import { EnrollmentStatus } from '@lumiqos/shared/index';
+import { HomeworkAssignment } from '@xceliqos/shared/src/entities/homework-assignment.entity';
+import { HomeworkSubmission } from '@xceliqos/shared/src/entities/homework-submission.entity';
+import { StudentEnrollment } from '@xceliqos/shared/src/entities/student-enrollment.entity';
+import { HomeworkStatus } from '@xceliqos/shared/index';
+import { TenantContext } from '@xceliqos/shared/index';
+import { EnrollmentStatus } from '@xceliqos/shared/index';
 
 @Injectable()
 export class HomeworkService {

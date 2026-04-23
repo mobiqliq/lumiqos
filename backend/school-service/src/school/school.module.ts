@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { SchoolController } from './school.controller';
 import { SchoolService } from './school.service';
-import { LessonPlan } from '@lumiqos/shared';
+import { LessonPlan } from '@xceliqos/shared';
 
 @Module({
   imports: [

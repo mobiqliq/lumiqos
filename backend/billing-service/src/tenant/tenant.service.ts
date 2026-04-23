@@ -9,7 +9,7 @@ import {
     Role,
     SaasPlan,
     TenantSubscription
-} from '@lumiqos/shared/index';
+} from '@xceliqos/shared/index';
 
 @Injectable()
 export class TenantService {

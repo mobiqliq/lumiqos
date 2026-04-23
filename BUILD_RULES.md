@@ -1,6 +1,6 @@
-# LumiqOS — Build Rules (Read Once, Follow Always)
+# XceliQOS — Build Rules (Read Once, Follow Always)
 
-> **Project**: LumiqOS  
+> **Project**: XceliQOS  
 > **Type**: AI-First School Intelligence OS  
 > **Architecture**: Layered Microservices (NestJS + React + PostgreSQL)
 
@@ -14,7 +14,7 @@
 | 2 | **Always build module by module** | Each module = one testable, deployable unit |
 | 3 | **Never change schema without migration** | Protects production data; every column change needs a TypeORM migration |
 | 4 | **Never rename folders after creation** | Prevents broken imports, CI failures, and lost git history |
-| 5 | **Always use same product name: LumiqOS** | Consistency in code, docs, UI, and communication |
+| 5 | **Always use same product name: XceliQOS** | Consistency in code, docs, UI, and communication |
 | 6 | **Always load architecture before prompting AI** | AI must read `docs/architecture.md` + `ARCHITECTURE_MEMORY.md` first |
 | 7 | **Never let AI invent new structure** | All new modules must follow the existing pattern in `BUILD_ORDER.md` |
 | 8 | **Always save files before next step** | No orphan changes; every edit is persisted |

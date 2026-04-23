@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CurriculumPlan } from '@lumiqos/shared/src/entities/curriculum-plan.entity';
-import { CurriculumPlanItem } from '@lumiqos/shared/src/entities/curriculum-plan-item.entity';
-import { Syllabus } from '@lumiqos/shared/src/entities/syllabus.entity';
-import { AcademicCalendarEvent } from '@lumiqos/shared/src/entities/academic-calendar-event.entity';
-import { AcademicYear } from '@lumiqos/shared/src/entities/academic-year.entity';
+import { CurriculumPlan } from '@xceliqos/shared/src/entities/curriculum-plan.entity';
+import { CurriculumPlanItem } from '@xceliqos/shared/src/entities/curriculum-plan-item.entity';
+import { Syllabus } from '@xceliqos/shared/src/entities/syllabus.entity';
+import { AcademicCalendarEvent } from '@xceliqos/shared/src/entities/academic-calendar-event.entity';
+import { AcademicYear } from '@xceliqos/shared/src/entities/academic-year.entity';
 import { GeneratePlanDto } from '../dto/orchestrator.dto';
 
 @Injectable()

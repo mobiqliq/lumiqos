@@ -1,5 +1,5 @@
 /**
- * LumiqOS Design Tokens — Single Source of Truth
+ * XceliQOS Design Tokens — Single Source of Truth
  * All values exported as constants for use in TypeScript/React components.
  * Corresponding CSS variables are generated in theme.css
  */

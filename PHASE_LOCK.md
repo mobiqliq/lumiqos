@@ -1,4 +1,4 @@
-# LumiqOS — Phase Lock Protocol
+# XceliQOS — Phase Lock Protocol
 
 > **No phase advances until the gate clears. No exceptions.**
 

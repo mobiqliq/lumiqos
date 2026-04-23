@@ -1,6 +1,6 @@
-# LumiqOS — Brand Guidelines
+# XceliQOS — Brand Guidelines
 
-> **Product Name**: LumiqOS (final, non-negotiable)  
+> **Product Name**: XceliQOS (final, non-negotiable)  
 > **Design Principle**: Rule of 3s — three colors, three typeweights, three spacing scales  
 > **Last Updated**: 2026-03-19
 
@@ -9,11 +9,11 @@
 ## 1. Brand Identity
 
 ### Name
-**LumiqOS** — always written as one word, capital L, lowercase u-m-i-q, capital O-S.
+**XceliQOS** — always written as one word, capital L, lowercase u-m-i-q, capital O-S.
 
 | ✅ Correct | ❌ Incorrect |
 |-----------|-------------|
-| LumiqOS | Lumiq OS, LUMIQOS, lumiqos, Lumiq-OS |
+| XceliQOS | XceliQ OS, LUMIQOS, xceliqos, XceliQ-OS |
 
 ### Tagline (Rule of 3)
 > **Intelligence. Insight. Impact.**
@@ -34,9 +34,9 @@
 
 | Role | Name | Hex | Usage |
 |------|------|-----|-------|
-| **Primary** | Lumiq Blue | `#3B82F6` | CTAs, active states, links, primary buttons |
-| **Secondary** | Lumiq Emerald | `#10B981` | Success states, growth metrics, positive actions |
-| **Accent** | Lumiq Cyan | `#06B6D4` | Highlights, gradients, differentiation |
+| **Primary** | XceliQ Blue | `#3B82F6` | CTAs, active states, links, primary buttons |
+| **Secondary** | XceliQ Emerald | `#10B981` | Success states, growth metrics, positive actions |
+| **Accent** | XceliQ Cyan | `#06B6D4` | Highlights, gradients, differentiation |
 
 ### Neutral Palette (3 tiers)
 
@@ -128,7 +128,7 @@ The logo mark is a **36×36px rounded square** with the brand gradient (`Emerald
 ```
 
 ### Wordmark
-School name appears first (e.g., **"Greenfield Academy"**), with **"powered by LumiqOS"** below in muted text (10px).
+School name appears first (e.g., **"Greenfield Academy"**), with **"powered by XceliQOS"** below in muted text (10px).
 
 ### Usage Rules
 - Never stretch or rotate the logo
@@ -189,7 +189,7 @@ Migrate to **Lucide React** icons when building production mobile apps.
 
 ## 9. Dark Mode (Default & Only)
 
-LumiqOS is **dark-mode only** for v1. This is a deliberate brand decision:
+XceliQOS is **dark-mode only** for v1. This is a deliberate brand decision:
 - Reduces eye strain during long admin sessions
 - Creates visual premium feel
 - Differentiates from competition (most EdTech is light-mode)

@@ -1,9 +1,9 @@
 import { Controller, Post, Get, Put, Delete, Body, Param, UseGuards } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { StudentsService } from './students.service';
-import { JwtAuthGuard } from '@lumiqos/shared/index';
-import { RbacGuard } from '@lumiqos/shared/index';
-import { RequirePermissions } from '@lumiqos/shared/index';
+import { JwtAuthGuard } from '@xceliqos/shared/index';
+import { RbacGuard } from '@xceliqos/shared/index';
+import { RequirePermissions } from '@xceliqos/shared/index';
 
 @Controller('students')
 @UseGuards(JwtAuthGuard, RbacGuard)

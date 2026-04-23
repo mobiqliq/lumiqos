@@ -40,7 +40,7 @@ const LoginPage = () => {
 
     return (
         <div style={{ maxWidth: '400px', margin: '50px auto', textAlign: 'center' }}>
-            <h2>LumiqOS Login</h2>
+            <h2>XceliQOS Login</h2>
             {error && <p style={{ color: 'red', fontWeight: 'bold' }}>{error}</p>}
             <form onSubmit={handleLogin}>
                 <div style={{ marginBottom: '15px' }}>

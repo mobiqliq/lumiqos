@@ -1,9 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, In, Not, MoreThanOrEqual, LessThanOrEqual } from 'typeorm';
-import { PlannedSchedule, ScheduleStatus } from '@lumiqos/shared/src/entities/planned-schedule.entity';
-import { User } from '@lumiqos/shared/src/entities/user.entity';
-import { TeacherSubject } from '@lumiqos/shared/src/entities/teacher-subject.entity';
+import { PlannedSchedule, ScheduleStatus } from '@xceliqos/shared/src/entities/planned-schedule.entity';
+import { User } from '@xceliqos/shared/src/entities/user.entity';
+import { TeacherSubject } from '@xceliqos/shared/src/entities/teacher-subject.entity';
 
 @Injectable()
 export class SubstitutionService {

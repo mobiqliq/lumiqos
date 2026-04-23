@@ -1,9 +1,9 @@
 import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
-import { LumiqosBaseEntity } from './base.entity';
+import { XceliQosBaseEntity } from './base.entity';
 import { School } from './school.entity';
 
 @Entity('class')
-export class Class extends LumiqosBaseEntity {
+export class Class extends XceliQosBaseEntity {
   @Column({ type: 'uuid', nullable: true })
   class_id: string;
 

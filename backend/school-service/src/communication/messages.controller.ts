@@ -1,7 +1,7 @@
 import { Controller, Post, Get, Body, Param } from '@nestjs/common';
 import { CommunicationService } from './communication.service';
-import { RequirePermissions } from '@lumiqos/shared/index';
-import { CurrentUser } from '@lumiqos/shared/index';
+import { RequirePermissions } from '@xceliqos/shared/index';
+import { CurrentUser } from '@xceliqos/shared/index';
 
 @Controller('messages')
 export class MessagesController {

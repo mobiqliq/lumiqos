@@ -1,6 +1,6 @@
 import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
 import OpenAI from 'openai';
-import { ILessonPlan } from '@lumiqos/shared';
+import { ILessonPlan } from '@xceliqos/shared';
 import { StudentGraphData, LearningRecommendation, PersonalizedLearningPath } from './interfaces/recommendation.interface';
 
 @Injectable()

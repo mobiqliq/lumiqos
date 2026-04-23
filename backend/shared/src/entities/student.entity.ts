@@ -18,7 +18,7 @@ export class Student {
     student_id: string;
 
     @Column({ type: 'varchar', nullable: true, unique: true })
-    lumiq_id: string;
+    xceliq_id: string;
 
     @Column({ type: 'uuid', nullable: true })
     school_id: string;

@@ -1,6 +1,6 @@
 import { Controller, Post, Get, Put, Body, Param, Query } from '@nestjs/common';
 import { HomeworkService } from './homework.service';
-import { RequirePermissions } from '@lumiqos/shared/index';
+import { RequirePermissions } from '@xceliqos/shared/index';
 
 @Controller('homework')
 export class HomeworkController {

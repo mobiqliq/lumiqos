@@ -1,8 +1,8 @@
 import { Entity, Column } from 'typeorm';
-import { LumiqosBaseEntity } from './base.entity';
+import { XceliQosBaseEntity } from './base.entity';
 
 @Entity('planning_day')
-export class PlanningDay extends LumiqosBaseEntity {
+export class PlanningDay extends XceliQosBaseEntity {
   @Column({ type: 'uuid' })
   academic_year_id: string;
 

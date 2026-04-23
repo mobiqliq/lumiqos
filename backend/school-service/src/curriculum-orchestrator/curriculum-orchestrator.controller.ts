@@ -3,7 +3,7 @@ import { CurriculumPlannerService } from './services/planner.service';
 import { CurriculumTrackingService } from './services/tracking.service';
 import { CurriculumReschedulerService } from './services/rescheduler.service';
 import { GeneratePlanDto, LogTeachingDto } from './dto/orchestrator.dto';
-import { JwtAuthGuard } from '@lumiqos/shared/index';
+import { JwtAuthGuard } from '@xceliqos/shared/index';
 import { AcademicPlanningService } from '../academic-planning/academic-planning.service';
 import { HttpException, HttpStatus } from '@nestjs/common';
 

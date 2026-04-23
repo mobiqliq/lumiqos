@@ -1,8 +1,8 @@
 import { Controller, Post, Get, Put, Body, Param, UseGuards } from '@nestjs/common';
 import { AcademicYearService } from './academic-year.service';
-import { JwtAuthGuard } from '@lumiqos/shared/index';
-import { RbacGuard } from '@lumiqos/shared/index';
-import { RequirePermissions } from '@lumiqos/shared/index';
+import { JwtAuthGuard } from '@xceliqos/shared/index';
+import { RbacGuard } from '@xceliqos/shared/index';
+import { RequirePermissions } from '@xceliqos/shared/index';
 
 @Controller('academic-years')
 @UseGuards(JwtAuthGuard, RbacGuard)
