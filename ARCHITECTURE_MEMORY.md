@@ -1,8 +1,8 @@
 # XceliQOS — Architecture Memory
 
 > This file is the AI's mandatory context loader. Read this BEFORE making any code changes.
-> Last Updated: 2026-04-23 — Phase 31 Started
-> Branch: main | HEAD: 98f65ff
+> Last Updated: 2026-04-23 — Phase 31 Sprint 1 In Progress (31.0 Complete)
+> Branch: main | HEAD: bf1b8b3
 
 ---
 
@@ -209,16 +209,36 @@ Command: docker compose build <service> && docker compose up -d <service>
 
 ## Phase 31 — Sprint 1 In Progress
 
-### Current Focus: 31.0 School Calendar & Timetable Configuration Engine
-- Status: NOT STARTED
+### Current Focus: 31.1 Student Persistent Identity Layer
+- Previously completed: 31.0 School Calendar & Timetable Configuration Engine
 - Prerequisite for: all curriculum/workload/compliance calculations
 - New entities required: SchoolCalendarConfig, TimetablePeriod, WeeklyTimetable, SubjectAllocation
 - New module: SchoolConfigModule (school-config-service long term, school-service for now)
 
+### New Endpoints (31.0)
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | /api/school-config/calendar?academic_year_id= | Get calendar config |
+| POST | /api/school-config/calendar | Upsert calendar config |
+| GET | /api/school-config/periods?academic_year_id= | Get timetable periods |
+| POST | /api/school-config/periods | Upsert timetable periods |
+| GET | /api/school-config/timetable?academic_year_id=&class_id= | Get weekly timetable |
+| POST | /api/school-config/timetable | Upsert weekly timetable entries |
+| GET | /api/school-config/allocations?academic_year_id=&class_id= | Get subject allocations |
+| POST | /api/school-config/allocations | Upsert subject allocations |
+
+All require: x-school-id header
+
+### New Entities (31.0)
+- SchoolCalendarConfig — year-level config, exam windows, event days, holidays
+- TimetablePeriod — typed period slots (period/break/recess/assembly/co_curricular)
+- WeeklyTimetable — subject-period-class-teacher allocation per day
+- SubjectAllocation — periods per week per subject per class, NEP compliance flag
+
 ### Sprint 1 Items
 | Item | Description | Status |
 |------|-------------|--------|
-| 31.0 | School Calendar & Timetable Config Engine | 🔲 Next |
+| 31.0 | School Calendar & Timetable Config Engine | ✅ Complete |
 | 31.1 | Student Persistent Identity Layer | 🔲 Pending |
 | 31.2 | XceliQScore v1.0 (10-dimension scoring) | 🔲 Pending |
 | 31.3 | Adaptive Role Architecture (Tier 1/2/3) | 🔲 Pending |
