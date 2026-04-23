@@ -1,8 +1,8 @@
 # XceliQOS — Architecture Memory
 
 > This file is the AI's mandatory context loader. Read this BEFORE making any code changes.
-> Last Updated: 2026-04-23 — Phase 31 Sprint 1 COMPLETE (31.0–31.3)
-> Branch: main | HEAD: e1679cc
+> Last Updated: 2026-04-23 — Phase 31 Sprint 2 IN PROGRESS (31.4 COMPLETE)
+> Branch: main | HEAD: 4841933
 
 ---
 
@@ -81,7 +81,9 @@ IntelligenceGraphController, DashboardController,
 FinanceController, ParentController, HrController,
 SubstitutionController, TimetableController,
 ReportCardsController, ExamsController, HomeworkController,
-CommunicationController, AuthController, AdminController
+CommunicationController, AuthController, AdminController,
+SchoolConfigController, StudentIdentityController,
+XceliQScoreController, SchoolTierController, XceliQChatController
 
 ---
 
@@ -92,7 +94,8 @@ SchoolModule, AcademicPlanningModule, IntelligenceGraphModule,
 DashboardModule, FinanceModule, ParentModule, HrModule,
 SubstitutionModule, TimetableModule, ReportCardsModule,
 ExamsModule, HomeworkModule, CommunicationModule,
-SeederModule, AdminModule
+SeederModule, AdminModule, SchoolConfigModule,
+StudentIdentityModule, XceliQScoreModule, SchoolTierModule, XceliQChatModule
 
 ---
 
@@ -277,6 +280,39 @@ All require: x-school-id header
 
 
 ---
+
+
+## Phase 31 — Sprint 2 Status
+
+| Item | Description | Status |
+|------|-------------|--------|
+| 31.4 | XceliQChat — Internal Staff Communication | ✅ Complete |
+| 31.5 | Parent-School Communication Platform | ⬜ Pending |
+| 31.6 | Homework Transparency Triangle | ⬜ Pending |
+
+### New Entities (31.4)
+- ChatChannel — channel with type enum: class/subject/department/whole_school/direct
+- ChatMessage — message with sender, channel, parent threading, attachment, poll ref, ai flag
+- ChatMember — user↔channel membership, role, status (active/muted/in_class), ack, last_read_at
+
+### New Endpoints (31.4) — all require x-school-id + x-user-id
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | /api/chat/channels | List channels for user |
+| POST | /api/chat/channels | Create channel |
+| GET | /api/chat/channels/:id/members | List members |
+| POST | /api/chat/channels/:id/members | Add member |
+| PATCH | /api/chat/channels/:id/members/:userId/status | Update member status |
+| GET | /api/chat/channels/:id/messages | Get messages (paginated, cursor) |
+| POST | /api/chat/channels/:id/messages | Send message |
+| POST | /api/chat/channels/:id/polls | Create poll |
+| POST | /api/chat/channels/:id/polls/:messageId/vote | Cast vote |
+| POST | /api/chat/channels/:id/acknowledge | Acknowledge announcement |
+| POST | /api/chat/channels/:id/read | Mark channel read |
+
+### WS Deferral Note
+Real-time WebSocket layer deferred to Sprint 3 infrastructure.
+REST API + full data model complete. WS will consume same entities.
 
 ## Known Issues / Technical Debt
 
