@@ -6,6 +6,9 @@ import { ParentMessage, ParentMessageSenderType } from '@xceliqos/shared/src/ent
 import { BroadcastAnnouncement, BroadcastAudienceType, BroadcastTriggerType } from '@xceliqos/shared/src/entities/broadcast-announcement.entity';
 import { BroadcastReadReceipt } from '@xceliqos/shared/src/entities/broadcast-read-receipt.entity';
 import { TenantContext } from '@xceliqos/shared/index';
+import { StudentGuardian } from '@xceliqos/shared/src/entities/student-guardian.entity';
+import { Student } from '@xceliqos/shared/src/entities/student.entity';
+import { User } from '@xceliqos/shared/src/entities/user.entity';
 
 @Injectable()
 export class ParentCommsService {
@@ -14,6 +17,9 @@ export class ParentCommsService {
     @InjectRepository(ParentMessage) private readonly messageRepo: Repository<ParentMessage>,
     @InjectRepository(BroadcastAnnouncement) private readonly broadcastRepo: Repository<BroadcastAnnouncement>,
     @InjectRepository(BroadcastReadReceipt) private readonly receiptRepo: Repository<BroadcastReadReceipt>,
+    @InjectRepository(StudentGuardian) private readonly guardianRepo: Repository<StudentGuardian>,
+    @InjectRepository(Student) private readonly studentRepo: Repository<Student>,
+    @InjectRepository(User) private readonly userRepo: Repository<User>,
   ) {}
 
   private getSchoolId(): string {
@@ -101,7 +107,37 @@ export class ParentCommsService {
       order: { created_at: 'ASC' },
     });
 
-    return { thread, messages };
+    // Enrich: resolve parent name, student name, relationship
+    const [parentUser, student, guardian] = await Promise.all([
+      this.userRepo.findOne({ where: { id: thread.parent_user_id } }),
+      this.studentRepo.findOne({ where: { id: thread.student_id } }),
+      this.guardianRepo.findOne({
+        where: { school_id: schoolId, user_id: thread.parent_user_id, student_id: thread.student_id },
+      }),
+    ]);
+
+    // Enrich assigned staff name if present
+    let assignedStaff: { id: string; first_name: string; last_name: string } | null = null;
+    if (thread.assigned_to_user_id) {
+      const staffUser = await this.userRepo.findOne({ where: { id: thread.assigned_to_user_id } });
+      if (staffUser) {
+        assignedStaff = { id: staffUser.id, first_name: staffUser.first_name, last_name: staffUser.last_name };
+      }
+    }
+
+    return {
+      thread,
+      parent: parentUser
+        ? { id: parentUser.id, first_name: parentUser.first_name, last_name: parentUser.last_name, email: parentUser.email }
+        : null,
+      student: student
+        ? { id: student.id, first_name: student.first_name, last_name: student.last_name }
+        : null,
+      relationship: guardian?.relationship ?? null,
+      is_primary_guardian: guardian?.is_primary ?? false,
+      assigned_staff: assignedStaff,
+      messages,
+    };
   }
 
   async sendMessage(threadId: string, dto: {

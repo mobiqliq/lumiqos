@@ -6,6 +6,9 @@ import { ParentMessageThread } from '@xceliqos/shared/src/entities/parent-messag
 import { ParentMessage } from '@xceliqos/shared/src/entities/parent-message.entity';
 import { BroadcastAnnouncement } from '@xceliqos/shared/src/entities/broadcast-announcement.entity';
 import { BroadcastReadReceipt } from '@xceliqos/shared/src/entities/broadcast-read-receipt.entity';
+import { StudentGuardian } from '@xceliqos/shared/src/entities/student-guardian.entity';
+import { Student } from '@xceliqos/shared/src/entities/student.entity';
+import { User } from '@xceliqos/shared/src/entities/user.entity';
 
 @Module({
   imports: [
@@ -14,6 +17,9 @@ import { BroadcastReadReceipt } from '@xceliqos/shared/src/entities/broadcast-re
       ParentMessage,
       BroadcastAnnouncement,
       BroadcastReadReceipt,
+      StudentGuardian,
+      Student,
+      User,
     ]),
   ],
   controllers: [ParentCommsController],
