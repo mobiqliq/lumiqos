@@ -27,6 +27,7 @@ import { SchoolTierController } from './school-tier.controller';
 import { XceliQChatController } from './xceliq-chat.controller';
 import { ParentCommsController } from './parent-comms.controller';
 import { HomeworkTransparencyController } from './homework-transparency.controller';
+import { ExamEngineController } from './exam-engine.controller';
 
 @Module({
   imports: [
@@ -61,7 +62,7 @@ import { HomeworkTransparencyController } from './homework-transparency.controll
     ]),
     HttpModule,
   ],
-  controllers: [AppController, HealthController, TeacherController, IntelligenceGraphController, DashboardController, FinanceController, ParentController, HrController, SubstitutionController, TimetableController, ReportCardsController, ExamsController, HomeworkController, CommunicationController, AuthController, AdminController, SchoolConfigController, StudentIdentityController, XceliQScoreController, SchoolTierController, XceliQChatController, ParentCommsController, HomeworkTransparencyController],
+  controllers: [AppController, HealthController, TeacherController, IntelligenceGraphController, DashboardController, FinanceController, ParentController, HrController, SubstitutionController, TimetableController, ReportCardsController, ExamsController, HomeworkController, CommunicationController, AuthController, AdminController, SchoolConfigController, StudentIdentityController, XceliQScoreController, SchoolTierController, XceliQChatController, ParentCommsController, HomeworkTransparencyController, ExamEngineController],
   providers: [AppService],
 })
 export class AppModule {}
