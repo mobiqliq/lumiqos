@@ -1,8 +1,8 @@
 # XceliQOS — Architecture Memory
 
 > This file is the AI's mandatory context loader. Read this BEFORE making any code changes.
-> Last Updated: 2026-04-23 — Phase 31 Sprint 1 In Progress (31.0, 31.1, 31.2 Complete)
-> Branch: main | HEAD: f40a17e
+> Last Updated: 2026-04-23 — Phase 31 Sprint 1 COMPLETE (31.0–31.3)
+> Branch: main | HEAD: e1679cc
 
 ---
 
@@ -209,8 +209,13 @@ Command: docker compose build <service> && docker compose up -d <service>
 
 ## Phase 31 — Sprint 1 In Progress
 
-### Current Focus: 31.3 Adaptive Role Architecture (Tier 1/2/3)
-- Previously completed: 31.0 School Calendar & Timetable Config, 31.1 Student Persistent Identity Layer, 31.2 XceliQScore v1.0
+### Sprint 1 STATUS: COMPLETE
+- 31.0 School Calendar & Timetable Config ✅
+- 31.1 Student Persistent Identity Layer ✅
+- 31.2 XceliQScore v1.0 ✅
+- 31.3 Adaptive Role Architecture ✅
+
+### Current Focus: Sprint 2 — Communication & Collaboration (31.4–31.6)
 - Prerequisite for: all curriculum/workload/compliance calculations
 - New entities required: SchoolCalendarConfig, TimetablePeriod, WeeklyTimetable, SubjectAllocation
 - New module: SchoolConfigModule (school-config-service long term, school-service for now)
@@ -244,6 +249,16 @@ All require: x-school-id header
 | GET | /api/xceliq-score/:student_id?academic_year_id= | Get current score + trajectory |
 | POST | /api/xceliq-score/:student_id/calculate | Calculate score from dimension inputs |
 
+| GET | /api/school-config/tier | Get/auto-create tier config (auto-detects from student count) |
+| POST | /api/school-config/tier | Upsert tier config |
+| GET | /api/school-config/tier/priority-queue | Get Tier 3 Smart Priority Queue |
+| GET | /api/school-config/tier/bundles | Get all role bundles for school |
+| POST | /api/school-config/tier/bundles | Upsert role bundle |
+
+### New Entities (31.3)
+- SchoolTierConfig — tier (1/2/3), auto-detection, solo mode, priority queue, active bundles
+- RoleBundle — merged role sets (principal+admin, finance+hr, solo), per-tier, unified dashboard flag
+
 ### New Entities (31.2)
 - XceliQScore — composite + 10 dimension scores, growth delta, Growth Mindset narrative
 - XceliQScoreDimension — school-configurable weights (default: Academic Mastery 25%, etc.)
@@ -258,7 +273,7 @@ All require: x-school-id header
 | 31.0 | School Calendar & Timetable Config Engine | ✅ Complete |
 | 31.1 | Student Persistent Identity Layer | ✅ Complete |
 | 31.2 | XceliQScore v1.0 (10-dimension scoring) | ✅ Complete |
-| 31.3 | Adaptive Role Architecture (Tier 1/2/3) | 🔲 Pending |
+| 31.3 | Adaptive Role Architecture (Tier 1/2/3) | ✅ Complete |
 
 
 ---
