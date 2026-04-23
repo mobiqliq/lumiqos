@@ -1,8 +1,8 @@
 # XceliQOS — Architecture Memory
 
 > This file is the AI's mandatory context loader. Read this BEFORE making any code changes.
-> Last Updated: 2026-04-22 — Phase 29 Complete
-> Branch: main | HEAD: 399ed7d
+> Last Updated: 2026-04-23 — Phase 31 Started
+> Branch: main | HEAD: 98f65ff
 
 ---
 
@@ -12,6 +12,7 @@
 - **Tagline**: AI-First School Intelligence OS
 - **Type**: Multi-Tenant SaaS Platform for K-12 Education
 - **Stack**: NestJS + React/Vite + PostgreSQL + TypeORM + Docker Compose
+- **Rebrand**: Renamed from LumiqOS → XceliQOS (2026-04-23) — 260 files + Dockerfiles updated
 
 ---
 
@@ -102,7 +103,7 @@ SeederModule, AdminModule
 - POST /auth/register
 - JWT secret: dev_jwt_secret_change_in_production
 - JWT payload: { user_id, school_id, role, permissions[] }
-- permissions[] is ALWAYS EMPTY — role_permission table not seeded (known issue)
+- permissions[] POPULATED — 20 permissions seeded, 7 roles mapped
 
 ---
 
@@ -206,6 +207,25 @@ Command: docker compose build <service> && docker compose up -d <service>
 
 ---
 
+## Phase 31 — Sprint 1 In Progress
+
+### Current Focus: 31.0 School Calendar & Timetable Configuration Engine
+- Status: NOT STARTED
+- Prerequisite for: all curriculum/workload/compliance calculations
+- New entities required: SchoolCalendarConfig, TimetablePeriod, WeeklyTimetable, SubjectAllocation
+- New module: SchoolConfigModule (school-config-service long term, school-service for now)
+
+### Sprint 1 Items
+| Item | Description | Status |
+|------|-------------|--------|
+| 31.0 | School Calendar & Timetable Config Engine | 🔲 Next |
+| 31.1 | Student Persistent Identity Layer | 🔲 Pending |
+| 31.2 | XceliQScore v1.0 (10-dimension scoring) | 🔲 Pending |
+| 31.3 | Adaptive Role Architecture (Tier 1/2/3) | 🔲 Pending |
+
+
+---
+
 ## Known Issues / Technical Debt
 
 | Issue                              | Severity | Notes                                        |
@@ -218,6 +238,7 @@ Command: docker compose build <service> && docker compose up -d <service>
 | No API versioning (/api/v1/)       | Medium   | Deferred                                     |
 | Communication needs JWT context    | Medium   | createThread/sendMessage need user context   |
 | Two duplicate "Test School" rows   | Low      | No school_code, harmless in dev              |
+| Seeder FK violations on fresh DB   | ✅ Fixed  | School/Class/Subject hardcoded UUIDs inserted via SQL on fresh volume |
 | recent_activity timestamps static  | Low      | School entity has no created_at field        |
 | AuditLogs/Settings no backend      | Low      | Static mock only                             |
 | OPENAI_API_KEY not in git          | Note     | Set manually: backend/ai-service/.env        |
