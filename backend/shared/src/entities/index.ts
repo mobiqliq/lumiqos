@@ -100,3 +100,4 @@ export * from './ptc-meeting.entity';
 export * from './ptc-meeting-commitment.entity';
 export * from './workload-index.entity';
 export * from './workload-rule.entity';
+export * from './wellbeing-flag.entity';

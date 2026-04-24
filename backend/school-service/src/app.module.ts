@@ -32,6 +32,7 @@ import { XceliQAssistantModule } from './xceliq-assistant/xceliq-assistant.modul
 import { PredictiveAnalyticsModule } from './predictive-analytics/predictive-analytics.module';
 import { PTCMModule } from './ptcm/ptcm.module';
 import { TeacherWellbeingModule } from './teacher-wellbeing/teacher-wellbeing.module';
+import { StudentWellbeingModule } from './student-wellbeing/student-wellbeing.module';
 import * as AllEntities from '@xceliqos/shared/src/entities';
 import { LoggingMiddleware } from './middleware/logging.middleware';
 
@@ -78,6 +79,7 @@ import { LoggingMiddleware } from './middleware/logging.middleware';
     PredictiveAnalyticsModule,
     PTCMModule,
     TeacherWellbeingModule,
+    StudentWellbeingModule,
   ],
   providers: [
     Reflector,
