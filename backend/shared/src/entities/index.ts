@@ -103,3 +103,9 @@ export * from './workload-rule.entity';
 export * from './wellbeing-flag.entity';
 export * from './compliance-indicator.entity';
 export * from './compliance-record.entity';
+
+export * from './finance-ledger.entity';
+export * from './finance-entry.entity';
+export * from './tax-invoice.entity';
+export * from './tax-withholding.entity';
+export * from './fee-structure-version.entity';

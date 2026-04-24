@@ -34,6 +34,7 @@ import { PTCMModule } from './ptcm/ptcm.module';
 import { TeacherWellbeingModule } from './teacher-wellbeing/teacher-wellbeing.module';
 import { StudentWellbeingModule } from './student-wellbeing/student-wellbeing.module';
 import { ComplianceModule } from './compliance/compliance.module';
+import { FinanceV2Module } from './finance/finance-v2.module';
 import * as AllEntities from '@xceliqos/shared/src/entities';
 import { LoggingMiddleware } from './middleware/logging.middleware';
 
@@ -82,6 +83,7 @@ import { LoggingMiddleware } from './middleware/logging.middleware';
     TeacherWellbeingModule,
     StudentWellbeingModule,
     ComplianceModule,
+    FinanceV2Module,
   ],
   providers: [
     Reflector,
