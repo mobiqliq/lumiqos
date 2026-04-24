@@ -502,6 +502,72 @@ Sprint 4: AssistantInteraction, PredictiveAlert, PTCMeeting, PTCMeetingCommitmen
 - WS layer for XceliQChat deferred — REST API complete
 - OCR Vision API for StudentAnswerSheet deferred — needs image upload infra
 
+
+## Phase 31 — Sprint 5 Status
+
+| Item | Description | Status |
+|------|-------------|--------|
+| 31.13 | Teacher Wellbeing & Rotation System | ✅ Complete |
+| 31.14 | Student Wellbeing Radar | ✅ Complete |
+| 31.15 | NEP/Regulatory Compliance Engine | ✅ Complete |
+
+### New Entities (31.13)
+- WorkloadIndex: periods_taught, substitutions, correction_queue_depth, consecutive_periods_max, workload_score, risk_level (green/amber/red), violations jsonb
+- WorkloadRule: school-configurable limits, hard_block_on_violation, amber/red thresholds
+
+### New Endpoints (31.13)
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | /api/teacher-wellbeing/rules | Get workload rules |
+| POST | /api/teacher-wellbeing/rules | Upsert rules |
+| POST | /api/teacher-wellbeing/workload/compute | Compute workload for all teachers |
+| GET | /api/teacher-wellbeing/workload | Principal heatmap |
+| GET | /api/teacher-wellbeing/workload/:staffId | Individual staff history |
+| POST | /api/teacher-wellbeing/check-assignment | Pre-assignment workload check |
+| POST | /api/teacher-wellbeing/referral | Confidential self-referral |
+| PATCH | /api/teacher-wellbeing/workload/:id/acknowledge | Acknowledge flag |
+
+### New Entities (31.14)
+- WellbeingFlag: signal_type (4 types), tier (1/2/3), route_to, signals jsonb (explainable), severity_score, trauma-informed guide_key, care_notes, acknowledgment
+
+### Signal Detectors (31.14)
+- attendance_drop: recent 10 sessions < 75% attendance rate
+- mastery_regression: >30% of forgetting curve topics at-risk
+- retrieval_avoidance: >40% of recent tasks skipped/overdue
+- homework_decline: <50% homework completion rate
+
+### New Endpoints (31.14)
+| Method | Path | Description |
+|--------|------|-------------|
+| POST | /api/student-wellbeing/scan/:studentId | Run multi-signal scan |
+| POST | /api/student-wellbeing/scan/class/:classId | Scan entire class |
+| GET | /api/student-wellbeing/flags | Active flags (tier/status filterable) |
+| GET | /api/student-wellbeing/flags/:studentId | Student flags |
+| PATCH | /api/student-wellbeing/flags/:id/status | Update flag status |
+| GET | /api/student-wellbeing/guides/:signal_type | Trauma-informed response guide |
+
+### New Entities (31.15)
+- ComplianceIndicator: framework_id, domain, indicator_code, measurement_type, target_value, is_mandatory, data_source
+- ComplianceRecord: status (met/partial/not_met/not_assessed), current_value, evidence, corrective_action, manual override
+
+### Compliance Engine Architecture (31.15)
+- Framework-agnostic: framework_id free-form varchar (NEP/Ofsted/IB/Common Core/CBSE)
+- 36 NEP 2020 indicators seeded across 8 domains: Curriculum, Assessment, Pedagogy, Teacher Development, Inclusion, Infrastructure, Governance, Wellbeing, Community
+- Auto-assessment: curriculum coverage + attendance data-driven
+- Manual assessment: principal/admin marks indicators with evidence
+- Report: compliance_score, mandatory_compliance_score, by_domain breakdown, corrective_actions list
+- Export: JSON/CSV live; PDF/Excel deferred to frontend layer
+
+### New Endpoints (31.15)
+| Method | Path | Description |
+|--------|------|-------------|
+| POST | /api/compliance/seed/nep | Seed 36 NEP indicators |
+| GET | /api/compliance/indicators?framework_id= | Get indicators |
+| POST | /api/compliance/assess | Run assessment |
+| PATCH | /api/compliance/records/:id | Manual assessment update |
+| GET | /api/compliance/report | Full compliance report |
+| GET | /api/compliance/report/export?format=json|csv | Export report |
+
 ## Known Issues / Technical Debt
 
 | Issue                              | Severity | Notes                                        |
