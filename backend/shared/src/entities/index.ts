@@ -92,3 +92,5 @@ export * from './student-answer-sheet.entity';
 export * from './item-analysis.entity';
 export * from './curriculum-calendar.entity';
 export * from './curriculum-calendar-entry.entity';
+export * from './retrieval-task.entity';
+export * from './forgetting-curve.entity';

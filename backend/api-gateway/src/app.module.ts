@@ -29,6 +29,7 @@ import { ParentCommsController } from './parent-comms.controller';
 import { HomeworkTransparencyController } from './homework-transparency.controller';
 import { ExamEngineController } from './exam-engine.controller';
 import { CurriculumCalendarController } from './curriculum-calendar.controller';
+import { XceliQReviseController } from './xceliq-revise.controller';
 
 @Module({
   imports: [
@@ -63,7 +64,7 @@ import { CurriculumCalendarController } from './curriculum-calendar.controller';
     ]),
     HttpModule,
   ],
-  controllers: [AppController, HealthController, TeacherController, IntelligenceGraphController, DashboardController, FinanceController, ParentController, HrController, SubstitutionController, TimetableController, ReportCardsController, ExamsController, HomeworkController, CommunicationController, AuthController, AdminController, SchoolConfigController, StudentIdentityController, XceliQScoreController, SchoolTierController, XceliQChatController, ParentCommsController, HomeworkTransparencyController, ExamEngineController, CurriculumCalendarController],
+  controllers: [AppController, HealthController, TeacherController, IntelligenceGraphController, DashboardController, FinanceController, ParentController, HrController, SubstitutionController, TimetableController, ReportCardsController, ExamsController, HomeworkController, CommunicationController, AuthController, AdminController, SchoolConfigController, StudentIdentityController, XceliQScoreController, SchoolTierController, XceliQChatController, ParentCommsController, HomeworkTransparencyController, ExamEngineController, CurriculumCalendarController, XceliQReviseController],
   providers: [AppService],
 })
 export class AppModule {}

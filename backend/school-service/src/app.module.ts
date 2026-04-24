@@ -27,6 +27,7 @@ import { ParentCommsModule } from './parent-comms/parent-comms.module';
 import { HomeworkTransparencyModule } from './homework-transparency/homework-transparency.module';
 import { ExamEngineModule } from './exam-engine/exam-engine.module';
 import { CurriculumCalendarModule } from './curriculum-calendar/curriculum-calendar.module';
+import { XceliQReviseModule } from './xceliq-revise/xceliq-revise.module';
 import * as AllEntities from '@xceliqos/shared/src/entities';
 import { LoggingMiddleware } from './middleware/logging.middleware';
 
@@ -68,6 +69,7 @@ import { LoggingMiddleware } from './middleware/logging.middleware';
     HomeworkTransparencyModule,
     ExamEngineModule,
     CurriculumCalendarModule,
+    XceliQReviseModule,
   ],
   providers: [
     Reflector,
