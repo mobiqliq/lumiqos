@@ -33,6 +33,7 @@ import { PredictiveAnalyticsModule } from './predictive-analytics/predictive-ana
 import { PTCMModule } from './ptcm/ptcm.module';
 import { TeacherWellbeingModule } from './teacher-wellbeing/teacher-wellbeing.module';
 import { StudentWellbeingModule } from './student-wellbeing/student-wellbeing.module';
+import { ComplianceModule } from './compliance/compliance.module';
 import * as AllEntities from '@xceliqos/shared/src/entities';
 import { LoggingMiddleware } from './middleware/logging.middleware';
 
@@ -80,6 +81,7 @@ import { LoggingMiddleware } from './middleware/logging.middleware';
     PTCMModule,
     TeacherWellbeingModule,
     StudentWellbeingModule,
+    ComplianceModule,
   ],
   providers: [
     Reflector,

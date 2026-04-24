@@ -101,3 +101,5 @@ export * from './ptc-meeting-commitment.entity';
 export * from './workload-index.entity';
 export * from './workload-rule.entity';
 export * from './wellbeing-flag.entity';
+export * from './compliance-indicator.entity';
+export * from './compliance-record.entity';
