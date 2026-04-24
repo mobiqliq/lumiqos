@@ -31,6 +31,7 @@ import { ExamEngineController } from './exam-engine.controller';
 import { CurriculumCalendarController } from './curriculum-calendar.controller';
 import { XceliQReviseController } from './xceliq-revise.controller';
 import { XceliQAssistantController } from './xceliq-assistant.controller';
+import { PredictiveAnalyticsController } from './predictive-analytics.controller';
 
 @Module({
   imports: [
@@ -65,7 +66,7 @@ import { XceliQAssistantController } from './xceliq-assistant.controller';
     ]),
     HttpModule,
   ],
-  controllers: [AppController, HealthController, TeacherController, IntelligenceGraphController, DashboardController, FinanceController, ParentController, HrController, SubstitutionController, TimetableController, ReportCardsController, ExamsController, HomeworkController, CommunicationController, AuthController, AdminController, SchoolConfigController, StudentIdentityController, XceliQScoreController, SchoolTierController, XceliQChatController, ParentCommsController, HomeworkTransparencyController, ExamEngineController, CurriculumCalendarController, XceliQReviseController, XceliQAssistantController],
+  controllers: [AppController, HealthController, TeacherController, IntelligenceGraphController, DashboardController, FinanceController, ParentController, HrController, SubstitutionController, TimetableController, ReportCardsController, ExamsController, HomeworkController, CommunicationController, AuthController, AdminController, SchoolConfigController, StudentIdentityController, XceliQScoreController, SchoolTierController, XceliQChatController, ParentCommsController, HomeworkTransparencyController, ExamEngineController, CurriculumCalendarController, XceliQReviseController, XceliQAssistantController, PredictiveAnalyticsController],
   providers: [AppService],
 })
 export class AppModule {}

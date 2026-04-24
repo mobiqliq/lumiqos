@@ -29,6 +29,7 @@ import { ExamEngineModule } from './exam-engine/exam-engine.module';
 import { CurriculumCalendarModule } from './curriculum-calendar/curriculum-calendar.module';
 import { XceliQReviseModule } from './xceliq-revise/xceliq-revise.module';
 import { XceliQAssistantModule } from './xceliq-assistant/xceliq-assistant.module';
+import { PredictiveAnalyticsModule } from './predictive-analytics/predictive-analytics.module';
 import * as AllEntities from '@xceliqos/shared/src/entities';
 import { LoggingMiddleware } from './middleware/logging.middleware';
 
@@ -72,6 +73,7 @@ import { LoggingMiddleware } from './middleware/logging.middleware';
     CurriculumCalendarModule,
     XceliQReviseModule,
     XceliQAssistantModule,
+    PredictiveAnalyticsModule,
   ],
   providers: [
     Reflector,

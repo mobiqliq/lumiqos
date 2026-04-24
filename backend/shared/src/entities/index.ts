@@ -95,3 +95,4 @@ export * from './curriculum-calendar-entry.entity';
 export * from './retrieval-task.entity';
 export * from './forgetting-curve.entity';
 export * from './assistant-interaction.entity';
+export * from './predictive-alert.entity';
