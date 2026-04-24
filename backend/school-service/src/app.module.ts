@@ -30,6 +30,7 @@ import { CurriculumCalendarModule } from './curriculum-calendar/curriculum-calen
 import { XceliQReviseModule } from './xceliq-revise/xceliq-revise.module';
 import { XceliQAssistantModule } from './xceliq-assistant/xceliq-assistant.module';
 import { PredictiveAnalyticsModule } from './predictive-analytics/predictive-analytics.module';
+import { PTCMModule } from './ptcm/ptcm.module';
 import * as AllEntities from '@xceliqos/shared/src/entities';
 import { LoggingMiddleware } from './middleware/logging.middleware';
 
@@ -74,6 +75,7 @@ import { LoggingMiddleware } from './middleware/logging.middleware';
     XceliQReviseModule,
     XceliQAssistantModule,
     PredictiveAnalyticsModule,
+    PTCMModule,
   ],
   providers: [
     Reflector,
