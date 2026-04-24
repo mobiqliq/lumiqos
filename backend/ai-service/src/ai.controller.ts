@@ -30,4 +30,6 @@ export class AiController {
   async healthCheck() {
     return { status: 'ok', service: 'ai-service', timestamp: new Date().toISOString() };
   }
+
+
 }
