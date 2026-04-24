@@ -1,7 +1,7 @@
 # XceliQOS — Architecture Memory
 
 > This file is the AI's mandatory context loader. Read this BEFORE making any code changes.
-> Last Updated: 2026-04-23 — Phase 31 Sprint 3 IN PROGRESS (31.7 COMPLETE)
+> Last Updated: 2026-04-24 — Phase 31 Sprint 3 COMPLETE (31.7–31.9)
 > Branch: main | HEAD: 2ea9d82
 
 ---
@@ -357,8 +357,8 @@ REST API + full data model complete. WS will consume same entities.
 | Item | Description | Status |
 |------|-------------|--------|
 | 31.7 | Exam Creation Engine + Board Syllabus + Curriculum Map | ✅ Complete |
-| 31.8 | Curriculum Calendar v2.0 | ⬜ Pending |
-| 31.9 | XceliQRevise (Spaced Repetition) | ⬜ Pending |
+| 31.8 | Curriculum Calendar v2.0 | ✅ Complete |
+| 31.9 | XceliQRevise (Spaced Repetition) | ✅ Complete |
 
 ### New Entities (31.7)
 - QuestionBank — board_id+board_topic_id scoped, Bloom level, difficulty, NEP competency, all question types
@@ -429,3 +429,42 @@ REST API + full data model complete. WS will consume same entities.
 5. Replace synchronize:true with TypeORM migrations
 6. API versioning /api/v1/
 7. Communication endpoints JWT user context
+
+
+### New Entities (31.8)
+- CurriculumCalendar: regulatory_framework (NEP/Common Core/IB/Cambridge/IGCSE/Australian/Custom), IANA timezone, compliance enforcement, rebalance summary
+- CurriculumCalendarEntry: per-day teaching plan, mark-taught, substitution tracking, rebalance scenario
+
+### New Endpoints (31.8)
+| Method | Path | Description |
+|--------|------|-------------|
+| POST | /api/curriculum-calendar/generate | Auto-generate from timetable + curriculum map |
+| GET | /api/curriculum-calendar | Get calendar with entries |
+| PATCH | /api/curriculum-calendar/:id/publish | Publish (blocks if non-compliant) |
+| POST | /api/curriculum-calendar/entries/:id/mark-taught | Teacher marks lesson taught |
+| POST | /api/curriculum-calendar/:id/rebalance | Get 3 rebalance scenarios |
+| POST | /api/curriculum-calendar/:id/rebalance/apply | Apply chosen scenario |
+| GET | /api/curriculum-calendar/coverage | Coverage % + topic coverage |
+
+### New Entities (31.9)
+- RetrievalTask: SM-2 quality scoring (0-5), task types, response + response_time_ms tracking
+- ForgettingCurve: Ebbinghaus stability/retrievability R=e^(-t/S), SM-2 ease_factor, at_risk flag
+
+### New Endpoints (31.9)
+| Method | Path | Description |
+|--------|------|-------------|
+| POST | /api/xceliq-revise/schedule/:studentId | Generate retrieval schedule from taught topics |
+| GET | /api/xceliq-revise/tasks/:studentId | Get due tasks (hydrated with questions) |
+| POST | /api/xceliq-revise/tasks/:taskId/respond | Submit response, update SM-2 state |
+| GET | /api/xceliq-revise/curve/:studentId | Forgetting curve state per topic |
+| GET | /api/xceliq-revise/analytics/:studentId | Retention analytics + at-risk topics |
+
+### Global-First Architecture Notes
+- CurriculumCalendar.regulatory_framework covers NEP/Common Core/IB/Cambridge/Australian/Custom
+- CurriculumCalendar.timezone: IANA string — no hardcoded Indian assumptions
+- working_day_numbers on SchoolCalendarConfig handles Mon-Fri/Sun-Thu/Sat-Wed globally
+- RetrievalTask/ForgettingCurve use board_topic_id as universal identifier — works for any board/curriculum
+- BoardSyllabus.board_id free-form varchar — CBSE/ICSE/IB/Cambridge/State boards
+
+| 31.8 | Curriculum Calendar v2.0 | ✅ Complete |
+| 31.9 | XceliQRevise (Spaced Repetition) | ✅ Complete |
