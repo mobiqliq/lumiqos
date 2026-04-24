@@ -116,10 +116,10 @@ TeacherWellbeingModule, StudentWellbeingModule, ComplianceModule
 
 ---
 
-## Entity Registry — shared/src/entities/
+## Entity Registry — backend/shared/src/entities/
 
 All entities extend XceliQosBaseEntity (id, school_id, metadata, timestamps, soft-delete).
-Export every new entity from shared/src/entities/index.ts.
+Export every new entity from backend/shared/src/entities/index.ts.
 
 Sprint 1: SchoolCalendarConfig, TimetablePeriod, WeeklyTimetable, SubjectAllocation,
           StudentIdentity, StudentPassport, XceliQScore, XceliQScoreDimension,
