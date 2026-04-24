@@ -83,7 +83,12 @@ SubstitutionController, TimetableController,
 ReportCardsController, ExamsController, HomeworkController,
 CommunicationController, AuthController, AdminController,
 SchoolConfigController, StudentIdentityController,
-XceliQScoreController, SchoolTierController, XceliQChatController
+XceliQScoreController, SchoolTierController,
+XceliQChatController, ParentCommsController,
+HomeworkTransparencyController, ExamEngineController,
+CurriculumCalendarController, XceliQReviseController,
+XceliQAssistantController, PredictiveAnalyticsController,
+PTCMController
 
 ---
 
@@ -95,7 +100,10 @@ DashboardModule, FinanceModule, ParentModule, HrModule,
 SubstitutionModule, TimetableModule, ReportCardsModule,
 ExamsModule, HomeworkModule, CommunicationModule,
 SeederModule, AdminModule, SchoolConfigModule,
-StudentIdentityModule, XceliQScoreModule, SchoolTierModule, XceliQChatModule
+StudentIdentityModule, XceliQScoreModule, SchoolTierModule,
+XceliQChatModule, ParentCommsModule, HomeworkTransparencyModule,
+ExamEngineModule, CurriculumCalendarModule, XceliQReviseModule,
+XceliQAssistantModule, PredictiveAnalyticsModule, PTCMModule
 
 ---
 
@@ -400,6 +408,99 @@ REST API + full data model complete. WS will consume same entities.
 - All question queries auto-filter by school board
 - BoardSyllabus: canonical, operator-managed, never school-editable
 - SchoolCurriculumMap: school-managed, academic-year scoped, versioned+archived
+
+
+## Phase 31 — Sprint 4 Status
+
+| Item | Description | Status |
+|------|-------------|--------|
+| 31.10 | XceliQ Assistant v1.0 — Role-Aware Context Injection | ✅ Complete |
+| 31.11 | Predictive Analytics v1.0 | ✅ Complete |
+| 31.12 | PTCM Intelligence | ✅ Complete |
+
+### New Entities (31.10)
+- AssistantInteraction — full audit log per query: persona, query, response, tokens, model, response_time_ms, helpfulness_rating
+
+### XceliQ Assistant Architecture
+- 8 personas: principal, teacher, parent, student, finance, hr, front_desk, counselor
+- Primary: OpenAI gpt-4o-mini | Fallback: Anthropic claude-haiku-4-5-20251001
+- Both keys in school-service .env (baked into Docker image)
+- All outputs marked is_draft=true — never autonomous actions
+- Full audit trail in assistant_interaction table
+
+### New Endpoints (31.10)
+| Method | Path | Description |
+|--------|------|-------------|
+| POST | /api/xceliq-assistant/query | Role-aware AI query |
+| POST | /api/xceliq-assistant/interactions/:id/rate | Rate helpfulness |
+| GET | /api/xceliq-assistant/history | Interaction history |
+
+### New Entities (31.11)
+- PredictiveAlert — explainable factors jsonb, risk_score 0-100, risk_level enum, route_to, acknowledgment, previous_risk tracking
+
+### Predictive Models
+- dropout_risk: attendance(40%) + assessment(35%) + retrieval_engagement(25%)
+- assessment_failure: forgetting curve retrievability gaps
+- fee_default: overdue invoice ratio + count (medium+ only)
+- curriculum_shortfall: coverage rate vs remaining periods
+- teacher_burnout: deferred (no workload index data yet)
+
+### New Endpoints (31.11)
+| Method | Path | Description |
+|--------|------|-------------|
+| POST | /api/predictive-analytics/run/dropout-risk | Run dropout model |
+| POST | /api/predictive-analytics/run/assessment-failure | Run assessment model |
+| POST | /api/predictive-analytics/run/fee-default | Run fee default model |
+| POST | /api/predictive-analytics/run/curriculum-shortfall | Run shortfall model |
+| POST | /api/predictive-analytics/run/all | Run all models |
+| GET | /api/predictive-analytics/alerts | Get alerts (filterable) |
+| POST | /api/predictive-analytics/alerts/:id/acknowledge | Acknowledge alert |
+
+### New Entities (31.12)
+- PTCMeeting — scheduled conference, AI briefs (teacher+parent), digital agenda, notes, summary, followup tracking
+- PTCMeetingCommitment — owner (parent/teacher/school), due_date, completion, overdue auto-flag
+
+### PTCM AI Brief Architecture
+- Teacher brief: 3 strengths + 2 growth areas + 1 ask of parent (Growth Mindset framed)
+- Parent brief: 3 achievements + 2 discussion points + 1 home support tip
+- Brief cached on meeting record after first generation
+- OpenAI primary + Anthropic fallback
+
+### New Endpoints (31.12)
+| Method | Path | Description |
+|--------|------|-------------|
+| POST | /api/ptcm/meetings | Schedule meeting |
+| GET | /api/ptcm/meetings | List meetings (role-aware) |
+| GET | /api/ptcm/meetings/:id | Get meeting + commitments |
+| GET | /api/ptcm/meetings/:id/teacher-brief | AI teacher brief |
+| GET | /api/ptcm/meetings/:id/parent-brief | AI parent brief |
+| POST | /api/ptcm/meetings/:id/notes | Log during-meeting notes |
+| POST | /api/ptcm/meetings/:id/commitments | Log post-meeting commitments |
+| PATCH | /api/ptcm/meetings/:id/status | Update status |
+| GET | /api/ptcm/commitments | List open commitments |
+| PATCH | /api/ptcm/commitments/:id | Complete commitment |
+
+### New Entities (Sprint 2-4 complete list)
+Sprint 2: ChatChannel, ChatMessage, ChatMember, ParentMessageThread, ParentMessage,
+          BroadcastAnnouncement, BroadcastReadReceipt, HomeworkFeedback
+Sprint 3: QuestionBank, ExamQuestion, ExamAnswerSheet, StudentAnswerSheet, ItemAnalysis,
+          BoardSyllabus, SchoolCurriculumMap, CurriculumCalendar, CurriculumCalendarEntry,
+          RetrievalTask, ForgettingCurve
+Sprint 4: AssistantInteraction, PredictiveAlert, PTCMeeting, PTCMeetingCommitment
+
+### AI Key Architecture (school-service)
+- OPENAI_API_KEY: in school-service .env (primary)
+- ANTHROPIC_API_KEY: in school-service .env (fallback)
+- ai-service: TCP microservice only — NOT used for assistant queries
+- All LLM calls via native fetch (Node 20) from school-service directly
+
+### Known Technical Debt (updated)
+- synchronize:true in TypeORM — replace with migrations before prod
+- ai-service is TCP only — no HTTP endpoint — do not add HTTP routes there
+- OPENAI_API_KEY + ANTHROPIC_API_KEY baked into Docker image — use secrets manager in prod
+- Teacher burnout model (31.11) deferred — no WorkloadIndex entity yet (Sprint 5)
+- WS layer for XceliQChat deferred — REST API complete
+- OCR Vision API for StudentAnswerSheet deferred — needs image upload infra
 
 ## Known Issues / Technical Debt
 
