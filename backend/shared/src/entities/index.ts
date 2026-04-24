@@ -90,3 +90,5 @@ export * from './school-curriculum-map.entity';
 export * from './exam-answer-sheet.entity';
 export * from './student-answer-sheet.entity';
 export * from './item-analysis.entity';
+export * from './curriculum-calendar.entity';
+export * from './curriculum-calendar-entry.entity';
