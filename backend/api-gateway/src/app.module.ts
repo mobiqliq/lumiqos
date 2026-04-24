@@ -33,6 +33,7 @@ import { XceliQReviseController } from './xceliq-revise.controller';
 import { XceliQAssistantController } from './xceliq-assistant.controller';
 import { PredictiveAnalyticsController } from './predictive-analytics.controller';
 import { PTCMController } from './ptcm.controller';
+import { TeacherWellbeingController } from './teacher-wellbeing.controller';
 
 @Module({
   imports: [
@@ -67,7 +68,7 @@ import { PTCMController } from './ptcm.controller';
     ]),
     HttpModule,
   ],
-  controllers: [AppController, HealthController, TeacherController, IntelligenceGraphController, DashboardController, FinanceController, ParentController, HrController, SubstitutionController, TimetableController, ReportCardsController, ExamsController, HomeworkController, CommunicationController, AuthController, AdminController, SchoolConfigController, StudentIdentityController, XceliQScoreController, SchoolTierController, XceliQChatController, ParentCommsController, HomeworkTransparencyController, ExamEngineController, CurriculumCalendarController, XceliQReviseController, XceliQAssistantController, PredictiveAnalyticsController, PTCMController],
+  controllers: [AppController, HealthController, TeacherController, IntelligenceGraphController, DashboardController, FinanceController, ParentController, HrController, SubstitutionController, TimetableController, ReportCardsController, ExamsController, HomeworkController, CommunicationController, AuthController, AdminController, SchoolConfigController, StudentIdentityController, XceliQScoreController, SchoolTierController, XceliQChatController, ParentCommsController, HomeworkTransparencyController, ExamEngineController, CurriculumCalendarController, XceliQReviseController, XceliQAssistantController, PredictiveAnalyticsController, PTCMController, TeacherWellbeingController],
   providers: [AppService],
 })
 export class AppModule {}

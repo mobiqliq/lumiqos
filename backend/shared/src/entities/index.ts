@@ -98,3 +98,5 @@ export * from './assistant-interaction.entity';
 export * from './predictive-alert.entity';
 export * from './ptc-meeting.entity';
 export * from './ptc-meeting-commitment.entity';
+export * from './workload-index.entity';
+export * from './workload-rule.entity';
