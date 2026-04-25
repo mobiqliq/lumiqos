@@ -46,6 +46,7 @@ import { SchoolGroupController } from './school-group.controller';
 import { AlumniController } from './alumni.controller';
 import { BoardReportingController } from './board-reporting.controller';
 import { PLCController } from './plc.controller';
+import { XceliQReflectController } from './xceliq-reflect.controller';
 
 @Module({
   imports: [
@@ -80,7 +81,7 @@ import { PLCController } from './plc.controller';
     ]),
     HttpModule,
   ],
-  controllers: [AppController, HealthController, TeacherController, IntelligenceGraphController, DashboardController, FinanceController, ParentController, HrController, SubstitutionController, TimetableController, ReportCardsController, ExamsController, HomeworkController, CommunicationController, AuthController, AdminController, SchoolConfigController, StudentIdentityController, XceliQScoreController, SchoolTierController, XceliQChatController, ParentCommsController, HomeworkTransparencyController, ExamEngineController, CurriculumCalendarController, XceliQReviseController, XceliQAssistantController, PredictiveAnalyticsController, PTCMController, TeacherWellbeingController, StudentWellbeingController, ComplianceController, FinanceV2Controller, AdmissionsController, OperationsController, LearningDNAController, SELIntelligenceController, PortfolioController, SchoolGroupController, AlumniController, BoardReportingController, PLCController],
+  controllers: [AppController, HealthController, TeacherController, IntelligenceGraphController, DashboardController, FinanceController, ParentController, HrController, SubstitutionController, TimetableController, ReportCardsController, ExamsController, HomeworkController, CommunicationController, AuthController, AdminController, SchoolConfigController, StudentIdentityController, XceliQScoreController, SchoolTierController, XceliQChatController, ParentCommsController, HomeworkTransparencyController, ExamEngineController, CurriculumCalendarController, XceliQReviseController, XceliQAssistantController, PredictiveAnalyticsController, PTCMController, TeacherWellbeingController, StudentWellbeingController, ComplianceController, FinanceV2Controller, AdmissionsController, OperationsController, LearningDNAController, SELIntelligenceController, PortfolioController, SchoolGroupController, AlumniController, BoardReportingController, PLCController, XceliQReflectController],
   providers: [AppService],
 })
 export class AppModule {}

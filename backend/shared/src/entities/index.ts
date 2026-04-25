@@ -141,3 +141,6 @@ export * from './board-report.entity';
 export * from './plc-group.entity';
 export * from './plc-session.entity';
 export * from './plc-resource.entity';
+
+export * from './reflection-entry.entity';
+export * from './metacognitive-score.entity';
