@@ -41,6 +41,7 @@ import { AdmissionsController } from './admissions.controller';
 import { OperationsController } from './operations.controller';
 import { LearningDNAController } from './learning-dna.controller';
 import { SELIntelligenceController } from './sel-intelligence.controller';
+import { PortfolioController } from './portfolio.controller';
 
 @Module({
   imports: [
@@ -75,7 +76,7 @@ import { SELIntelligenceController } from './sel-intelligence.controller';
     ]),
     HttpModule,
   ],
-  controllers: [AppController, HealthController, TeacherController, IntelligenceGraphController, DashboardController, FinanceController, ParentController, HrController, SubstitutionController, TimetableController, ReportCardsController, ExamsController, HomeworkController, CommunicationController, AuthController, AdminController, SchoolConfigController, StudentIdentityController, XceliQScoreController, SchoolTierController, XceliQChatController, ParentCommsController, HomeworkTransparencyController, ExamEngineController, CurriculumCalendarController, XceliQReviseController, XceliQAssistantController, PredictiveAnalyticsController, PTCMController, TeacherWellbeingController, StudentWellbeingController, ComplianceController, FinanceV2Controller, AdmissionsController, OperationsController, LearningDNAController, SELIntelligenceController],
+  controllers: [AppController, HealthController, TeacherController, IntelligenceGraphController, DashboardController, FinanceController, ParentController, HrController, SubstitutionController, TimetableController, ReportCardsController, ExamsController, HomeworkController, CommunicationController, AuthController, AdminController, SchoolConfigController, StudentIdentityController, XceliQScoreController, SchoolTierController, XceliQChatController, ParentCommsController, HomeworkTransparencyController, ExamEngineController, CurriculumCalendarController, XceliQReviseController, XceliQAssistantController, PredictiveAnalyticsController, PTCMController, TeacherWellbeingController, StudentWellbeingController, ComplianceController, FinanceV2Controller, AdmissionsController, OperationsController, LearningDNAController, SELIntelligenceController, PortfolioController],
   providers: [AppService],
 })
 export class AppModule {}

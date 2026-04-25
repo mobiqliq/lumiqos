@@ -40,6 +40,7 @@ import { AdmissionsModule } from './admissions/admissions.module';
 import { OperationsModule } from './operations/operations.module';
 import { LearningDNAModule } from './learning-dna/learning-dna.module';
 import { SELIntelligenceModule } from './sel-intelligence/sel-intelligence.module';
+import { PortfolioModule } from './portfolio/portfolio.module';
 import * as AllEntities from '@xceliqos/shared/src/entities';
 import { LoggingMiddleware } from './middleware/logging.middleware';
 
@@ -93,6 +94,7 @@ import { LoggingMiddleware } from './middleware/logging.middleware';
     OperationsModule,
     LearningDNAModule,
     SELIntelligenceModule,
+    PortfolioModule,
   ],
   controllers: [AppController],
   providers: [

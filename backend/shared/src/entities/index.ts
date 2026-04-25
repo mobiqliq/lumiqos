@@ -127,3 +127,6 @@ export * from './sel-observation.entity';
 export * from './eq-profile.entity';
 export * from './flow-state-log.entity';
 export * from './sel-framework-config.entity';
+export * from './portfolio.entity';
+export * from './portfolio-item.entity';
+export * from './portfolio-config.entity';
