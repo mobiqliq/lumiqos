@@ -10,35 +10,12 @@ services:
       - POSTGRES_DB=xceliq
     volumes:
       - pgdata:/var/lib/postgresql/data
-
-  api-gateway:
-    build:
-      context: ./backend
-      dockerfile: api-gateway/Dockerfile
-    env_file:
-      - ./backend/api-gateway/.env
-    ports:
-      - "3000:3000"
-    depends_on:
-      - xceliqos_db
-
-  school-service:
-    build:
-      context: ./backend
-      dockerfile: school-service/Dockerfile
-    ports:
-      - "3001:3000"
-    depends_on:
-      - xceliqos_db
-
-  ai-service:
-    build:
-      context: ./backend
-      dockerfile: ai-service/Dockerfile
-    env_file:
-      - ./backend/ai-service/.env
-    depends_on:
-      - xceliqos_db
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d xceliq"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
 
   auth-service:
     build:
@@ -49,7 +26,62 @@ services:
     ports:
       - "3002:3002"
     depends_on:
-      - xceliqos_db
+      xceliqos_db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"require('http').get('http://localhost:3002/health', r => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))\""]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 20s
+
+  school-service:
+    build:
+      context: ./backend
+      dockerfile: school-service/Dockerfile
+    env_file:
+      - ./backend/school-service/.env
+    ports:
+      - "3001:3000"
+    depends_on:
+      xceliqos_db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:3000/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 30s
+
+  ai-service:
+    build:
+      context: ./backend
+      dockerfile: ai-service/Dockerfile
+    env_file:
+      - ./backend/ai-service/.env
+    depends_on:
+      xceliqos_db:
+        condition: service_healthy
+
+  api-gateway:
+    build:
+      context: ./backend
+      dockerfile: api-gateway/Dockerfile
+    env_file:
+      - ./backend/api-gateway/.env
+    ports:
+      - "3000:3000"
+    depends_on:
+      auth-service:
+        condition: service_healthy
+      school-service:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:3000/api/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 30s
 
   frontend:
     build:
@@ -60,7 +92,8 @@ services:
     environment:
       - VITE_API_URL=http://api-gateway:3000
     depends_on:
-      - api-gateway
+      api-gateway:
+        condition: service_healthy
 
 volumes:
   pgdata:

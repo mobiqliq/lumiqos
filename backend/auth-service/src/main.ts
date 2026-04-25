@@ -5,7 +5,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
 
-  const port = process.env.PORT ?? 3002;
+  const port = process.env.AUTH_SERVICE_PORT ?? process.env.PORT ?? 3002;
   await app.listen(port);
   console.log(`Auth Service running on port ${port}`);
 }
