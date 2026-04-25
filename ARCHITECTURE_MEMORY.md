@@ -1,7 +1,7 @@
 # XceliQOS — Architecture Memory
 
 > Mandatory context loader. Read BEFORE any code changes.
-> Last Updated: 2026-04-25 — Phase 31 Sprint 7 COMPLETE | Sprint 8 IN PROGRESS (31.23+31.24 done)
+> Last Updated: 2026-04-25 — Phase 31 Sprint 7 COMPLETE | Sprint 8 IN PROGRESS (31.23+31.24+31.25 done)
 > Branch: main | HEAD: 5131f42
 
 ---
@@ -82,7 +82,7 @@ finance@testschool.edu, hr@testschool.edu, parent@testschool.edu, student@testsc
 
 ---
 
-## API Gateway — Controllers (42 total, verified 2026-04-25)
+## API Gateway — Controllers (43 total, verified 2026-04-25)
 
 AppController, HealthController, TeacherController,
 IntelligenceGraphController, DashboardController,
@@ -100,11 +100,11 @@ PTCMController, TeacherWellbeingController,
 StudentWellbeingController, ComplianceController,
 FinanceV2Controller, AdmissionsController, OperationsController, LearningDNAController,
 SELIntelligenceController, PortfolioController,
-SchoolGroupController, AlumniController, BoardReportingController, PLCController
+SchoolGroupController, AlumniController, BoardReportingController, PLCController, XceliQReflectController
 
 ---
 
-## School Service — Modules (42 total)
+## School Service — Modules (43 total)
 
 SchoolModule, AcademicPlanningModule, IntelligenceGraphModule,
 DashboardModule, FinanceModule, ParentModule, HrModule,
@@ -117,7 +117,7 @@ ExamEngineModule, CurriculumCalendarModule, XceliQReviseModule,
 XceliQAssistantModule, PredictiveAnalyticsModule, PTCMModule,
 TeacherWellbeingModule, StudentWellbeingModule, ComplianceModule,
 FinanceV2Module, AdmissionsModule, OperationsModule, LearningDNAModule, SELIntelligenceModule, PortfolioModule,
-SchoolGroupModule, AlumniModule, BoardReportingModule, PLCModule
+SchoolGroupModule, AlumniModule, BoardReportingModule, PLCModule, XceliQReflectModule
 
 ---
 
@@ -154,7 +154,8 @@ Sprint 7: LearningDNAProfile, LearningDNAObservation, ChronobioConfig, Cognitive
           AlumniRecord, AlumniConfig
 
 Sprint 8: BoardReport,
-          PLCGroup, PLCSession, PLCResource
+          PLCGroup, PLCSession, PLCResource,
+          ReflectionEntry, MetacognitiveScore
 
 ---
 
@@ -303,3 +304,4 @@ These are recurring violation patterns. Check before every action:
 | 31.22 complete | 2026-04-25 | XceliQAlumni — full lifecycle | AlumniRecord+AlumniConfig. Invite code: 32-byte crypto random, bcryptjs hash, single-use, 90-day expiry. Consent paths: underage (parent) + of-age (direct). house_group_id FK to SchoolGroup. Career pathway separately consented. ConsentJurisdiction renamed AlumniConsentJurisdiction to avoid collision. bcrypt→bcryptjs. All endpoints 200. Sprint 7 COMPLETE. | Sprint 8 next: 31.23 Board Reporting |
 | 31.23 complete | 2026-04-25 | Board Reporting Portal | BoardReport entity + BoardReportingModule. Enums: BoardReportType, BoardReportStatus, BoardReportVisibility. 7 endpoints all 200. Fix: JwtStrategy now maps payload.user_id → req.user.user_id (was undefined, caused empty created_by across all modules). Systemic fix, zero breaking changes. | 31.24 next: PLCModule |
 | 31.24 complete | 2026-04-25 | Professional Learning Community | PLCGroup+PLCSession+PLCResource. Full CRUD 15 endpoints all 200. Group→Session→Resource FK chain validated. PLCResourceType enum. All created_by/shared_by populated. | 31.25 next: XceliQReflect |
+| 31.25 complete | 2026-04-25 | XceliQReflect | ReflectionEntry+MetacognitiveScore. ReflectionType+ReflectionVisibility+MetacognitiveDimension enums. word_count auto-computed. ai-feedback endpoint (Growth Mindset language). score 0-100 validation. evidence_ref FK. All 7 endpoints 200. | 31.26 next: GrowthMindsetModule |
