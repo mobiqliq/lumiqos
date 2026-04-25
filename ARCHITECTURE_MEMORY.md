@@ -1,8 +1,8 @@
 # XceliQOS — Architecture Memory
 
 > Mandatory context loader. Read BEFORE any code changes.
-> Last Updated: 2026-04-25 — Phase 33.1 COMPLETE
-> Branch: main | HEAD: cfe602a
+> Last Updated: 2026-04-25 — Phase 33.2 COMPLETE
+> Branch: main | HEAD: see git log
 
 ---
 
@@ -263,7 +263,7 @@ Sprint 8: BoardReport,
 | Issue                             | Severity | Notes                              |
 |-----------------------------------|----------|------------------------------------|
 | synchronize:true TypeORM          | RESOLVED | 33.1 — migrations system live      |
-| AI keys baked into Docker image   | High     | Secrets manager in prod            |
+| AI keys baked into Docker image   | RESOLVED | 33.2 — .env.example + setup-env.sh |
 | No API versioning /api/v1/        | Medium   | Deferred                           |
 | Communication endpoints need JWT  | Medium   | createThread/sendMessage user ctx  |
 | WS layer XceliQChat               | Medium   | REST done, WS deferred             |
@@ -310,3 +310,4 @@ These are recurring violation patterns. Check before every action:
 | 31.25 complete | 2026-04-25 | XceliQReflect | ReflectionEntry+MetacognitiveScore. ReflectionType+ReflectionVisibility+MetacognitiveDimension enums. word_count auto-computed. ai-feedback endpoint (Growth Mindset language). score 0-100 validation. evidence_ref FK. All 7 endpoints 200. | 31.26 next: GrowthMindsetModule |
 | 31.26 complete | 2026-04-25 | Growth Mindset Integration | MindsetMoment+ParentMindsetProgress. MindsetMomentType enum. share-with-parent auto-refreshes moments_count. Growth Mindset ai_narrative on ParentMindsetProgress. All 6 endpoints 200. PHASE 31 COMPLETE. | Phase 32 pending |
 | cfe602a | 2026-04-25 | 33.1 TypeORM Migration System | synchronize:false both services. school-service: BaselineSchema migration (4 delta ops). auth-service: explicit 15-entity boundary in data-source.ts — never grows automatically with school-service entities. migrations table stamped. migrationsRun:true on startup. All services healthy. | 33.2 next: Secrets Manager |
+| see git log | 2026-04-25 | 33.2 Secrets Management | .env.example for all 4 services. scripts/setup-env.sh idempotent setup. Protocol: never cat .env in chat. CHANGE_ME placeholders document all required vars. JWT_SECRET sync requirement documented. | 33.3 next: Structured Logging |
