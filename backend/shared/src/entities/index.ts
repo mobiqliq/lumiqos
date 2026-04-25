@@ -133,3 +133,5 @@ export * from './portfolio-config.entity';
 export * from './school-group.entity';
 export * from './school-group-member.entity';
 export * from './school-group-config.entity';
+export * from './alumni-record.entity';
+export * from './alumni-config.entity';

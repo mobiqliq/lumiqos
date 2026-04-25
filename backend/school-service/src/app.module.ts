@@ -42,6 +42,7 @@ import { LearningDNAModule } from './learning-dna/learning-dna.module';
 import { SELIntelligenceModule } from './sel-intelligence/sel-intelligence.module';
 import { PortfolioModule } from './portfolio/portfolio.module';
 import { SchoolGroupModule } from './school-group/school-group.module';
+import { AlumniModule } from './alumni/alumni.module';
 import * as AllEntities from '@xceliqos/shared/src/entities';
 import { LoggingMiddleware } from './middleware/logging.middleware';
 
@@ -97,6 +98,7 @@ import { LoggingMiddleware } from './middleware/logging.middleware';
     SELIntelligenceModule,
     PortfolioModule,
     SchoolGroupModule,
+    AlumniModule,
   ],
   controllers: [AppController],
   providers: [
