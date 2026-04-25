@@ -15,7 +15,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   async validate(payload: any) {
     // This injects the user context (including tenant_id) into every request
     return { 
-      id: payload.sub, 
+      id: payload.sub,
+      user_id: payload.user_id,
       school_id: payload.school_id, 
       email: payload.email, 
       role: payload.role 
