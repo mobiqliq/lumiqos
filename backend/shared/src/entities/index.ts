@@ -114,3 +114,8 @@ export * from './admission-application.entity';
 export * from './admission-document.entity';
 export * from './waitlist-entry.entity';
 export * from './reservation-config.entity';
+export * from './library-record.entity';
+export * from './transport-route.entity';
+export * from './transport-assignment.entity';
+export * from './visitor-log.entity';
+export * from './operations-config.entity';

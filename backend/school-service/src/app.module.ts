@@ -37,6 +37,7 @@ import { StudentWellbeingModule } from './student-wellbeing/student-wellbeing.mo
 import { ComplianceModule } from './compliance/compliance.module';
 import { FinanceV2Module } from './finance/finance-v2.module';
 import { AdmissionsModule } from './admissions/admissions.module';
+import { OperationsModule } from './operations/operations.module';
 import * as AllEntities from '@xceliqos/shared/src/entities';
 import { LoggingMiddleware } from './middleware/logging.middleware';
 
@@ -87,6 +88,7 @@ import { LoggingMiddleware } from './middleware/logging.middleware';
     ComplianceModule,
     FinanceV2Module,
     AdmissionsModule,
+    OperationsModule,
   ],
   controllers: [AppController],
   providers: [
