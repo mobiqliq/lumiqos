@@ -1,7 +1,7 @@
 # XceliQOS — Architecture Memory
 
 > Mandatory context loader. Read BEFORE any code changes.
-> Last Updated: 2026-04-24 — Phase 31 Sprint 5 COMPLETE | Sprint 6 READY
+> Last Updated: 2026-04-25 — Phase 31 Sprint 6 COMPLETE (31.16+31.17+31.18) | Sprint 7 READY
 > Branch: main | HEAD: 5131f42
 
 ---
@@ -82,7 +82,7 @@ finance@testschool.edu, hr@testschool.edu, parent@testschool.edu, student@testsc
 
 ---
 
-## API Gateway — Controllers (33 total, verified 2026-04-24)
+## API Gateway — Controllers (35 total, verified 2026-04-25)
 
 AppController, HealthController, TeacherController,
 IntelligenceGraphController, DashboardController,
@@ -97,11 +97,12 @@ HomeworkTransparencyController, ExamEngineController,
 CurriculumCalendarController, XceliQReviseController,
 XceliQAssistantController, PredictiveAnalyticsController,
 PTCMController, TeacherWellbeingController,
-StudentWellbeingController, ComplianceController
+StudentWellbeingController, ComplianceController,
+FinanceV2Controller, AdmissionsController, OperationsController
 
 ---
 
-## School Service — Modules (31 total)
+## School Service — Modules (34 total)
 
 SchoolModule, AcademicPlanningModule, IntelligenceGraphModule,
 DashboardModule, FinanceModule, ParentModule, HrModule,
@@ -112,7 +113,8 @@ StudentIdentityModule, XceliQScoreModule, SchoolTierModule,
 XceliQChatModule, ParentCommsModule, HomeworkTransparencyModule,
 ExamEngineModule, CurriculumCalendarModule, XceliQReviseModule,
 XceliQAssistantModule, PredictiveAnalyticsModule, PTCMModule,
-TeacherWellbeingModule, StudentWellbeingModule, ComplianceModule
+TeacherWellbeingModule, StudentWellbeingModule, ComplianceModule,
+FinanceV2Module, AdmissionsModule, OperationsModule
 
 ---
 
@@ -138,10 +140,9 @@ Sprint 4: AssistantInteraction, PredictiveAlert, PTCMeeting, PTCMeetingCommitmen
 
 Sprint 5: WorkloadIndex, WorkloadRule, WellbeingFlag, ComplianceIndicator, ComplianceRecord
 
-Sprint 6: FinanceLedger, FinanceEntry, GSTInvoice, TDSRecord,
-          AdmissionApplication, AdmissionDocument, WaitlistEntry,
-          LibraryRecord, TransportRoute, TransportAssignment, VisitorLog
-          [PENDING — Sprint 6 not yet started]
+Sprint 6: FinanceLedger, FinanceEntry, TaxInvoice, TaxWithholding, FeeStructureVersion,
+          AdmissionApplication, AdmissionDocument, WaitlistEntry, ReservationConfig,
+          LibraryRecord, TransportRoute, TransportAssignment, VisitorLog, OperationsConfig
 
 ---
 
@@ -154,8 +155,8 @@ Sprint 6: FinanceLedger, FinanceEntry, GSTInvoice, TDSRecord,
 | 3      | 31.7–31.9   | COMPLETE    |
 | 4      | 31.10–31.12 | COMPLETE    |
 | 5      | 31.13–31.15 | COMPLETE    |
-| 6      | 31.16–31.18 | NEXT        |
-| 7      | 31.19–31.22 | Pending     |
+| 6      | 31.16–31.18 | COMPLETE    |
+| 7      | 31.19–31.22 | NEXT        |
 | 8      | 31.23–31.26 | Pending     |
 
 ---
@@ -281,3 +282,4 @@ These are recurring violation patterns. Check before every action:
 | (31.17 in progress) | 2026-04-25 | Admissions System built, routes mapped | AdmissionApplication, AdmissionDocument, WaitlistEntry, ReservationConfig | Auth drop triggered — diagnosing root cause before proceeding |
 | fix: infra | 2026-04-25 | ROOT CAUSE FIXED — gateway/auth drop | AUTH_SERVICE_PORT was 3003 in both envs, should be 3002. AppController missing from school-service. docker-compose healthchecks + depends_on added. All services now start healthy. | None — issue closed |
 | 31.17 complete | 2026-04-25 | Admissions System v1.0 | Global-first pipeline, quota framework-agnostic, waitlist auto-promote | Pending: 31.17 endpoint tests, then 31.18 |
+| 31.18 complete | 2026-04-25 | Resource & Operations v1.0 | LibraryRecord, TransportRoute, TransportAssignment, VisitorLog, OperationsConfig — all 200 | Sprint 7 ready |
