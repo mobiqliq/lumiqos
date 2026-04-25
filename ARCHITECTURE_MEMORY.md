@@ -1,8 +1,8 @@
 # XceliQOS — Architecture Memory
 
 > Mandatory context loader. Read BEFORE any code changes.
-> Last Updated: 2026-04-25 — Phase 31 COMPLETE (all 26 items done)
-> Branch: main | HEAD: 5131f42
+> Last Updated: 2026-04-25 — Phase 33.1 COMPLETE
+> Branch: main | HEAD: cfe602a
 
 ---
 
@@ -57,7 +57,7 @@
 - PostgreSQL 15 | DB: xceliq | User: postgres | Pass: postgres
 - Host: xceliqos_db (Docker) / localhost:5432 (host)
 - Tenant isolation: school_id on every query
-- TypeORM synchronize:true — replace with migrations before prod
+- TypeORM synchronize:false — migration system live (33.1 complete)
 
 ### Seeded Test UUIDs
 | Entity        | UUID                                   |
@@ -262,7 +262,7 @@ Sprint 8: BoardReport,
 
 | Issue                             | Severity | Notes                              |
 |-----------------------------------|----------|------------------------------------|
-| synchronize:true TypeORM          | High     | Migrations before prod             |
+| synchronize:true TypeORM          | RESOLVED | 33.1 — migrations system live      |
 | AI keys baked into Docker image   | High     | Secrets manager in prod            |
 | No API versioning /api/v1/        | Medium   | Deferred                           |
 | Communication endpoints need JWT  | Medium   | createThread/sendMessage user ctx  |
@@ -309,3 +309,4 @@ These are recurring violation patterns. Check before every action:
 | 31.24 complete | 2026-04-25 | Professional Learning Community | PLCGroup+PLCSession+PLCResource. Full CRUD 15 endpoints all 200. Group→Session→Resource FK chain validated. PLCResourceType enum. All created_by/shared_by populated. | 31.25 next: XceliQReflect |
 | 31.25 complete | 2026-04-25 | XceliQReflect | ReflectionEntry+MetacognitiveScore. ReflectionType+ReflectionVisibility+MetacognitiveDimension enums. word_count auto-computed. ai-feedback endpoint (Growth Mindset language). score 0-100 validation. evidence_ref FK. All 7 endpoints 200. | 31.26 next: GrowthMindsetModule |
 | 31.26 complete | 2026-04-25 | Growth Mindset Integration | MindsetMoment+ParentMindsetProgress. MindsetMomentType enum. share-with-parent auto-refreshes moments_count. Growth Mindset ai_narrative on ParentMindsetProgress. All 6 endpoints 200. PHASE 31 COMPLETE. | Phase 32 pending |
+| cfe602a | 2026-04-25 | 33.1 TypeORM Migration System | synchronize:false both services. school-service: BaselineSchema migration (4 delta ops). auth-service: explicit 15-entity boundary in data-source.ts — never grows automatically with school-service entities. migrations table stamped. migrationsRun:true on startup. All services healthy. | 33.2 next: Secrets Manager |
