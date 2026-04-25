@@ -18,7 +18,10 @@ import { User, Role, Permission, RolePermission, School, AcademicYear, Class, Se
       password: process.env.DB_PASSWORD || 'postgres',
       database: process.env.DB_NAME || 'xceliq',
       autoLoadEntities: true,
-      synchronize: true, // For MVP schema sync
+      synchronize: false,
+      migrations: [__dirname + '/database/migrations/*.js'],
+      migrationsRun: true,
+      migrationsTableName: 'migrations',
       entities: [
         User, Role, Permission, RolePermission, School,
         AcademicYear, Class, Section, Subject, TeacherSubject,
