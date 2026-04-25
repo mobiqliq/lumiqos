@@ -1,7 +1,7 @@
 # XceliQOS — Architecture Memory
 
 > Mandatory context loader. Read BEFORE any code changes.
-> Last Updated: 2026-04-25 — Phase 31 Sprint 6 COMPLETE | Sprint 7 IN PROGRESS (31.19+31.20+31.21 done)
+> Last Updated: 2026-04-25 — Phase 31 Sprint 7 COMPLETE | Sprint 8 IN PROGRESS (31.23 done)
 > Branch: main | HEAD: 5131f42
 
 ---
@@ -82,7 +82,7 @@ finance@testschool.edu, hr@testschool.edu, parent@testschool.edu, student@testsc
 
 ---
 
-## API Gateway — Controllers (38 total, verified 2026-04-25)
+## API Gateway — Controllers (40 total, verified 2026-04-25)
 
 AppController, HealthController, TeacherController,
 IntelligenceGraphController, DashboardController,
@@ -99,11 +99,12 @@ XceliQAssistantController, PredictiveAnalyticsController,
 PTCMController, TeacherWellbeingController,
 StudentWellbeingController, ComplianceController,
 FinanceV2Controller, AdmissionsController, OperationsController, LearningDNAController,
-SELIntelligenceController, PortfolioController
+SELIntelligenceController, PortfolioController,
+SchoolGroupController, AlumniController, BoardReportingController
 
 ---
 
-## School Service — Modules (37 total)
+## School Service — Modules (40 total)
 
 SchoolModule, AcademicPlanningModule, IntelligenceGraphModule,
 DashboardModule, FinanceModule, ParentModule, HrModule,
@@ -115,7 +116,8 @@ XceliQChatModule, ParentCommsModule, HomeworkTransparencyModule,
 ExamEngineModule, CurriculumCalendarModule, XceliQReviseModule,
 XceliQAssistantModule, PredictiveAnalyticsModule, PTCMModule,
 TeacherWellbeingModule, StudentWellbeingModule, ComplianceModule,
-FinanceV2Module, AdmissionsModule, OperationsModule, LearningDNAModule, SELIntelligenceModule, PortfolioModule
+FinanceV2Module, AdmissionsModule, OperationsModule, LearningDNAModule, SELIntelligenceModule, PortfolioModule,
+SchoolGroupModule, AlumniModule, BoardReportingModule
 
 ---
 
@@ -147,7 +149,11 @@ Sprint 6: FinanceLedger, FinanceEntry, TaxInvoice, TaxWithholding, FeeStructureV
 
 Sprint 7: LearningDNAProfile, LearningDNAObservation, ChronobioConfig, CognitiveLoadRule,
           SELObservation, EQProfile, FlowStateLog, SELFrameworkConfig,
-          Portfolio, PortfolioItem, PortfolioConfig
+          Portfolio, PortfolioItem, PortfolioConfig,
+          SchoolGroup, SchoolGroupMember, SchoolGroupConfig,
+          AlumniRecord, AlumniConfig
+
+Sprint 8: BoardReport
 
 ---
 
@@ -161,8 +167,8 @@ Sprint 7: LearningDNAProfile, LearningDNAObservation, ChronobioConfig, Cognitive
 | 4      | 31.10–31.12 | COMPLETE    |
 | 5      | 31.13–31.15 | COMPLETE    |
 | 6      | 31.16–31.18 | COMPLETE    |
-| 7      | 31.19–31.22 | IN PROGRESS |
-| 8      | 31.23–31.26 | Pending     |
+| 7      | 31.19–31.22 | COMPLETE    |
+| 8      | 31.23–31.26 | IN PROGRESS |
 
 ---
 
@@ -294,3 +300,4 @@ These are recurring violation patterns. Check before every action:
 | fix: secrets | 2026-04-25 | .env files untracked, git history rewritten, force pushed | git rm --cached + filter-repo scrubbed all 120 commits. .env.docker added to .gitignore. Keys rotated. | Never use heredoc for file creation |
 | 31.22a complete | 2026-04-25 | SchoolGroup — houses, sports teams, co-curricular, committees, projects | SchoolGroup+SchoolGroupMember+SchoolGroupConfig. Self-referential sub-groups (max depth 2). Student moderators. Points system. ChatChannelType+BroadcastAudienceType extended with ALUMNI+GROUP. group_id FK added to ChatChannel. Alumni affiliation hook ready for 31.22. All endpoints 200. | 31.22 AlumniModule next |
 | 31.22 complete | 2026-04-25 | XceliQAlumni — full lifecycle | AlumniRecord+AlumniConfig. Invite code: 32-byte crypto random, bcryptjs hash, single-use, 90-day expiry. Consent paths: underage (parent) + of-age (direct). house_group_id FK to SchoolGroup. Career pathway separately consented. ConsentJurisdiction renamed AlumniConsentJurisdiction to avoid collision. bcrypt→bcryptjs. All endpoints 200. Sprint 7 COMPLETE. | Sprint 8 next: 31.23 Board Reporting |
+| 31.23 complete | 2026-04-25 | Board Reporting Portal | BoardReport entity + BoardReportingModule. Enums: BoardReportType, BoardReportStatus, BoardReportVisibility. 7 endpoints all 200. Fix: JwtStrategy now maps payload.user_id → req.user.user_id (was undefined, caused empty created_by across all modules). Systemic fix, zero breaking changes. | 31.24 next: PLCModule |
