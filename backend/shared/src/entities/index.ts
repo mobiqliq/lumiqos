@@ -130,3 +130,6 @@ export * from './sel-framework-config.entity';
 export * from './portfolio.entity';
 export * from './portfolio-item.entity';
 export * from './portfolio-config.entity';
+export * from './school-group.entity';
+export * from './school-group-member.entity';
+export * from './school-group-config.entity';

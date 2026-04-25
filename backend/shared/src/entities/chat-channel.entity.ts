@@ -7,6 +7,8 @@ export enum ChatChannelType {
   DEPARTMENT = 'department',
   WHOLE_SCHOOL = 'whole_school',
   DIRECT = 'direct',
+  ALUMNI = 'alumni',
+  GROUP = 'group',
 }
 
 @Entity('chat_channel')
@@ -30,6 +32,10 @@ export class ChatChannel extends XceliQosBaseEntity {
 
   @Column({ type: 'varchar', length: 100, nullable: true })
   department: string;
+
+  // For GROUP/ALUMNI channel types — scoped to SchoolGroup
+  @Column({ type: 'uuid', nullable: true })
+  group_id: string;
 
   // Principal announcements require acknowledgment
   @Column({ type: 'boolean', default: false })

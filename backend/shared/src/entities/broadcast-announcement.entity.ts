@@ -15,6 +15,8 @@ export enum BroadcastAudienceType {
   SECTION_PARENTS = 'section_parents',
   ALL_STAFF = 'all_staff',
   WHOLE_SCHOOL = 'whole_school',
+  ALUMNI = 'alumni',
+  GROUP = 'group',
 }
 
 @Entity('broadcast_announcement')
@@ -38,6 +40,10 @@ export class BroadcastAnnouncement extends XceliQosBaseEntity {
 
   @Column({ type: 'uuid', nullable: true })
   target_section_id: string;
+
+  // Target group for GROUP/ALUMNI audience types
+  @Column({ type: 'uuid', nullable: true })
+  target_group_id: string;
 
   // 7-year audit archive compliance
   @Column({ type: 'timestamp', nullable: true })
