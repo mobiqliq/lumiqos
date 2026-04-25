@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { Injectable, Logger, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DataSource } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
@@ -11,6 +11,7 @@ import { PeriodConfiguration } from '@xceliqos/shared/src/entities/period-config
 
 @Injectable()
 export class SchoolService {
+  private readonly logger = new Logger(SchoolService.name);
   constructor(
     @InjectRepository(School) private schoolRepository: Repository<School>,
     @InjectRepository(PeriodConfiguration) private periodConfigRepo: Repository<PeriodConfiguration>,
@@ -98,7 +99,7 @@ export class SchoolService {
 
     } catch (err) {
       await queryRunner.rollbackTransaction();
-      console.error('Transaction failed, rolled back:', err);
+      this.logger.error('Transaction failed, rolled back:', err);
       throw new InternalServerErrorException('Registration failed. Rolled back.');
     } finally {
       await queryRunner.release();

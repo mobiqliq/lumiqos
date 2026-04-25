@@ -1,4 +1,4 @@
-import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
+import { Injectable, Logger, OnApplicationBootstrap } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { School } from '@xceliqos/shared/src/entities/school.entity';
@@ -28,6 +28,7 @@ const TEST_SUBJECT_ID = '44444444-4444-4444-4444-444444444444';
 
 @Injectable()
 export class SeederService implements OnApplicationBootstrap {
+  private readonly logger = new Logger(SeederService.name);
     constructor(
         @InjectRepository(School) private readonly schoolRepo: Repository<School>,
         @InjectRepository(Student) private readonly studentRepo: Repository<Student>,
@@ -52,7 +53,7 @@ export class SeederService implements OnApplicationBootstrap {
     ) { }
 
     async onApplicationBootstrap() {
-        console.log('--- STARTING IDEMPOTENT SEEDER ---');
+        this.logger.log('--- STARTING IDEMPOTENT SEEDER ---');
 
         // 1. Find or Create School
         let school = await this.schoolRepo.findOne({ where: { school_code: 'GFA-2026' } });
@@ -64,7 +65,7 @@ export class SeederService implements OnApplicationBootstrap {
                 region: 'ap-south-1',
                 board: 'CBSE',
             }));
-            console.log('Seeded School: Greenfield Academy');
+            this.logger.log('Seeded School: Greenfield Academy');
         }
 
         // 2. Find or Create Academic Year
@@ -115,7 +116,7 @@ export class SeederService implements OnApplicationBootstrap {
             let role = await this.roleRepo.findOne({ where: { name: roleName } });
             if (!role) {
                 role = await this.roleRepo.save(this.roleRepo.create({ name: roleName, role_id: roleName }));
-                console.log(`Seeded role: ${roleName}`);
+                this.logger.log(`Seeded role: ${roleName}`);
             }
         }
 
@@ -133,7 +134,7 @@ export class SeederService implements OnApplicationBootstrap {
             const exists = await this.roleRepo.findOne({ where: { role_id: r.role_id } });
             if (!exists) {
                 await this.roleRepo.save(this.roleRepo.create(r));
-                console.log(`Seeded role: ${r.role_id}`);
+                this.logger.log(`Seeded role: ${r.role_id}`);
             }
         }
 
@@ -163,11 +164,11 @@ export class SeederService implements OnApplicationBootstrap {
                     is_active: true,
                     password_hash: DEFAULT_PASSWORD_HASH,
                 }));
-                console.log(`Seeded staff: ${s.email}`);
+                this.logger.log(`Seeded staff: ${s.email}`);
             } else if (!user.password_hash || user.password_hash.length < 10) {
                 user.password_hash = DEFAULT_PASSWORD_HASH;
                 await this.userRepo.save(user);
-                console.log(`Fixed password_hash for: ${s.email}`);
+                this.logger.log(`Fixed password_hash for: ${s.email}`);
             }
             seededUsers[s.email] = user;
         }
@@ -184,7 +185,7 @@ export class SeederService implements OnApplicationBootstrap {
                     subject_name: name,
                     credits: 1.0,
                 }));
-                console.log(`Seeded subject: ${name}`);
+                this.logger.log(`Seeded subject: ${name}`);
             }
             seededSubjects[name] = subj;
         }
@@ -215,7 +216,7 @@ export class SeederService implements OnApplicationBootstrap {
                     class_id: TEST_CLASS_ID,
                     periods_per_day: 1,
                 }));
-                console.log(`Seeded TeacherSubject: ${a.teacher.email} → ${a.subject_id}`);
+                this.logger.log(`Seeded TeacherSubject: ${a.teacher.email} → ${a.subject_id}`);
             }
         }
 
@@ -230,7 +231,7 @@ export class SeederService implements OnApplicationBootstrap {
             let plan = await this.planRepo.findOne({ where: { plan_id: p.plan_id } });
             if (!plan) {
                 plan = await this.planRepo.save(this.planRepo.create(p));
-                console.log(`Seeded plan: ${p.name}`);
+                this.logger.log(`Seeded plan: ${p.name}`);
             }
             seededPlans[p.plan_id] = plan;
         }
@@ -249,7 +250,7 @@ export class SeederService implements OnApplicationBootstrap {
                     status: 'active',
                     current_period_end: new Date('2027-03-31'),
                 }));
-                console.log(`Seeded subscription: ${s.name} -> ${planKey}`);
+                this.logger.log(`Seeded subscription: ${s.name} -> ${planKey}`);
             }
         }
 
@@ -283,7 +284,7 @@ export class SeederService implements OnApplicationBootstrap {
                 await this.permissionRepo.save(this.permissionRepo.create(p));
             }
         }
-        console.log('Permissions seeded');
+        this.logger.log('Permissions seeded');
 
         // Role → permission mapping
         const ROLE_PERMISSIONS: Record<string, string[]> = {
@@ -333,8 +334,8 @@ export class SeederService implements OnApplicationBootstrap {
                 }
             }
         }
-        console.log('RolePermissions seeded');
+        this.logger.log('RolePermissions seeded');
 
-        console.log('--- IDEMPOTENT SEEDING COMPLETE ---');
+        this.logger.log('--- IDEMPOTENT SEEDING COMPLETE ---');
     }
 }

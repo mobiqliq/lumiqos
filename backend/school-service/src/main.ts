@@ -1,12 +1,13 @@
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { AppModule } from './app.module';
+import { createWinstonLogger } from '@xceliqos/shared/src/logger/winston.logger';
 
 async function bootstrap() {
+  const logger = createWinstonLogger('SchoolService');
+
   // 1. Create HTTP app
-  const app = await NestFactory.create(AppModule, {
-  logger: ['error', 'warn', 'log', 'debug'],
-});
+  const app = await NestFactory.create(AppModule, { logger });
 
   // 2. Connect microservice
   app.connectMicroservice<MicroserviceOptions>({
@@ -17,7 +18,6 @@ async function bootstrap() {
   // 3. Start both
   await app.startAllMicroservices();
   await app.listen(3000);
-
-  console.log('HTTP server running on http://localhost:3000');
+  logger.log('HTTP server running on http://localhost:3000', 'Bootstrap');
 }
 bootstrap();

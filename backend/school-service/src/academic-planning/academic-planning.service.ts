@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException, ConflictException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { AcademicPlan } from '@xceliqos/shared/src/entities/academic-plan.entity';
@@ -19,6 +19,7 @@ import { v4 as uuid } from 'uuid';
 
 @Injectable()
 export class AcademicPlanningService {
+  private readonly logger = new Logger(AcademicPlanningService.name);
     constructor(
         @InjectRepository(AcademicPlan)
         private planRepo: Repository<AcademicPlan>,
@@ -171,8 +172,8 @@ export class AcademicPlanningService {
             where: { school_id: schoolId, academic_year_id: academicYearId, type: 'WORKING' },
             order: { date: 'ASC' }
         });
-        console.log('WORKING DAYS COUNT:', workingDays.length);
-        console.log('FIRST 5 DAYS:', workingDays.slice(0, 5));
+        this.logger.log('WORKING DAYS COUNT:', workingDays.length);
+        this.logger.log('FIRST 5 DAYS:', workingDays.slice(0, 5));
 
         // 3. Handle Disruption Mode (Adjusted Plan)
         if (disruptionMode && baselinePlan) {
@@ -382,16 +383,16 @@ if (lastTeachingDateIdx < 0) {
                 is_baseline: plan.is_baseline
             };
         } catch (err) {
-            console.error(`[DEBUG] ERROR in getLatestPlanStatus:`, err);
+            this.logger.error(`[DEBUG] ERROR in getLatestPlanStatus:`, err);
             return { status: 'ERROR', message: err.message };
         }
     }
 
     async getPlanPreview(planId: string) {
-        console.log(`[DEBUG] getPlanPreview for planId: ${planId}`);
+        this.logger.log(`[DEBUG] getPlanPreview for planId: ${planId}`);
         try {
             const { plan, items } = await this.getPlan(planId);
-            console.log(`[DEBUG] Found plan: ${plan.id}, items count: ${items.length}`);
+            this.logger.log(`[DEBUG] Found plan: ${plan.id}, items count: ${items.length}`);
         
         const academicYear = await this.academicYearRepo.findOne({ where: { id: plan.academic_year_id } });
         if (!academicYear) throw new NotFoundException('Academic Year not found');
@@ -416,7 +417,7 @@ if (lastTeachingDateIdx < 0) {
             bufferDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
             
             if (bufferDays > 60) {
-                console.warn(`[SANITY] High buffer detected for plan ${plan.id}: ${bufferDays} days.`);
+                this.logger.warn(`[SANITY] High buffer detected for plan ${plan.id}: ${bufferDays} days.`);
             }
 
             if (bufferDays > 30) bufferStatus = 'LOOSE';
@@ -478,7 +479,7 @@ if (lastTeachingDateIdx < 0) {
         const elapsed = new Date().getTime() - ayStart;
 
         if ((elapsed / ayDuration) > 0.25 && expected_topics_by_today === 0) {
-            console.warn(`[SANITY] Planning misalignment for plan ${plan.id}. 25% of year elapsed but 0 topics expected.`);
+            this.logger.warn(`[SANITY] Planning misalignment for plan ${plan.id}. 25% of year elapsed but 0 topics expected.`);
         }
 
         // Pacing Check
@@ -501,7 +502,7 @@ if (lastTeachingDateIdx < 0) {
             completed_topics
         };
         } catch (err) {
-            console.error(`[DEBUG] ERROR in getPlanPreview:`, err);
+            this.logger.error(`[DEBUG] ERROR in getPlanPreview:`, err);
             throw err;
         }
     }
@@ -523,12 +524,12 @@ if (lastTeachingDateIdx < 0) {
     }
 
     async getAcademicHealthSummary(schoolId: string, academicYearId: string) {
-        console.log(`[DEBUG] getAcademicHealthSummary for school: ${schoolId}, year: ${academicYearId}`);
+        this.logger.log(`[DEBUG] getAcademicHealthSummary for school: ${schoolId}, year: ${academicYearId}`);
         
         // Simple UUID validation to prevent Postgres cast errors
         const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
         if (!uuidRegex.test(schoolId) || !uuidRegex.test(academicYearId)) {
-            console.error(`[ERROR] Invalid schoolId or academicYearId format: ${schoolId}, ${academicYearId}`);
+            this.logger.error(`[ERROR] Invalid schoolId or academicYearId format: ${schoolId}, ${academicYearId}`);
             return { status: 'INVALID_PARAMETERS' };
         }
 
@@ -633,7 +634,7 @@ if (lastTeachingDateIdx < 0) {
 
             return response;
         } catch (err) {
-            console.error(`[DEBUG] ERROR in getAcademicHealthSummary:`, err);
+            this.logger.error(`[DEBUG] ERROR in getAcademicHealthSummary:`, err);
             throw err;
         }
     }

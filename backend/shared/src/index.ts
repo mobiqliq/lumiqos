@@ -9,3 +9,5 @@ export * from './interceptors/tenant.interceptor';
 export * from './clients/resilient-http.client';
 export * from './interfaces/ai-recommendation.interface';
 export * from './config/service-endpoints';
+export * from './logger/winston.logger';
+export * from './logger/correlation.middleware';

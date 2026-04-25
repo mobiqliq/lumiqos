@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger, UnauthorizedException, NotFoundException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -7,12 +7,13 @@ import { User, RolePermission, Role } from '@xceliqos/shared/index';
 
 @Injectable()
 export class AuthService {
+  private readonly logger = new Logger(AuthService.name);
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
     @InjectRepository(RolePermission) private readonly rolePermRepository: Repository<RolePermission>,
     private readonly jwtService: JwtService,
   ) {
-    console.log('--- AUTH SERVICE INITIALIZED [STABILIZATION_V2] ---');
+    this.logger.log('--- AUTH SERVICE INITIALIZED [STABILIZATION_V2] ---');
   }
 
   async login(loginDto: any) {
