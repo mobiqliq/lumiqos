@@ -123,3 +123,7 @@ export * from './learning-dna-profile.entity';
 export * from './learning-dna-observation.entity';
 export * from './chronobio-config.entity';
 export * from './cognitive-load-rule.entity';
+export * from './sel-observation.entity';
+export * from './eq-profile.entity';
+export * from './flow-state-log.entity';
+export * from './sel-framework-config.entity';

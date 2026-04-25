@@ -39,6 +39,7 @@ import { FinanceV2Module } from './finance/finance-v2.module';
 import { AdmissionsModule } from './admissions/admissions.module';
 import { OperationsModule } from './operations/operations.module';
 import { LearningDNAModule } from './learning-dna/learning-dna.module';
+import { SELIntelligenceModule } from './sel-intelligence/sel-intelligence.module';
 import * as AllEntities from '@xceliqos/shared/src/entities';
 import { LoggingMiddleware } from './middleware/logging.middleware';
 
@@ -91,6 +92,7 @@ import { LoggingMiddleware } from './middleware/logging.middleware';
     AdmissionsModule,
     OperationsModule,
     LearningDNAModule,
+    SELIntelligenceModule,
   ],
   controllers: [AppController],
   providers: [
