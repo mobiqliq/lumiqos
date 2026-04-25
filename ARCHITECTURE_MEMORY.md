@@ -31,7 +31,7 @@
 
 - User PK is `id` (uuid) NOT `user_id`
 - ai-service TCP ONLY — never add HTTP routes
-- Gateway loses connection after school-service restart — restart gateway too
+- Gateway/auth connection drop after restart — ROOT CAUSE UNDIAGNOSED — do NOT restart as workaround — STOP, read logs, diagnose first
 - TypeORM create() needs `as any` cast for complex partial objects
 - Apostrophes in single-quoted TS strings break compiler — use double quotes
 - OpenAI = primary (gpt-4o-mini), Anthropic = fallback (claude-haiku-4-5-20251001)
@@ -255,3 +255,27 @@ Sprint 6: FinanceLedger, FinanceEntry, GSTInvoice, TDSRecord,
 | Teacher burnout model incomplete  | Low      | No attendance in WorkloadIndex yet |
 | PDF/Excel compliance export       | Low      | Frontend layer needed              |
 | Two duplicate Test School rows    | Low      | Harmless in dev                    |
+
+---
+
+## Protocol Enforcement Reminders
+
+These are recurring violation patterns. Check before every action:
+
+1. NEVER issue a restart/rebuild to unblock a test failure without first reading logs and identifying root cause.
+2. NEVER assume field names, module paths, or file locations — grep/cat the actual file first.
+3. NEVER workaround a bug — if root cause is unclear, STOP and state what data is needed.
+4. Data is truth. Logs, file contents, grep output = truth. Memory, assumption, "likely" = violation.
+5. If a known issue in this file is marked UNDIAGNOSED — diagnose it before working around it.
+
+---
+
+## Session Log (append after every successful commit)
+
+| Commit | Date | Items Completed | Key Decisions | Open Issues |
+|--------|------|-----------------|---------------|-------------|
+| f7c1de8 | 2026-04-24 | ARCHITECTURE_MEMORY.md created | Correct path: backend/shared/src/entities/ | Gateway/auth drop undiagnosed |
+| 9d19649 | 2026-04-24 | Fixed shared entities path in memory | Path was wrong in initial write | — |
+| (Sprint 6 start) | 2026-04-25 | JwtStrategy missing from FinanceV2Module — added as provider | PassportModule not in school-service deps — use JwtStrategy directly | — |
+| (31.16) | 2026-04-25 | Finance System v2.0 complete | FinanceLedger, FinanceEntry, TaxInvoice, TaxWithholding, FeeStructureVersion | Gateway/auth drop still undiagnosed |
+| (31.17 in progress) | 2026-04-25 | Admissions System built, routes mapped | AdmissionApplication, AdmissionDocument, WaitlistEntry, ReservationConfig | Auth drop triggered — diagnosing root cause before proceeding |
