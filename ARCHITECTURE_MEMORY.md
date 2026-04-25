@@ -1,7 +1,7 @@
 # XceliQOS — Architecture Memory
 
 > Mandatory context loader. Read BEFORE any code changes.
-> Last Updated: 2026-04-25 — Phase 31 Sprint 6 COMPLETE | Sprint 7 IN PROGRESS (31.19+31.20 done)
+> Last Updated: 2026-04-25 — Phase 31 Sprint 6 COMPLETE | Sprint 7 IN PROGRESS (31.19+31.20+31.21 done)
 > Branch: main | HEAD: 5131f42
 
 ---
@@ -82,7 +82,7 @@ finance@testschool.edu, hr@testschool.edu, parent@testschool.edu, student@testsc
 
 ---
 
-## API Gateway — Controllers (37 total, verified 2026-04-25)
+## API Gateway — Controllers (38 total, verified 2026-04-25)
 
 AppController, HealthController, TeacherController,
 IntelligenceGraphController, DashboardController,
@@ -99,11 +99,11 @@ XceliQAssistantController, PredictiveAnalyticsController,
 PTCMController, TeacherWellbeingController,
 StudentWellbeingController, ComplianceController,
 FinanceV2Controller, AdmissionsController, OperationsController, LearningDNAController,
-SELIntelligenceController
+SELIntelligenceController, PortfolioController
 
 ---
 
-## School Service — Modules (36 total)
+## School Service — Modules (37 total)
 
 SchoolModule, AcademicPlanningModule, IntelligenceGraphModule,
 DashboardModule, FinanceModule, ParentModule, HrModule,
@@ -115,7 +115,7 @@ XceliQChatModule, ParentCommsModule, HomeworkTransparencyModule,
 ExamEngineModule, CurriculumCalendarModule, XceliQReviseModule,
 XceliQAssistantModule, PredictiveAnalyticsModule, PTCMModule,
 TeacherWellbeingModule, StudentWellbeingModule, ComplianceModule,
-FinanceV2Module, AdmissionsModule, OperationsModule, LearningDNAModule, SELIntelligenceModule
+FinanceV2Module, AdmissionsModule, OperationsModule, LearningDNAModule, SELIntelligenceModule, PortfolioModule
 
 ---
 
@@ -146,7 +146,8 @@ Sprint 6: FinanceLedger, FinanceEntry, TaxInvoice, TaxWithholding, FeeStructureV
           LibraryRecord, TransportRoute, TransportAssignment, VisitorLog, OperationsConfig
 
 Sprint 7: LearningDNAProfile, LearningDNAObservation, ChronobioConfig, CognitiveLoadRule,
-          SELObservation, EQProfile, FlowStateLog, SELFrameworkConfig
+          SELObservation, EQProfile, FlowStateLog, SELFrameworkConfig,
+          Portfolio, PortfolioItem, PortfolioConfig
 
 ---
 
@@ -289,3 +290,4 @@ These are recurring violation patterns. Check before every action:
 | 31.18 complete | 2026-04-25 | Resource & Operations v1.0 | LibraryRecord, TransportRoute, TransportAssignment, VisitorLog, OperationsConfig — all 200 | Sprint 7 ready |
 | 31.19 complete | 2026-04-25 | Learning DNA v1.0 | Gardner 8 + Sweller CLT + Chronobio — weighted aggregation, narrative gate, all 200 | 31.20 next |
 | 31.20 complete | 2026-04-25 | SEL Intelligence Layer | CASEL 5 + flow state + EQProfile → XceliQScore feed, framework-agnostic config, all 200 | 31.21 next |
+| 31.21 complete | 2026-04-25 | Student Portfolio | Portfolio+PortfolioItem+PortfolioConfig, self-curation, approval workflow, visibility ceiling, share consent, all 200 | 31.22 next |
