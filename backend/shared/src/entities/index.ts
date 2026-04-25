@@ -137,3 +137,7 @@ export * from './alumni-record.entity';
 export * from './alumni-config.entity';
 
 export * from './board-report.entity';
+
+export * from './plc-group.entity';
+export * from './plc-session.entity';
+export * from './plc-resource.entity';
