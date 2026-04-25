@@ -119,3 +119,7 @@ export * from './transport-route.entity';
 export * from './transport-assignment.entity';
 export * from './visitor-log.entity';
 export * from './operations-config.entity';
+export * from './learning-dna-profile.entity';
+export * from './learning-dna-observation.entity';
+export * from './chronobio-config.entity';
+export * from './cognitive-load-rule.entity';

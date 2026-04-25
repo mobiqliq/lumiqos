@@ -39,6 +39,7 @@ import { ComplianceController } from './compliance.controller';
 import { FinanceV2Controller } from './finance-v2.controller';
 import { AdmissionsController } from './admissions.controller';
 import { OperationsController } from './operations.controller';
+import { LearningDNAController } from './learning-dna.controller';
 
 @Module({
   imports: [
@@ -73,7 +74,7 @@ import { OperationsController } from './operations.controller';
     ]),
     HttpModule,
   ],
-  controllers: [AppController, HealthController, TeacherController, IntelligenceGraphController, DashboardController, FinanceController, ParentController, HrController, SubstitutionController, TimetableController, ReportCardsController, ExamsController, HomeworkController, CommunicationController, AuthController, AdminController, SchoolConfigController, StudentIdentityController, XceliQScoreController, SchoolTierController, XceliQChatController, ParentCommsController, HomeworkTransparencyController, ExamEngineController, CurriculumCalendarController, XceliQReviseController, XceliQAssistantController, PredictiveAnalyticsController, PTCMController, TeacherWellbeingController, StudentWellbeingController, ComplianceController, FinanceV2Controller, AdmissionsController, OperationsController],
+  controllers: [AppController, HealthController, TeacherController, IntelligenceGraphController, DashboardController, FinanceController, ParentController, HrController, SubstitutionController, TimetableController, ReportCardsController, ExamsController, HomeworkController, CommunicationController, AuthController, AdminController, SchoolConfigController, StudentIdentityController, XceliQScoreController, SchoolTierController, XceliQChatController, ParentCommsController, HomeworkTransparencyController, ExamEngineController, CurriculumCalendarController, XceliQReviseController, XceliQAssistantController, PredictiveAnalyticsController, PTCMController, TeacherWellbeingController, StudentWellbeingController, ComplianceController, FinanceV2Controller, AdmissionsController, OperationsController, LearningDNAController],
   providers: [AppService],
 })
 export class AppModule {}

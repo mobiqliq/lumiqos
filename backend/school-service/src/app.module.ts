@@ -38,6 +38,7 @@ import { ComplianceModule } from './compliance/compliance.module';
 import { FinanceV2Module } from './finance/finance-v2.module';
 import { AdmissionsModule } from './admissions/admissions.module';
 import { OperationsModule } from './operations/operations.module';
+import { LearningDNAModule } from './learning-dna/learning-dna.module';
 import * as AllEntities from '@xceliqos/shared/src/entities';
 import { LoggingMiddleware } from './middleware/logging.middleware';
 
@@ -89,6 +90,7 @@ import { LoggingMiddleware } from './middleware/logging.middleware';
     FinanceV2Module,
     AdmissionsModule,
     OperationsModule,
+    LearningDNAModule,
   ],
   controllers: [AppController],
   providers: [
