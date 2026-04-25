@@ -31,7 +31,7 @@
 
 - User PK is `id` (uuid) NOT `user_id`
 - ai-service TCP ONLY — never add HTTP routes
-- Gateway/auth connection drop after restart — ROOT CAUSE UNDIAGNOSED — do NOT restart as workaround — STOP, read logs, diagnose first
+- Gateway/auth connection drop — RESOLVED: AUTH_SERVICE_PORT was 3003 (wrong), fixed to 3002. AppController missing from school-service. Healthchecks + depends_on added to docker-compose.
 - TypeORM create() needs `as any` cast for complex partial objects
 - Apostrophes in single-quoted TS strings break compiler — use double quotes
 - OpenAI = primary (gpt-4o-mini), Anthropic = fallback (claude-haiku-4-5-20251001)
@@ -279,3 +279,5 @@ These are recurring violation patterns. Check before every action:
 | (Sprint 6 start) | 2026-04-25 | JwtStrategy missing from FinanceV2Module — added as provider | PassportModule not in school-service deps — use JwtStrategy directly | — |
 | (31.16) | 2026-04-25 | Finance System v2.0 complete | FinanceLedger, FinanceEntry, TaxInvoice, TaxWithholding, FeeStructureVersion | Gateway/auth drop still undiagnosed |
 | (31.17 in progress) | 2026-04-25 | Admissions System built, routes mapped | AdmissionApplication, AdmissionDocument, WaitlistEntry, ReservationConfig | Auth drop triggered — diagnosing root cause before proceeding |
+| fix: infra | 2026-04-25 | ROOT CAUSE FIXED — gateway/auth drop | AUTH_SERVICE_PORT was 3003 in both envs, should be 3002. AppController missing from school-service. docker-compose healthchecks + depends_on added. All services now start healthy. | None — issue closed |
+| 31.17 complete | 2026-04-25 | Admissions System v1.0 | Global-first pipeline, quota framework-agnostic, waitlist auto-promote | Pending: 31.17 endpoint tests, then 31.18 |
