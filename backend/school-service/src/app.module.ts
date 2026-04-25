@@ -46,6 +46,7 @@ import { AlumniModule } from './alumni/alumni.module';
 import { BoardReportingModule } from './board-reporting/board-reporting.module';
 import { PLCModule } from './plc/plc.module';
 import { XceliQReflectModule } from './xceliq-reflect/xceliq-reflect.module';
+import { GrowthMindsetModule } from './growth-mindset/growth-mindset.module';
 import * as AllEntities from '@xceliqos/shared/src/entities';
 import { LoggingMiddleware } from './middleware/logging.middleware';
 
@@ -105,6 +106,7 @@ import { LoggingMiddleware } from './middleware/logging.middleware';
     BoardReportingModule,
     PLCModule,
     XceliQReflectModule,
+    GrowthMindsetModule,
   ],
   controllers: [AppController],
   providers: [

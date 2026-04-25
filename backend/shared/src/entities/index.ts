@@ -144,3 +144,6 @@ export * from './plc-resource.entity';
 
 export * from './reflection-entry.entity';
 export * from './metacognitive-score.entity';
+
+export * from './mindset-moment.entity';
+export * from './parent-mindset-progress.entity';
