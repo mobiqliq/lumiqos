@@ -109,3 +109,8 @@ export * from './finance-entry.entity';
 export * from './tax-invoice.entity';
 export * from './tax-withholding.entity';
 export * from './fee-structure-version.entity';
+
+export * from './admission-application.entity';
+export * from './admission-document.entity';
+export * from './waitlist-entry.entity';
+export * from './reservation-config.entity';

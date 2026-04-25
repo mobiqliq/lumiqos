@@ -3,6 +3,7 @@ import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
 import { AcademicPlanningModule } from './academic-planning/academic-planning.module';
 import { IntelligenceGraphModule } from './intelligence-graph/intelligence-graph.module';
 import { APP_INTERCEPTOR, Reflector } from '@nestjs/core';
+import { AppController } from './app.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { SchoolModule } from './school/school.module';
@@ -35,6 +36,7 @@ import { TeacherWellbeingModule } from './teacher-wellbeing/teacher-wellbeing.mo
 import { StudentWellbeingModule } from './student-wellbeing/student-wellbeing.module';
 import { ComplianceModule } from './compliance/compliance.module';
 import { FinanceV2Module } from './finance/finance-v2.module';
+import { AdmissionsModule } from './admissions/admissions.module';
 import * as AllEntities from '@xceliqos/shared/src/entities';
 import { LoggingMiddleware } from './middleware/logging.middleware';
 
@@ -84,7 +86,9 @@ import { LoggingMiddleware } from './middleware/logging.middleware';
     StudentWellbeingModule,
     ComplianceModule,
     FinanceV2Module,
+    AdmissionsModule,
   ],
+  controllers: [AppController],
   providers: [
     Reflector,
     {

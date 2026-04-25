@@ -37,6 +37,7 @@ import { TeacherWellbeingController } from './teacher-wellbeing.controller';
 import { StudentWellbeingController } from './student-wellbeing.controller';
 import { ComplianceController } from './compliance.controller';
 import { FinanceV2Controller } from './finance-v2.controller';
+import { AdmissionsController } from './admissions.controller';
 
 @Module({
   imports: [
@@ -71,7 +72,7 @@ import { FinanceV2Controller } from './finance-v2.controller';
     ]),
     HttpModule,
   ],
-  controllers: [AppController, HealthController, TeacherController, IntelligenceGraphController, DashboardController, FinanceController, ParentController, HrController, SubstitutionController, TimetableController, ReportCardsController, ExamsController, HomeworkController, CommunicationController, AuthController, AdminController, SchoolConfigController, StudentIdentityController, XceliQScoreController, SchoolTierController, XceliQChatController, ParentCommsController, HomeworkTransparencyController, ExamEngineController, CurriculumCalendarController, XceliQReviseController, XceliQAssistantController, PredictiveAnalyticsController, PTCMController, TeacherWellbeingController, StudentWellbeingController, ComplianceController, FinanceV2Controller],
+  controllers: [AppController, HealthController, TeacherController, IntelligenceGraphController, DashboardController, FinanceController, ParentController, HrController, SubstitutionController, TimetableController, ReportCardsController, ExamsController, HomeworkController, CommunicationController, AuthController, AdminController, SchoolConfigController, StudentIdentityController, XceliQScoreController, SchoolTierController, XceliQChatController, ParentCommsController, HomeworkTransparencyController, ExamEngineController, CurriculumCalendarController, XceliQReviseController, XceliQAssistantController, PredictiveAnalyticsController, PTCMController, TeacherWellbeingController, StudentWellbeingController, ComplianceController, FinanceV2Controller, AdmissionsController],
   providers: [AppService],
 })
 export class AppModule {}
