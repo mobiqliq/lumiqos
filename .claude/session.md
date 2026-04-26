@@ -45,3 +45,23 @@ ComplianceIndicator, ComplianceRecord
 - School: 11111111 | AY: 22222222 | Class: 33333333 | Subject: 44444444
 - Student: 55555555 | Enrollment: eeeeeeee (TEST-001)
 - Staff: teacher1-4, principal, admin, finance, hr, parent, student @testschool.edu / password
+
+## 2026-04-26 — Phase 33.5 validation fix map
+- Files:
+  - backend/api-gateway/src/app.module.ts (restore throttler module/providers)
+  - backend/api-gateway/src/guards/tenant-throttler.guard.ts (recreated guard)
+  - backend/api-gateway/src/health/health.controller.ts (SkipThrottle default+tenant)
+  - backend/api-gateway/src/main.ts, backend/auth-service/src/main.ts, backend/school-service/src/main.ts (shared root imports)
+  - backend/shared/src/index.ts, backend/shared/src/filters/error-codes.ts, backend/shared/src/filters/http-exception.filter.ts
+- Rationale:
+  - Fix runtime resolution failure from @xceliqos/shared/src/* imports.
+  - Reinstate dropped throttler wiring.
+  - Ensure health endpoints bypass both default and named tenant throttles.
+- Open threads:
+  - Keep DB host/runtime alignment between Docker and local shell starts.
+- Dependencies:
+  - shared build required before gateway/auth/school builds.
+  - postgres required up for runtime smoke tests.
+- Architectural state:
+  - /api/health exempt verified under burst.
+  - non-exempt routes throttle verified with 429 under burst.

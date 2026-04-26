@@ -3,6 +3,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { HttpModule } from '@nestjs/axios';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { HealthController } from './health/health.controller';
@@ -48,6 +50,7 @@ import { BoardReportingController } from './board-reporting.controller';
 import { PLCController } from './plc.controller';
 import { XceliQReflectController } from './xceliq-reflect.controller';
 import { GrowthMindsetController } from './growth-mindset.controller';
+import { TenantThrottlerGuard } from './guards/tenant-throttler.guard';
 
 @Module({
   imports: [
@@ -81,8 +84,29 @@ import { GrowthMindsetController } from './growth-mindset.controller';
       },
     ]),
     HttpModule,
+    ThrottlerModule.forRoot([
+      {
+        ttl: 60000,
+        limit: 100,
+      },
+      {
+        name: 'tenant',
+        ttl: 60000,
+        limit: 1000,
+      },
+    ]),
   ],
   controllers: [AppController, HealthController, TeacherController, IntelligenceGraphController, DashboardController, FinanceController, ParentController, HrController, SubstitutionController, TimetableController, ReportCardsController, ExamsController, HomeworkController, CommunicationController, AuthController, AdminController, SchoolConfigController, StudentIdentityController, XceliQScoreController, SchoolTierController, XceliQChatController, ParentCommsController, HomeworkTransparencyController, ExamEngineController, CurriculumCalendarController, XceliQReviseController, XceliQAssistantController, PredictiveAnalyticsController, PTCMController, TeacherWellbeingController, StudentWellbeingController, ComplianceController, FinanceV2Controller, AdmissionsController, OperationsController, LearningDNAController, SELIntelligenceController, PortfolioController, SchoolGroupController, AlumniController, BoardReportingController, PLCController, XceliQReflectController, GrowthMindsetController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: TenantThrottlerGuard,
+    },
+  ],
 })
 export class AppModule {}

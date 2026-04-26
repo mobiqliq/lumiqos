@@ -1,7 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { AppModule } from './app.module';
-import { createWinstonLogger } from '@xceliqos/shared/src/logger/winston.logger';
+import { createWinstonLogger } from '@xceliqos/shared';
+import { GlobalExceptionFilter } from '@xceliqos/shared';
 
 async function bootstrap() {
   const logger = createWinstonLogger('SchoolService');
@@ -16,6 +17,7 @@ async function bootstrap() {
   });
 
   // 3. Start both
+  app.useGlobalFilters(new GlobalExceptionFilter());
   await app.startAllMicroservices();
   await app.listen(3000);
   logger.log('HTTP server running on http://localhost:3000', 'Bootstrap');

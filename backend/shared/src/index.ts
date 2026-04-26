@@ -11,3 +11,5 @@ export * from './interfaces/ai-recommendation.interface';
 export * from './config/service-endpoints';
 export * from './logger/winston.logger';
 export * from './logger/correlation.middleware';
+export * from './filters/http-exception.filter';
+export * from './filters/error-codes';

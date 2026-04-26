@@ -1,4 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
+import { SkipThrottle } from '@nestjs/throttler';
 import { HttpService } from '@nestjs/axios';
 import { lastValueFrom } from 'rxjs';
 
@@ -6,6 +7,7 @@ import { lastValueFrom } from 'rxjs';
 export class HealthController {
     constructor(private readonly httpService: HttpService) { }
 
+    @SkipThrottle({ default: true, tenant: true })
     @Get()
     getHealth() {
         return {
@@ -15,6 +17,7 @@ export class HealthController {
         };
     }
 
+    @SkipThrottle({ default: true, tenant: true })
     @Get('services')
     async getServicesHealth() {
         const services = [
