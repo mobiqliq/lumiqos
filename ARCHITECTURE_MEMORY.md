@@ -1,8 +1,8 @@
 # XceliQOS — Architecture Memory
 
 > Mandatory context loader. Read BEFORE any code changes.
-> Last Updated: 2026-04-25 — Phase 33.3 COMPLETE
-> Branch: main | HEAD: 1b0a2a8
+> Last Updated: 2026-04-26 — Phase 33.7 IN PROGRESS (33.4 built/uncommitted, 33.5 ✓, 33.6 ✓, 33.7 partial on fix/school-service-stabilization)
+> Branch: fix/school-service-stabilization | HEAD: 87b2586
 
 ---
 
@@ -264,7 +264,11 @@ Sprint 8: BoardReport,
 |-----------------------------------|----------|------------------------------------|
 | synchronize:true TypeORM          | RESOLVED | 33.1 — migrations system live      |
 | AI keys baked into Docker image   | RESOLVED | 33.2 — .env.example + setup-env.sh |
-| No API versioning /api/v1/        | Medium   | Deferred                           |
+| No structured logging             | RESOLVED | 33.3 — Winston + correlation IDs   |
+| No global error handler           | RESOLVED | 33.4 — built, wired, commit pending |
+| No rate limiting                  | RESOLVED | 33.5 — TenantThrottlerGuard, SkipThrottle, in-memory dev |
+| Shallow health checks             | RESOLVED | 33.6 — /health/live + /health/ready, DB/auth/school/ai/disk |
+| No API versioning /api/v1/        | IN PROGRESS | 33.7 — main.ts updated on fix branch, full gateway path update pending |
 | Communication endpoints need JWT  | Medium   | createThread/sendMessage user ctx  |
 | WS layer XceliQChat               | Medium   | REST done, WS deferred             |
 | OCR for StudentAnswerSheet        | Medium   | Needs image upload infra           |
@@ -314,3 +318,4 @@ These are recurring violation patterns. Check before every action:
 | 1b0a2a8 | 2026-04-25 | 33.3 Structured Logging | Winston logger in shared. CorrelationMiddleware at gateway. JSON prod / pretty dev. LOG_LEVEL env var. All 33 console.* replaced. api-gateway Dockerfile fixed with shared build + tsconfig path injection. All services healthy. | 33.4 next: Global Error Handler |
 | 33.5 validate-fix | 2026-04-26 | Rate limiting + health exemption validated | Restored throttler wiring, fixed shared root imports, recreated TenantThrottlerGuard, SkipThrottle(default+tenant). Burst: health 120x200; alumni 200x429 + 100x500. | 33.6 next |
 | 33.6 complete | 2026-04-26 | Deep health checks | Added /api/health/live and /api/health/ready with DB/auth/school/ai/disk checks; school-service liveness/readiness endpoints added | 33.7 next |
+| 87b2586 | 2026-04-26 | Restored initial-schema migration | Accidentally deleted in 31444ef on fix/school-service-stabilization. Restored from main. Both migrations present: initial-schema + BaselineSchema. | 33.7 completion + merge to main next |
