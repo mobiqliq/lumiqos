@@ -69,3 +69,10 @@ ComplianceIndicator, ComplianceRecord
 ## 2026-04-26 — Architecture/session update
 - ARCHITECTURE_MEMORY.md synced to 33.5 validated state
 - Session log appended with validation-fix row and measured burst outcomes
+
+## 2026-04-26 — Phase 33.6
+- Files: backend/api-gateway/src/health/health.controller.ts, backend/school-service/src/app.controller.ts
+- Rationale: add liveness/readiness split and deep dependency checks
+- Open threads: Phase 33.7 API versioning
+- Dependencies: postgres + auth + school + ai endpoints affect readiness status
+- Architectural state: /api/health/live returns process liveness; /api/health/ready returns dependency matrix
