@@ -65,3 +65,7 @@ ComplianceIndicator, ComplianceRecord
 - Architectural state:
   - /api/health exempt verified under burst.
   - non-exempt routes throttle verified with 429 under burst.
+
+## 2026-04-26 — Architecture/session update
+- ARCHITECTURE_MEMORY.md synced to 33.5 validated state
+- Session log appended with validation-fix row and measured burst outcomes
