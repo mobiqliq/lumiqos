@@ -1,8 +1,8 @@
 # XceliQOS — Architecture Memory
 
 > Mandatory context loader. Read BEFORE any code changes.
-> Last Updated: 2026-04-26 — Phase 33.7 IN PROGRESS (33.4 built/uncommitted, 33.5 ✓, 33.6 ✓, 33.7 partial on fix/school-service-stabilization)
-> Branch: fix/school-service-stabilization | HEAD: 87b2586
+> Last Updated: 2026-04-26 — Phase 33 COMPLETE (33.1–33.7 all done)
+> Branch: fix/school-service-stabilization | HEAD: pending merge to main
 
 ---
 
@@ -268,7 +268,7 @@ Sprint 8: BoardReport,
 | No global error handler           | RESOLVED | 33.4 — built, wired, commit pending |
 | No rate limiting                  | RESOLVED | 33.5 — TenantThrottlerGuard, SkipThrottle, in-memory dev |
 | Shallow health checks             | RESOLVED | 33.6 — /health/live + /health/ready, DB/auth/school/ai/disk |
-| No API versioning /api/v1/        | IN PROGRESS | 33.7 — main.ts updated on fix branch, full gateway path update pending |
+| No API versioning /api/v1/        | RESOLVED | 33.7 — global prefix api/v1, health excluded, all 44 controllers use relative paths |
 | Communication endpoints need JWT  | Medium   | createThread/sendMessage user ctx  |
 | WS layer XceliQChat               | Medium   | REST done, WS deferred             |
 | OCR for StudentAnswerSheet        | Medium   | Needs image upload infra           |
@@ -319,3 +319,4 @@ These are recurring violation patterns. Check before every action:
 | 33.5 validate-fix | 2026-04-26 | Rate limiting + health exemption validated | Restored throttler wiring, fixed shared root imports, recreated TenantThrottlerGuard, SkipThrottle(default+tenant). Burst: health 120x200; alumni 200x429 + 100x500. | 33.6 next |
 | 33.6 complete | 2026-04-26 | Deep health checks | Added /api/health/live and /api/health/ready with DB/auth/school/ai/disk checks; school-service liveness/readiness endpoints added | 33.7 next |
 | 87b2586 | 2026-04-26 | Restored initial-schema migration | Accidentally deleted in 31444ef on fix/school-service-stabilization. Restored from main. Both migrations present: initial-schema + BaselineSchema. | 33.7 completion + merge to main next |
+| 88eebd8 | 2026-04-26 | 33.7 API Versioning COMPLETE | Global prefix api/v1 in main.ts. Health excluded via RequestMethod.ALL on health + health/(.*). All 44 gateway controllers use relative paths — no controller edits needed. PHASE 33 COMPLETE. | Merge fix branch to main, bring containers up, run smoke tests |
