@@ -27,9 +27,9 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     let message = 'An unexpected error occurred';
     let details: unknown = undefined;
 
-    if (exception instanceof HttpException) {
-      status = exception.getStatus();
-      const exceptionResponse = exception.getResponse();
+    if (exception != null && typeof (exception as any).getStatus === "function" && typeof (exception as any).getResponse === "function") {
+      status = (exception as any).getStatus();
+      const exceptionResponse = (exception as any).getResponse();
       if (typeof exceptionResponse === 'string') {
         message = exceptionResponse;
       } else if (typeof exceptionResponse === 'object') {
