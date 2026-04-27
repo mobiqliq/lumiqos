@@ -1,8 +1,8 @@
 # XceliQOS — Architecture Memory
 
 > Mandatory context loader. Read BEFORE any code changes.
-> Last Updated: 2026-04-26 — Phase 33 COMPLETE (33.1–33.7 all done)
-> Branch: fix/school-service-stabilization | HEAD: pending merge to main
+> Last Updated: 2026-04-27 — Phase 33 COMPLETE + post-merge stabilization done
+> Branch: main | HEAD: 4a0c89b
 
 ---
 
@@ -38,6 +38,9 @@
 - heredoc fails silently in Codespaces — ALWAYS use python3 << PYEOF
 - TenantContext.getStore() returns null — all callers must null-check
 - Internal gateway→service calls must NOT require JWT
+- GlobalExceptionFilter uses duck-typing for HttpException (not instanceof) — cross-module boundary safe
+- shared/@nestjs must stay in dependencies (not peerDependencies) — shared compiled JS requires it at runtime
+- Docker healthcheck for api-gateway: /health (not /api/health) — health controller excluded from global prefix
 
 ---
 
@@ -320,3 +323,4 @@ These are recurring violation patterns. Check before every action:
 | 33.6 complete | 2026-04-26 | Deep health checks | Added /api/health/live and /api/health/ready with DB/auth/school/ai/disk checks; school-service liveness/readiness endpoints added | 33.7 next |
 | 87b2586 | 2026-04-26 | Restored initial-schema migration | Accidentally deleted in 31444ef on fix/school-service-stabilization. Restored from main. Both migrations present: initial-schema + BaselineSchema. | 33.7 completion + merge to main next |
 | 88eebd8 | 2026-04-26 | 33.7 API Versioning COMPLETE | Global prefix api/v1 in main.ts. Health excluded via RequestMethod.ALL on health + health/(.*). All 44 gateway controllers use relative paths — no controller edits needed. PHASE 33 COMPLETE. | Merge fix branch to main, bring containers up, run smoke tests |
+| 4a0c89b | 2026-04-27 | Post-merge stabilization | Fixed: initial-schema migration stamp, GlobalExceptionFilter duck-type fix, docker healthcheck /health, auth-service @nestjs version alignment. All 6 containers healthy. Smoke tests pass. | CorrelationMiddleware missing from auth-service (traceId="-"), role=null in JWT payload — both pre-existing, deferred |
